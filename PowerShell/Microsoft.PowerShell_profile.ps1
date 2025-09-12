@@ -24,5 +24,37 @@ Set-Alias -Name ll -Value Get-ChildItem
 # Alias 'vi' to open Neovim
 function vi { nvim . }
 
+function fcd {
+    param (
+        [Parameter(Mandatory=$false)]
+        [string]$Path
+    )
+
+    $directoryMap = @{
+        "nexorion" = "D:\working\nexorion"
+        "sendo" = "D:\working\sendo-farm"
+        "tenefic" = "D:\working\tenefic-games"
+    }
+
+    if (-not $Path) {
+        Write-Host "Available shortcuts:" -ForegroundColor Cyan
+        $directoryMap.GetEnumerator() | Sort-Object Name | ForEach-Object {
+            Write-Host "  $($_.Key): $($_.Value)" -ForegroundColor Green
+        }
+        return
+    }
+
+    if ($directoryMap.ContainsKey($Path)) {
+        Set-Location -Path $directoryMap[$Path]
+        Write-Host "Moved to: $($directoryMap[$Path])" -ForegroundColor Green
+    } else {
+        Write-Host "Unknown shortcut: $Path" -ForegroundColor Red
+        Write-Host "Available shortcuts:" -ForegroundColor Cyan
+        $directoryMap.GetEnumerator() | Sort-Object Name | ForEach-Object {
+            Write-Host "  $($_.Key): $($_.Value)" -ForegroundColor Green
+        }
+    }
+}
+
 # Display a welcome message
 Write-Host "Welcome back, nghiapm! Ready to code?" -ForegroundColor Green
