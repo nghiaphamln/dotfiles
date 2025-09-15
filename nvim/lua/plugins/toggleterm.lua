@@ -14,7 +14,7 @@ return {
 			persist_size = true,
 			direction = "float",
 			close_on_exit = true,
-			shell = "pwsh -NoExit -Command \"Write-Host 'Hello Nghia!'\"",
+			shell = "pwsh -NoExit",
 		})
 	end,
 }
