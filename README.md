@@ -54,7 +54,7 @@ My personal development environment features:
 
 2. **Clone this repository**:
 ```bash
-git clone https://github.com/yourusername/dotfiles.git ~/.config/nvim
+git clone https://github.com/nghiaphamln/dotfiles.git ~/.config/nvim
 ```
 
 3. **Launch Neovim and install plugins**:
