@@ -1,18 +1,36 @@
 # dotfiles
 
-My Personal Dotfiles for Neovim Configuration
+🚀 **Ultimate Neovim IDE Experience** | Fully-featured Development Environment
 
 <div align="center">
 
 [![Neovim](https://img.shields.io/badge/Neovim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
 [![Lua](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+![Maintenance](https://img.shields.io/maintenance/yes/2025.svg)
+![Neovim nightly](https://img.shields.io/badge/Neovim-0.10+-informational.svg)
+
+</div>
+
+<div align="center">
+
+✨ **Powerful. Modern. Extensible.** ✨
 
 </div>
 
 ## 📋 Overview
 
-This repository contains my personal Neovim configuration files, designed to provide a modern, efficient development environment with VS Code-like features. The configuration includes LSP support, debugging capabilities, and many useful keybindings. This setup aims to provide an IDE-like experience while maintaining the speed and efficiency of Neovim.
+This repository contains my **personal Neovim configuration** — a comprehensive setup that transforms your terminal into a fully-featured IDE with modern development features. Built with performance and usability in mind, this configuration provides an unparalleled development experience that rivals traditional IDEs while maintaining the efficiency and flexibility of Vim.
+
+My personal development environment features:
+- 🔥 **Intelligent code completion** with AI-powered suggestions
+- 🐉 **Advanced debugging** with Visual Studio-like interface
+- 🌌 **Beautiful UI** with modern themes and smooth animations
+- 🚀 **Lightning-fast** performance with optimized loading
+- 🧩 **Modular architecture** for easy customization
+- 🌐 **Multi-language support** with LSP integration
+- 📦 **Git integration** for seamless version control
+- 🛠️ **Smart formatting** and linting capabilities
 
 ## 🔧 Key Features
 
