@@ -67,6 +67,8 @@ function M.setup()
 		desc = "Previous diagnostic",
 	})
 
+
+
 	-- Phím Escape để thoát khỏi Neo-tree và quay lại chỗ edit
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "neo-tree",
