@@ -60,8 +60,18 @@ local function create_rust_float_terminal(cmd, title, project_dir)
 	
 	vim.api.nvim_win_set_option(win, "winhl", "Normal:Normal,FloatBorder:FloatBorder")
 	
-	-- Chạy terminal command
-	local full_cmd = project_dir and ("cd " .. vim.fn.shellescape(project_dir) .. " && " .. cmd) or cmd
+	-- Xác định shell mặc định dựa trên hệ điều hành
+	local shell_cmd
+	if vim.fn.has("win32") == 1 then
+		-- Trên Windows, sử dụng PowerShell
+		shell_cmd = "powershell -Command \"" .. cmd .. "\""
+	else
+		-- Trên các hệ thống khác, sử dụng shell mặc định
+		shell_cmd = cmd
+	end
+	
+	-- Chạy terminal command với shell phù hợp
+	local full_cmd = project_dir and ("cd " .. vim.fn.shellescape(project_dir) .. " && " .. shell_cmd) or shell_cmd
 	
 	local job_id = vim.fn.termopen(full_cmd, {
 		on_exit = function(_, exit_code)
@@ -222,47 +232,161 @@ local function find_rust_executable(project_dir, package_name)
 	return nil
 end
 
-function M.start_debug(project)
-	if not build_rust_project(project.dir) then
+local function find_rust_binaries(project_dir)
+	local binaries = {}
+	
+	-- Find all binaries in target/debug directory
+	local debug_dir = project_dir .. "/target/debug"
+	if vim.fn.isdirectory(debug_dir) == 1 then
+		local files = vim.fn.readdir(debug_dir)
+		
+		for _, file in ipairs(files) do
+			local full_path = debug_dir .. "/" .. file
+			-- Check if it's executable and not a source file
+			if vim.fn.executable(full_path) == 1 and 
+				not file:match("%.d$") and not file:match("%.pdb$") and 
+				not file:match("%.dll$") and not file:match("%.so$") and 
+				not file:match("%.dylib$") then
+				table.insert(binaries, {
+					name = file,
+					path = full_path,
+					display = file
+				})
+			end
+		end
+	end
+	
+	return binaries
+end
+
+local function select_rust_binary_for_debug(project, callback)
+	local binaries = find_rust_binaries(project.dir)
+	
+	if #binaries == 0 then
+		vim.notify("No binaries found in " .. project.dir .. "/target/debug", vim.log.levels.WARN)
+		-- Try building first
+		if build_rust_project(project.dir) then
+			binaries = find_rust_binaries(project.dir)
+			if #binaries == 0 then
+				vim.notify("No binaries found after building. Make sure your project has binaries to debug.", vim.log.levels.ERROR)
+				return
+			end
+		else
+			vim.notify("Build failed, cannot debug.", vim.log.levels.ERROR)
+			return
+		end
+	end
+	
+	if #binaries == 1 then
+		callback(binaries[1])
 		return
 	end
 	
-	local executable = find_rust_executable(project.dir, project.name)
-	if not executable then
-		vim.notify("❌ Executable not found for: " .. project.name, vim.log.levels.ERROR)
-		return
+	-- Create floating window to select binary
+	local buf = vim.api.nvim_create_buf(false, true)
+	local width = 60
+	local height = math.min(#binaries + 4, 20)
+	
+	local row = math.floor((vim.o.lines - height) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
+	
+	local lines = { "Select Binary to Debug:", "" }
+	for i, binary in ipairs(binaries) do
+		table.insert(lines, string.format("%d. 🦀 %s", i, binary.display))
+	end
+	table.insert(lines, "")
+	table.insert(lines, "Press number or 'q' to cancel")
+	
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+	vim.api.nvim_buf_set_option(buf, "modifiable", false)
+	
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		style = "minimal",
+		border = "rounded",
+		title = " Rust Binaries ",
+		title_pos = "center",
+	})
+	
+	vim.api.nvim_win_set_option(win, "winhl", "Normal:Normal,FloatBorder:FloatBorder")
+	
+	for i, binary in ipairs(binaries) do
+		vim.api.nvim_buf_set_keymap(buf, "n", tostring(i), "", {
+			callback = function()
+				vim.api.nvim_win_close(win, true)
+				callback(binary)
+			end,
+			noremap = true,
+			silent = true,
+		})
 	end
 	
-	vim.notify("🦀 Starting Rust debug: " .. project.name, vim.log.levels.INFO)
+	local function close_window()
+		vim.api.nvim_win_close(win, true)
+	end
 	
-	local dap = require("dap")
-	dap.run({
-		type = "codelldb",
-		name = "Debug Rust: " .. project.name,
-		request = "launch",
-		program = executable,
-		cwd = project.dir,
-		stopOnEntry = false,
-		args = {},
-		runInTerminal = false,
+	vim.api.nvim_buf_set_keymap(buf, "n", "q", "", {
+		callback = close_window,
+		noremap = true,
+		silent = true,
+	})
+	
+	vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "", {
+		callback = close_window,
+		noremap = true,
+		silent = true,
 	})
 end
 
+function M.start_debug(project)
+	select_rust_binary_for_debug(project, function(binary)
+		vim.notify("🦀 Starting Rust debug: " .. binary.name, vim.log.levels.INFO)
+		
+		local dap = require("dap")
+		dap.run({
+			type = "codelldb",
+			name = "Debug Rust: " .. binary.name,
+			request = "launch",
+			program = binary.path,
+			cwd = project.dir,
+			stopOnEntry = false,
+			args = {},
+			runInTerminal = false,
+		})
+	end)
+end
+
 function M.setup(dap, dapui)
-	-- Setup CodeLLDB adapter for Rust
+	-- Setup CodeLLDB adapter for Rust with both manual and mason installation support
+	local codelldb_path
+	local mason_path = vim.fn.stdpath("data") .. "/mason/bin/codelldb"
+	
+	-- Check if codelldb is installed via Mason
+	if vim.fn.executable(mason_path) == 1 then
+		codelldb_path = mason_path
+	else
+		-- Fallback to system-wide installation
+		codelldb_path = "codelldb"
+	end
+
+	-- Setup only codelldb adapter (since that's what's available)
 	dap.adapters.codelldb = {
 		type = 'server',
 		port = "${port}",
 		executable = {
-			command = 'codelldb',
+			command = codelldb_path,
 			args = {"--port", "${port}"},
 		}
 	}
 
-	-- Rust configurations
+	-- Rust configurations - only using codelldb adapter
 	dap.configurations.rust = {
 		{
-			type = "codelldb",
+			type = "codelldb",  -- Only using codelldb adapter
 			name = "Debug Rust",
 			request = "launch",
 			program = function()

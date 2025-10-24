@@ -45,8 +45,7 @@ return {
 			},
 		})
 
-		-- Load debug configurations
-		require("configurations.debug.dotnet").setup(dap, dapui)
+		-- Load Rust debug configurations
 		require("configurations.debug.rust").setup(dap, dapui)
 		require("configurations.debug.shared").setup(dap, dapui)
 
