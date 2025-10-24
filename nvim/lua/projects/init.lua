@@ -27,10 +27,10 @@ function M.detect_project_type()
       files = { "init.lua", ".luarc.json" }
     },
     c = {
-      files = { "CMakeLists.txt", "Makefile", "*.c", "*.h" }
+      files = { "CMakeLists.txt", "Makefile", "main.c", "*.c", "*.h" }
     },
     cpp = {
-      files = { "CMakeLists.txt", "Makefile", "*.cpp", "*.cxx", "*.cc", "*.c", "*.h", "*.hpp", "*.hxx" }
+      files = { "CMakeLists.txt", "Makefile", "main.cpp", "*.cpp", "*.cxx", "*.cc", "*.hpp", "*.hxx" }
     }
   }
   
@@ -38,10 +38,25 @@ function M.detect_project_type()
   for project_type, patterns in pairs(project_patterns) do
     if patterns.files then
       for _, file_pattern in ipairs(patterns.files) do
-        -- Use glob to check for files
-        local matches = vim.fn.glob(cwd .. "/" .. file_pattern, false, true)
-        if #matches > 0 then
-          return project_type
+        -- Check if it's a specific filename (like Cargo.toml)
+        if file_pattern:match("^[%w_.-]+$") then
+          local filepath = cwd .. "/" .. file_pattern
+          local stat = vim.loop.fs_stat(filepath)
+          if stat then
+            return project_type
+          end
+        else
+          -- Handle glob patterns like *.c, *.cpp, etc.
+          local matches = vim.fn.glob(cwd .. "/" .. file_pattern, false, true)
+          if #matches > 0 then
+            -- For glob patterns, check if any files are directly in the current directory
+            for _, match in ipairs(matches) do
+              local file_dir = vim.fn.fnamemodify(match, ":h")
+              if file_dir == cwd then
+                return project_type
+              end
+            end
+          end
         end
       end
     end

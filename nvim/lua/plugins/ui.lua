@@ -94,6 +94,24 @@ return {
           enabled = true,
         },
         use_libuv_file_watcher = true,
+        filtered_items = {
+          visible = true, -- Show hidden files
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_hidden = false, -- Don't hide files starting with .
+          always_show = { -- These files/folders will always be shown
+            ".git",
+            ".github",
+            ".gitignore",
+            ".env",
+            ".vscode",
+            ".idea",
+          },
+          never_show = { -- These files/folders will never be shown
+            -- ".DS_Store",
+            -- "thumbs.db",
+          },
+        },
       },
       window = {
         width = 50,
