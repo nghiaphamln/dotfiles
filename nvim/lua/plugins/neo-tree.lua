@@ -8,6 +8,12 @@ return {
 			enable_git_status = true,
 			enable_diagnostics = true,
 			filesystem = {
+				filtered_items = {
+					visible = true,
+					hide_dotfiles = false,
+					hide_gitignored = false,
+					hide_hidden = false,
+				},
 				follow_current_file = {
 					enabled = true,
 				},
@@ -20,10 +26,6 @@ return {
 
 		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", {
 			desc = "Toggle Explorer",
-			silent = true,
-		})
-		vim.keymap.set("n", "<leader>ef", ":Neotree focus<CR>", {
-			desc = "Focus Explorer",
 			silent = true,
 		})
 	end,

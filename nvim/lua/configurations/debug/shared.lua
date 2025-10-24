@@ -28,7 +28,7 @@ function M.create_project_selector(projects, callback)
 		col = col,
 		style = "minimal",
 		border = "rounded",
-		title = " Projects ",
+		title = " Projects (.NET & Rust) ",
 		title_pos = "center",
 	})
 
@@ -63,44 +63,49 @@ function M.create_project_selector(projects, callback)
 end
 
 function M.setup(dap, dapui)
-	-- Main F5 debug function with support for multiple project types
+	-- Main F5 debug function
 	local function debug_project()
-		local rust_projects = {}
-		local has_rust = pcall(function()
-			local rust = require("configurations.debug.rust")
-			rust_projects = rust.find_projects() or {}
-			
-			for _, project in ipairs(rust_projects) do
-				project.type = "rust"
-			end
-		end)
-		
-		-- Combine all projects
+		local dotnet = require("configurations.debug.dotnet")
+		local rust = require("configurations.debug.rust")
+
+		local dotnet_projects = dotnet.find_projects() or {}
+		local rust_projects = rust.find_projects() or {}
+
+		for _, project in ipairs(rust_projects) do
+			project.type = "rust"
+		end
+		for _, project in ipairs(dotnet_projects) do
+			project.type = "dotnet"
+		end
+
 		local all_projects = {}
 		vim.list_extend(all_projects, rust_projects)
+		vim.list_extend(all_projects, dotnet_projects)
 
 		if #all_projects == 0 then
-			vim.notify("No projects found!", vim.log.levels.ERROR)
+			vim.notify("No .NET or Rust projects found!", vim.log.levels.ERROR)
 			return
 		end
 
 		if #all_projects == 1 then
 			local project = all_projects[1]
 			if project.type == "rust" then
-				local rust = require("configurations.debug.rust")
 				rust.start_debug(project)
+			else
+				dotnet.start_debug(project)
 			end
 		else
 			M.create_project_selector(all_projects, function(selected_project)
 				if selected_project.type == "rust" then
-					local rust = require("configurations.debug.rust")
 					rust.start_debug(selected_project)
+				else
+					dotnet.start_debug(selected_project)
 				end
 			end)
 		end
 	end
 
-	vim.keymap.set("n", "<F5>", debug_project, { desc = "Debug: Select & Start Project" })
+	vim.keymap.set("n", "<F5>", debug_project, { desc = "Debug: Select & Start Project (.NET/Rust)" })
 end
 
 return M

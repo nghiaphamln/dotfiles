@@ -45,11 +45,9 @@ return {
 			},
 		})
 
-		-- Load Rust debug configurations
-		require("configurations.debug.rust").setup(dap, dapui)
+		require("configurations.debug.dotnet").setup(dap, dapui)
 		require("configurations.debug.shared").setup(dap, dapui)
 
-		-- Auto-open/close DAP UI
 		dap.listeners.after.event_initialized["dapui_config"] = function()
 			dapui.open()
 		end
@@ -60,15 +58,12 @@ return {
 			dapui.close()
 		end
 
-		-- Visual Studio-style debug keymaps
-		vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
-		vim.keymap.set("n", "<F9>", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+		-- Base keymaps
+		vim.keymap.set("n", "<leader><F5>", dap.continue, { desc = "Debug: Continue" })
 		vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debug: Step Over" })
 		vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Debug: Step Into" })
-		vim.keymap.set("n", "<S-F11>", dap.step_out, { desc = "Debug: Step Out" })
-		vim.keymap.set("n", "<C-S-F5>", dap.restart, { desc = "Debug: Restart" })
-		vim.keymap.set("n", "<A-F5>", dap.run_to_cursor, { desc = "Debug: Run to Cursor" })
-		vim.keymap.set("n", "<F6>", dap.pause, { desc = "Debug: Pause" })
+		vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debug: Step Out" })
+		vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
 		vim.keymap.set("n", "<leader>B", function()
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 		end, { desc = "Debug: Set Conditional Breakpoint" })

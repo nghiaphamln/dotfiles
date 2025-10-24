@@ -1,8 +1,12 @@
 return {
-	"catppuccin/nvim",
+	"scottmckendry/cyberdream.nvim",
+    lazy = false,
 	priority = 1000,
 	config = function()
-		vim.o.background = "dark"
-		vim.cmd([[colorscheme catppuccin-frappe]])
+        require("cyberdream").setup({
+            variant = "auto",
+            transparent = true,
+        })
+		vim.cmd([[colorscheme cyberdream]])
 	end,
 }

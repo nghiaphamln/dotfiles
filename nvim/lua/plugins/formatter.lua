@@ -29,10 +29,12 @@ return {
 				cs = {
 					require("formatter.filetypes.cs").csharpier,
 				},
+				rust = {
+                    require("formatter.filetypes.rust").rustfmt,
+				},
 			},
 		})
 
-		-- Keymaps
 		vim.keymap.set("n", "<leader>fc", function()
 			vim.cmd("Format")
 		end, {

@@ -2,13 +2,8 @@ return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
 	config = function()
-		local shell
-		if vim.fn.has("win32") == 1 then
-			shell = "pwsh -NoExit"
-		else
-			shell = vim.o.shell
-		end
-	
+		local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+		local shell = is_windows and "pwsh -NoExit" or vim.o.shell
 		require("toggleterm").setup({
 			size = 20,
 			open_mapping = [[<c-\>]],

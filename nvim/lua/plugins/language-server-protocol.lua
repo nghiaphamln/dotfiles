@@ -2,7 +2,46 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = { "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp", "seblyng/roslyn.nvim" },
 	config = function()
-		-- Diagnostic configuration
+		local lspconfig = require("lspconfig")
+
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
+		local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+		if cmp_nvim_lsp_ok then
+			capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+		end
+
+		local servers = {
+			lua_ls = {
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							library = vim.api.nvim_get_runtime_file("", true),
+						},
+					},
+				},
+			},
+			clangd = {
+				cmd = {
+					"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\Llvm\\x64\\bin\\clangd.exe",
+				},
+			},
+			rust_analyzer = {
+				settings = {
+					["rust-analyzer"] = {
+						cargo = {
+							loadOutDirsFromCheck = true,
+						},
+						procMacro = {
+							enable = true,
+						},
+					},
+				},
+			},
+		}
+
 		vim.diagnostic.config({
 			virtual_text = {
 				prefix = "●",
@@ -21,6 +60,11 @@ return {
 			update_in_insert = false,
 			severity_sort = true,
 		})
+
+		for server_name, server_config in pairs(servers) do
+			server_config.capabilities = capabilities
+			lspconfig[server_name].setup(server_config)
+		end
 
 		-- Keymaps
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, {

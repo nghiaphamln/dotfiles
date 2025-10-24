@@ -10,7 +10,7 @@ return {
 				layout_strategy = "horizontal",
 				layout_config = {
 					horizontal = {
-						preview_width = 0.55,
+						preview_width = 0.65,
 					},
 				},
 			},
@@ -25,10 +25,10 @@ return {
 			desc = "Find files",
 			silent = true,
 		})
-		vim.keymap.set("n", "<leader>fw", ":Telescope grep_string<CR>", {
-			desc = "Grep current word",
-			silent = true,
-		})
+        vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<CR>", {
+            desc = "Live grep current word",
+            silent = true
+        })
 		vim.keymap.set("n", "<leader><leader>", ":Telescope oldfiles<CR>", {
 			desc = "Recent files",
 			silent = true,
