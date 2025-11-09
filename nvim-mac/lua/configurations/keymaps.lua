@@ -52,6 +52,8 @@ function M.setup()
 		desc = "Split horizontal",
 	})
 
+	-- (leader+1..9 mappings removed per user request)
+
 	-- Thoát
 	map("n", "<leader>q", ":q<CR>")
 	map("n", "<leader>Q", ":qa!<CR>")
