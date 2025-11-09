@@ -1,7 +1,7 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	opts = {
-		options = {
+			options = {
 			icons_enabled = true,
 			theme = "auto",
 			component_separators = {
@@ -17,8 +17,9 @@ return {
 				winbar = {},
 			},
 			ignore_focus = {},
-			always_last_session = true,
-			globalstatus = false,
+				always_last_session = true,
+				-- use a single global statusline (saves vertical space and looks cleaner)
+				globalstatus = true,
 			refresh = {
 				statusline = 1000,
 				tabline = 1000,
@@ -28,15 +29,16 @@ return {
 		sections = {
 			lualine_a = {
 				"mode",
+				-- Show only the primary LSP client to avoid long lists
 				{
 					function()
 						local clients = vim.lsp.get_clients({ bufnr = 0 })
 						if next(clients) then
-							local client_names = {}
-							for _, client in pairs(clients) do
-								table.insert(client_names, client.name)
+							-- prefer a short identifier (first client)
+							local first = clients[1]
+							if first and first.name then
+								return "[" .. first.name .. "]"
 							end
-							return "[" .. table.concat(client_names, ",") .. "]"
 						end
 						return ""
 					end,
@@ -46,19 +48,40 @@ return {
 				},
 			},
 			lualine_b = { "branch", "diff", "diagnostics" },
+			-- Keep the center compact: truncated filename only
 			lualine_c = {
 				{
-					"filename",
-					path = 1,
+					-- custom truncating filename to avoid long path consuming the bar
+					function()
+						local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:')
+						if name == '' then
+							return '[No Name]'
+						end
+						local maxlen = 40
+						if #name > maxlen then
+							return '...' .. name:sub(- (maxlen - 3))
+						end
+						return name
+					end,
+					padding = { left = 1, right = 1 },
 				},
-				function()
-					return require("lsp-progress").progress()
-				end,
 			},
 			lualine_x = {
 				"encoding",
 				"fileformat",
 				"filetype",
+				{
+					function()
+						local ok, p = pcall(require, "lsp-progress")
+						if not ok or not p then
+							return ""
+						end
+						return p.progress() or ""
+					end,
+					cond = function()
+						return vim.o.columns > 100 and next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil
+					end,
+				},
 			},
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
@@ -75,7 +98,24 @@ return {
 			lualine_z = {},
 		},
 		tabline = {},
-		winbar = {},
+		winbar = {
+			lualine_a = {
+				{
+					function()
+						local ok, p = pcall(require, "lsp-progress")
+						if not ok or not p then
+							return ""
+						end
+						local out = p.progress()
+						return out or ""
+					end,
+					cond = function()
+						-- show only when wide enough and an LSP client exists
+						return vim.o.columns > 100 and next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil
+					end,
+				},
+			},
+		},
 		extensions = {},
 	},
 }

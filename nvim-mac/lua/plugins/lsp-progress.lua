@@ -15,8 +15,17 @@ return {
 					table.insert(builder, message)
 					has_message = true
 				end
-				if percentage and (has_title or has_message) then
-					table.insert(builder, string.format("(%.0f%%)", percentage))
+				-- Always show percentage when provided. Some language servers only send percentage
+				-- without a title/message (e.g. pure "indexing" progress). Show it even if
+				-- title/message are empty so the user sees indexing percent.
+				if percentage then
+					-- if we have a title/message, keep the parentheses style; otherwise show raw
+					-- percent so it's more compact.
+					if has_title or has_message then
+						table.insert(builder, string.format("(%.0f%%)", percentage))
+					else
+						table.insert(builder, string.format("%.0f%%", percentage))
+					end
 				end
 				return { msg = table.concat(builder, " "), done = done }
 			end,
