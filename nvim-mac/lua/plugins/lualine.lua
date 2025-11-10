@@ -70,18 +70,7 @@ return {
 				"encoding",
 				"fileformat",
 				"filetype",
-				{
-					function()
-						local ok, p = pcall(require, "lsp-progress")
-						if not ok or not p then
-							return ""
-						end
-						return p.progress() or ""
-					end,
-					cond = function()
-						return vim.o.columns > 100 and next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil
-					end,
-				},
+				-- lsp progress moved to fidget.nvim (floating widget). Keep statusline compact.
 			},
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
@@ -98,24 +87,7 @@ return {
 			lualine_z = {},
 		},
 		tabline = {},
-		winbar = {
-			lualine_a = {
-				{
-					function()
-						local ok, p = pcall(require, "lsp-progress")
-						if not ok or not p then
-							return ""
-						end
-						local out = p.progress()
-						return out or ""
-					end,
-					cond = function()
-						-- show only when wide enough and an LSP client exists
-						return vim.o.columns > 100 and next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil
-					end,
-				},
-			},
-		},
-		extensions = {},
+ 		winbar = {},
+ 		extensions = {},
 	},
 }
