@@ -6,7 +6,6 @@ return {
 			text = {
 				spinner = "dots",
 			},
-			-- minimal config: no transparency or highlight overrides
 			timer = {
 				spinner_rate = 125,
 				fidget_decay = 2000,
