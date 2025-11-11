@@ -18,6 +18,14 @@ function M.setup()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 
+    map("n", "x", '"_x')
+    map("n", "<leader>d", '"_dd')
+    map("n", "<leader>p", '"0p')
+
+    -- Tăng/Giảm số
+    map("n", "+", "<C-a>")
+    map("n", "-", "<C-x>")
+
 	-- Di chuyển giữa các cửa sổ
 	map("n", "<C-h>", "<C-w>h")
 	map("n", "<C-j>", "<C-w>j")
