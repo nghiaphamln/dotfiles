@@ -114,6 +114,21 @@ return {
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
           vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
           vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+          -- Register with which-key
+          local wk = require("which-key")
+          wk.add({
+            { "g", group = "LSP" },
+            { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+            { "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+            { "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
+            { "gr", vim.lsp.buf.references, desc = "Go to references" },
+            { "K", vim.lsp.buf.hover, desc = "Hover" },
+            { "<leader>rn", vim.lsp.buf.rename, desc = "Rename" },
+            { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
+            { "[d", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
+            { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic" },
+          }, { buffer = ev.buf })
         end,
       })
     end,

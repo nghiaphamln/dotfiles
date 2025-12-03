@@ -43,21 +43,20 @@ return {
           hide_dotfiles = true,
           hide_gitignored = true,
         },
-        window = {
-          mappings = {
-            ["l"] = "open",
-            ["h"] = "close_node",
-            ["a"] = { "add", config = { show_path = "none" } },
-            ["d"] = "delete",
-            ["r"] = "rename",
-            ["c"] = "copy",
-            ["x"] = "cut",
-            ["p"] = "paste",
-            ["y"] = "copy_to_clipboard",
-          },
-        },
       },
     },
+    config = function(_, opts)
+      require("neo-tree").setup(opts)
+      -- Auto-open neo-tree on startup
+      vim.api.nvim_create_autocmd("VimEnter", {
+        group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", {}),
+        callback = function()
+          if vim.fn.argc() == 0 then
+            require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+          end
+        end,
+      })
+    end,
   },
 
   -- Statusline
