@@ -29,7 +29,10 @@ map("n", "<Esc>", "<Cmd>nohl<CR>", opts)
 -- Diagnostics (LSP)
 map("n", "[d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 map("n", "]d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-map("n", "<leader>e", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+map("n", "<leader>d", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+
+-- File Explorer
+map("n", "<leader>e", "<Cmd>Neotree toggle<CR>", opts)
 
 -- Format
 map("n", "<leader>fm", "<Cmd>lua require('conform').format({ async = true })<CR>", opts)

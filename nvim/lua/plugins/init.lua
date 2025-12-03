@@ -82,34 +82,27 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = "Neotree",
-    keys = {
-      {
-        "<leader>e",
-        function()
-          require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-        end,
-        desc = "Toggle File Explorer",
-      },
-      {
-        "<leader>E",
-        function()
-          require("neo-tree.command").execute({ toggle = true, reveal = true })
-        end,
-        desc = "Toggle File Explorer (Reveal)",
-      },
-    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
     opts = {
+      close_if_last_window = true,
+      enable_git_status = true,
+      enable_diagnostics = true,
       filesystem = {
         filtered_items = {
           visible = false,
           hide_dotfiles = true,
           hide_gitignored = true,
         },
+        follow_current_file = {
+          enabled = true,
+        },
+      },
+      window = {
+        width = 50,
       },
     },
     config = function(_, opts)
@@ -118,9 +111,7 @@ return {
       vim.api.nvim_create_autocmd("VimEnter", {
         group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", {}),
         callback = function()
-          if vim.fn.argc() == 0 then
-            require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-          end
+          vim.cmd("Neotree show")
         end,
       })
     end,
