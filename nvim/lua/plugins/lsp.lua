@@ -104,12 +104,17 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
-          local opts = { buffer = ev.buf, silent = true }
+          local opts = { buffer = ev.buf, silent = true, noremap = true }
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          -- Custom keymaps per user preference
+          vim.keymap.set("n", "gi", function()
+            require("telescope.builtin").lsp_implementations()
+          end, opts)
+          vim.keymap.set("n", "gu", function()
+            require("telescope.builtin").lsp_references()
+          end, opts)
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
           vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -122,7 +127,7 @@ return {
             { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
             { "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
             { "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
-            { "gr", vim.lsp.buf.references, desc = "Go to references" },
+            { "gu", vim.lsp.buf.references, desc = "Go to usage/references" },
             { "K", vim.lsp.buf.hover, desc = "Hover" },
             { "<leader>rn", vim.lsp.buf.rename, desc = "Rename" },
             { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
@@ -141,19 +146,19 @@ return {
     build = "cargo build --release",
     dependencies = "rafamadriz/friendly-snippets",
     opts = {
-      keymap = {
+      snippets = {
         preset = "default",
-        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide" },
-        ["<C-y>"] = { "select_and_accept" },
       },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-      },
-      cmdline = {
-        sources = { "buffer", "cmdline" },
+      appearance = {
+        use_nvim_cmp_as_default = false,
+        nerd_font_variant = "mono",
       },
       completion = {
+        accept = {
+          auto_brackets = {
+            enabled = true,
+          },
+        },
         menu = {
           draw = {
             treesitter = { "lsp" },
@@ -163,6 +168,42 @@ return {
           auto_show = true,
           auto_show_delay_ms = 200,
         },
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+      },
+      cmdline = {
+        enabled = true,
+        keymap = {
+          preset = "cmdline",
+          ["<Right>"] = false,
+          ["<Left>"] = false,
+        },
+        completion = {
+          list = { selection = { preselect = false } },
+          menu = {
+            auto_show = function(ctx)
+              return vim.fn.getcmdtype() == ":"
+            end,
+          },
+          ghost_text = { enabled = true },
+        },
+      },
+      keymap = {
+        preset = "enter",
+        ["<C-y>"] = { "select_and_accept" },
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_next()
+            end
+          end,
+          "snippet_forward",
+          "fallback",
+        },
+        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
       },
     },
   },

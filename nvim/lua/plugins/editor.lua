@@ -36,13 +36,6 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
 
-  -- Auto pairs: Auto-close brackets
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {},
-  },
-
   -- Comment.nvim: Toggle comments
   {
     "numToStr/Comment.nvim",
