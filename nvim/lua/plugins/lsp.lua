@@ -119,6 +119,21 @@ return {
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
           vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
           vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+          -- Document highlight navigation
+          vim.keymap.set("n", "]]", function()
+            vim.lsp.buf.document_highlight()
+            vim.cmd("silent! normal! n")
+          end, opts)
+          vim.keymap.set("n", "[[", function()
+            vim.lsp.buf.document_highlight()
+            vim.cmd("silent! normal! N")
+          end, opts)
+
+          -- Inlay hints
+          if vim.lsp.buf.inlay_hint then
+            vim.lsp.buf.inlay_hint(ev.buf, true)
+          end
         end,
       })
 
@@ -135,6 +150,8 @@ return {
         { "<leader>ca", desc = "Code action" },
         { "[d", desc = "Previous diagnostic" },
         { "]d", desc = "Next diagnostic" },
+        { "]]", desc = "Next reference" },
+        { "[[", desc = "Prev reference" },
       })
     end,
   },
