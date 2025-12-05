@@ -1,0 +1,19 @@
+# Neovim
+.nvimrc
+nvim/undo/
+nvim/lazy-lock.json
+nvim/lazy/
+nvim/backup/
+nvim/swap/
+nvim/view/
+
+# Vim (in case you use it too)
+.viminfo
+vim/undo/
+vim/view/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
