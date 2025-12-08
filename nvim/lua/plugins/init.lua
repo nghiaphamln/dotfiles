@@ -93,13 +93,15 @@ return {
       enable_diagnostics = true,
       filesystem = {
         filtered_items = {
-          visible = false,
-          hide_dotfiles = true,
-          hide_gitignored = true,
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_hidden = false,
         },
         follow_current_file = {
           enabled = true,
         },
+        use_libuv_file_watcher = true,
       },
       window = {
         width = 50,
