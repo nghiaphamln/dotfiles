@@ -81,7 +81,8 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    cmd = "Neotree",
+    lazy = false,
+    priority = 100,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
@@ -99,7 +100,7 @@ return {
           hide_hidden = false,
         },
         follow_current_file = {
-          enabled = true,
+          enabled = false,
         },
         use_libuv_file_watcher = true,
       },
