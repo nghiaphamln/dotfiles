@@ -105,7 +105,7 @@ return {
 			vim.lsp.config["yamlls"] = {
 				cmd = { "yaml-language-server", "--stdio" },
 				filetypes = { "yaml", "yml" },
-				root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]),
+				root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]) or vim.fn.getcwd(),
 				capabilities = capabilities,
 				settings = {
 					yaml = {
@@ -167,6 +167,17 @@ return {
 					if vim.lsp.buf.inlay_hint then
 						vim.lsp.buf.inlay_hint(ev.buf, true)
 					end
+
+					-- Update diagnostics when cursor moves
+					vim.api.nvim_create_autocmd("CursorHold", {
+						buffer = ev.buf,
+						callback = function()
+							vim.diagnostic.open_float(nil, { focus = false })
+						end,
+					})
+
+					-- Also add keymap to open diagnostics in trouble.nvim
+					vim.keymap.set("n", "<leader>td", "<cmd>Trouble diagnostics toggle<cr>", opts)
 				end,
 			})
 
@@ -185,6 +196,8 @@ return {
 				{ "]d", desc = "Next diagnostic" },
 				{ "]]", desc = "Next reference" },
 				{ "[[", desc = "Prev reference" },
+				{ "<leader>t", group = "toggle" },
+				{ "<leader>td", desc = "Toggle diagnostics (Trouble)" },
 			})
 		end,
 	},
