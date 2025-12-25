@@ -20,6 +20,9 @@ return {
 				python = { "black", "isort" },
 				rust = { "rustfmt" },
 				go = { "gofmt" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
+				cmake = { "cmake-format" },
 				javascript = { "prettier" },
 				json = { "prettier" },
 				markdown = { "prettier" },
@@ -39,6 +42,8 @@ return {
 				rust = { "clippy" },
 				lua = { "selene" },
 				go = { "golangci-lint" },
+				c = { "cppcheck" },
+				cpp = { "cppcheck" },
 			}
 
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {

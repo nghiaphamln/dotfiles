@@ -13,6 +13,23 @@ return {
 				"gopls",
 				"pyright",
 				"yaml-language-server",
+				"clangd",
+				"cmake-language-server",
+			},
+		},
+	},
+
+	-- Mason Tool Installer: Automatically install formatters and linters
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "mason.nvim" },
+		opts = {
+			ensure_installed = {
+				"clang-format",
+				"clangd",
+				"cppcheck",
+				"cmake-language-server",
+				"cmake-format",
 			},
 		},
 	},
@@ -131,6 +148,24 @@ return {
 						validate = true,
 					},
 				},
+			}
+
+			-- Clangd Language Server for C/C++
+			vim.lsp.config["clangd"] = {
+				cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu", "--completion-style=detailed", "--function-arg-placeholders=true" },
+				filetypes = { "c", "cpp", "objc", "objcpp" },
+				root_dir = vim.fs.find({ "compile_commands.json", "compile_flags.txt", ".git" }, { upward = true })[1] or vim.fn.getcwd(),
+				capabilities = capabilities,
+				settings = {},
+			}
+
+			-- CMake Language Server
+			vim.lsp.config["cmake"] = {
+				cmd = { "cmake-language-server" },
+				filetypes = { "cmake" },
+				root_dir = vim.fs.find({ "CMakeLists.txt", ".git" }, { upward = true })[1] or vim.fn.getcwd(),
+				capabilities = capabilities,
+				settings = {},
 			}
 
 			-- LSP Keymaps

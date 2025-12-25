@@ -10,6 +10,9 @@ function M.setup()
   -- Initialize lazy.nvim plugin manager
   require("config.lazy")
 
+  -- Load utilities
+  require("config.utils")
+
   -- Load keymaps and autocmds after plugins load
   vim.api.nvim_create_autocmd("User", {
     pattern = "VeryLazy",

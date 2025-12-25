@@ -18,6 +18,9 @@ return {
         "go",
         "json",
         "yaml",
+        "c",
+        "cpp",
+        "cmake",
       },
       highlight = {
         enable = true,
