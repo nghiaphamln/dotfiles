@@ -100,7 +100,7 @@ return {
           hide_hidden = false,
         },
         follow_current_file = {
-          enabled = false,
+          enabled = true,
         },
         use_libuv_file_watcher = true,
       },
