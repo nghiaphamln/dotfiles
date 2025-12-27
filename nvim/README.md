@@ -8,7 +8,7 @@ A modern, feature-rich Neovim configuration with AI integration, LSP support, an
 
 - **GitHub Copilot Integration** - AI-powered code completion with custom keybindings
 - **Auto-save** - Automatically saves files when leaving insert mode or on text changes
-- **LSP (Language Server Protocol)** - Full language support for Lua, Rust, Go, and Python
+- **LSP (Language Server Protocol)** - Full language support for Lua, Rust, Go, Python, C/C++, and YAML
 - **Smart Code Completion** - Powered by Blink.cmp with LSP, snippets, and buffer completion
 - **Syntax Highlighting** - Advanced highlighting via Treesitter
 - **File Navigation** - Neo-tree file explorer for project navigation
@@ -44,16 +44,23 @@ Before installing this Neovim configuration, ensure you have:
    - `rust-analyzer`
    - `gopls`
    - `pyright`
+   - `yaml-language-server`
+   - `clangd`
+   - `cmake-language-server`
 
 3. **Additional Tools** (for formatting and linting):
    - `stylua` (Lua formatter)
    - `rustfmt` (Rust formatter)
    - `gofmt` (Go formatter)
    - `black` and `isort` (Python formatters)
+   - `clang-format` (C/C++ formatter)
+   - `cmake-format` (CMake formatter)
    - `prettier` (General formatter)
    - `pylint` (Python linter)
    - `clippy` (Rust linter)
+   - `selene` (Lua linter)
    - `golangci-lint` (Go linter)
+   - `cppcheck` (C/C++ linter)
 
 ### Setup
 
@@ -102,13 +109,21 @@ Before installing this Neovim configuration, ensure you have:
 
 - `<S-h>` - Previous buffer
 - `<S-l>` - Next buffer
-- `<leader>e` - Toggle file explorer
+- `[b` - Previous buffer
+- `]b` - Next buffer
+- `<leader>bp` - Toggle pin buffer
+- `<leader>bP` - Close unpinned buffers
+- `<leader>br` - Close buffers to the right
+- `<leader>bl` - Close buffers to the left
+- `<leader>bo` - Close other buffers (keep only current)
+- `<leader>bc` - Close current buffer
 
 #### File Operations
 
 - `<C-s>` - Save file
 - `<Esc>` - Clear search highlights
 - `<leader>fm` - Format current file
+- `<leader>e` - Toggle file explorer
 
 #### Navigation
 
@@ -136,6 +151,7 @@ Before installing this Neovim configuration, ensure you have:
 
 - `]]` - Next reference
 - `[[` - Previous reference
+- `<leader>td` - Toggle diagnostics (Trouble)
 
 ### GitHub Copilot Keybindings
 
@@ -144,11 +160,54 @@ Before installing this Neovim configuration, ensure you have:
 - `<C-p>` - Previous Copilot suggestion
 - `<C-]>` - Dismiss current suggestion
 
+### Copilot Chat Keybindings
+
+- `<leader>cc` - Toggle Copilot Chat
+- `<leader>cx` - Clear Chat
+- `<leader>cq` - Quick Chat
+- `<leader>cp` - Prompt Actions
+- `<leader>cb` - Add Buffer to Chat
+- `<leader>ce` - Explain Code
+- `<leader>cr` - Review Code
+- `<leader>cf` - Fix Bug
+- `<leader>co` - Optimize Code
+
 ### Diagnostic Management
 
 - `<leader>xx` - Toggle Trouble diagnostics
 - `<leader>xq` - Toggle QuickFix
 - `<leader>xl` - Toggle Location List
+
+### File and Search Operations
+
+- `<leader>ff` - Find files
+- `<leader>fw` - Find word in files
+- `<leader><leader>` - Recent files
+- `<leader>fb` - Buffers
+- `<leader>fh` - Help tags
+
+### Git Operations
+
+- `<leader>gg` - Open LazyGit
+
+### Terminal Operations
+
+- `<C-\>` - Toggle terminal
+- `<C-h/j/k/l>` in terminal - Navigate between windows
+
+### Comment Operations
+
+- `gcc` - Toggle line comment
+- `gbc` - Toggle block comment
+
+### Formatting Operations
+
+- `<leader>fc` - Format buffer
+
+### Utility Operations
+
+- `<leader>.` - Toggle scratch buffer
+- `<leader>S` - Select scratch buffer
 
 ## Plugin Configuration
 
@@ -187,6 +246,7 @@ Before installing this Neovim configuration, ensure you have:
 #### AI Integration
 
 - **copilot.lua** - GitHub Copilot integration
+- **CopilotChat.nvim** - Chat with Copilot in Neovim
 - **auto-save.nvim** - Automatic file saving
 
 ## Customization
@@ -237,4 +297,3 @@ If Neovim feels slow:
 ## License
 
 This configuration is open source and available under the MIT License.
-

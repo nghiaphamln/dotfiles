@@ -24,6 +24,7 @@ return {
       { "<leader>bP", "<cmd>BufferLineGroupClose ungrouped<cr>", desc = "Delete Non-Pinned" },
       { "<leader>br", "<cmd>BufferLineCloseRight<cr>", desc = "Delete Right" },
       { "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", desc = "Delete Left" },
+      { "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Delete Other" },
     },
     opts = {
       options = {
