@@ -46,13 +46,13 @@ map("n", "<C-\\>", "<Cmd>ToggleTerm<CR>", opts)
 
 -- Close current buffer safely (don't quit Neovim if it's the last buffer)
 map("n", "<leader>bc", function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  -- try to switch to previous buffer; if none, create a new empty buffer
-  if vim.fn.bufnr('#') ~= -1 and vim.api.nvim_buf_is_valid(vim.fn.bufnr('#')) then
-    vim.cmd('buffer #')
-  else
-    vim.cmd('enew')
-  end
-  -- delete the original buffer (will prompt if modified)
-  pcall(vim.cmd, 'bdelete ' .. bufnr)
+	local bufnr = vim.api.nvim_get_current_buf()
+	-- try to switch to previous buffer; if none, create a new empty buffer
+	if vim.fn.bufnr("#") ~= -1 and vim.api.nvim_buf_is_valid(vim.fn.bufnr("#")) then
+		vim.cmd("buffer #")
+	else
+		vim.cmd("enew")
+	end
+	-- delete the original buffer (will prompt if modified)
+	pcall(vim.cmd, "bdelete " .. bufnr)
 end, { desc = "Close buffer" })

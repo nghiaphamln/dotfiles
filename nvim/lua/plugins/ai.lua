@@ -196,6 +196,12 @@ return {
 		optional = true,
 		dependencies = { "fang2hou/blink-copilot" },
 		opts = {
+			fuzzy = {
+				implementation = "prefer_rust", -- Use Rust implementation with fallback to Lua
+				prebuilt_binaries = {
+					force_version = "latest", -- Force using latest prebuilt binaries
+				},
+			},
 			sources = {
 				default = { "copilot" },
 				providers = {

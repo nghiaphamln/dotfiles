@@ -82,6 +82,18 @@ return {
 						diagnostics = {
 							enable = true,
 						},
+						cargo = {
+							allFeatures = true,
+							buildScripts = {
+								enable = true,
+							},
+						},
+						procMacro = {
+							enable = true,
+						},
+						inlayHints = {
+							enable = true,
+						},
 					},
 				},
 			}
@@ -152,9 +164,17 @@ return {
 
 			-- Clangd Language Server for C/C++
 			vim.lsp.config["clangd"] = {
-				cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu", "--completion-style=detailed", "--function-arg-placeholders=true" },
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"--header-insertion=iwyu",
+					"--completion-style=detailed",
+					"--function-arg-placeholders=true",
+				},
 				filetypes = { "c", "cpp", "objc", "objcpp" },
-				root_dir = vim.fs.find({ "compile_commands.json", "compile_flags.txt", ".git" }, { upward = true })[1] or vim.fn.getcwd(),
+				root_dir = vim.fs.find({ "compile_commands.json", "compile_flags.txt", ".git" }, { upward = true })[1]
+					or vim.fn.getcwd(),
 				capabilities = capabilities,
 				settings = {},
 			}
@@ -244,6 +264,12 @@ return {
 		build = "cargo build --release",
 		dependencies = "rafamadriz/friendly-snippets",
 		opts = {
+			fuzzy = {
+				implementation = "prefer_rust", -- Use Rust implementation with fallback to Lua
+				prebuilt_binaries = {
+					force_version = "latest", -- Force using latest prebuilt binaries
+				},
+			},
 			snippets = {
 				preset = "default",
 			},
