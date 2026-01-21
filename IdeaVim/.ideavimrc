@@ -1,0 +1,66 @@
+" Basic
+let mapleader = " "
+set clipboard+=unnamed
+set clipboard+=unnamedplus
+set scrolloff=15
+set relativenumber
+set ignorecase=true
+set smartcase=true
+set hlsearch=false
+set nohlsearch
+
+" Plugin
+set nerdtree
+set highlightedyank
+
+
+" AceJump
+nmap ; <Action>(AceAction)
+
+
+" Go to code
+nmap gd <Action>(GotoDeclaration)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap gi <Action>(GotoImplementation)
+nmap gu <Action>(ShowUsages)
+nmap <C>o <Action>(Back)
+nmap <C>i <Action>(Forward)
+
+
+" Code editing
+nmap scd <Action>(ReSharperSelectContainingDeclaration)
+nmap <leader>oi <Action>(OptimizeImports)
+
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+
+" Error
+map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
+map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
+nnoremap <Leader>se :action ShowErrorDescription<CR>
+
+
+" Comment lines
+map <leader>c <action>(CommentByLineComment)
+
+
+" Open NERDTree (use q to exit)
+map <leader>x :NERDTreeToggle<CR>
+
+
+" Close active tab
+map <leader>q <action>(CloseContent)
+
+map <leader>rn <action>(RenameElement)
+
+" File navigation
+map <leader><leader> <Action>(RecentFiles)
+map <leader>ff <action>(GotoFile)
+map <leader>fw <action>(FindInPath)
+
+" Sweep AI Tab completion mapping
+map <Tab> :action dev.sweep.assistant.autocomplete.edit.AcceptEditCompletionAction<CR>
+

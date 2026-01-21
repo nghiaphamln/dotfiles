@@ -24,4 +24,4 @@ require("lazy").setup("plugins", {
 })
 
 -- Set colorscheme
-pcall(vim.cmd.colorscheme, "onedark")
+pcall(vim.cmd.colorscheme, "tokyonight")
