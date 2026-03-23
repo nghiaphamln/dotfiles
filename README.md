@@ -1,32 +1,69 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Kitty terminal, and PowerShell.
-
-## Overview
-
-This repository contains my personal dotfiles that transform Neovim into a powerful IDE-like development environment. It features modern tooling for efficient coding across multiple languages with intelligent code completion, debugging, and visual enhancements.
-
-## Features
-
-- **Neovim IDE**: Full-featured development environment with AI-powered completions
-- **Multi-language support**: Rust, C/C++, C#, Lua, and more with LSP integration
-- **Visual debugging**: Visual Studio-like debugging interface
-- **Modern UI**: Beautiful themes and smooth animations
-- **Fast performance**: Optimized loading and responsiveness
-- **Terminal integration**: Customized Kitty terminal configuration
-- **PowerShell profile**: Enhanced PowerShell experience with Oh My Posh
+Personal development environment configuration for Neovim, Zed IDE, Kitty terminal, IdeaVim, and PowerShell.
 
 ## Structure
 
-- `nvim/` - Neovim configuration with Lua-based plugins
-- `kitty/` - Terminal emulator settings and themes
-- `PowerShell/` - PowerShell profile and theme configurations
+```
+dotfiles/
+├── nvim/         → ~/.config/nvim
+├── zed/          → ~/.config/zed
+├── kitty/        → ~/.config/kitty
+├── IdeaVim/      → ~/.ideavimrc
+└── PowerShell/   → PowerShell profile
+```
 
 ## Installation
 
-1. Clone this repository to your system
-2. For Neovim: `git clone https://github.com/nghiaphamln/dotfiles.git ~/.config/nvim`
-3. Launch Neovim and run `:Lazy` to install plugins
-4. Install language servers with `:Mason`
+Clone the repo and create symlinks:
 
-For detailed setup instructions, refer to the specific configuration files.
+```bash
+git clone https://github.com/nghiaphamln/dotfiles.git ~/dotfiles
+
+ln -s ~/dotfiles/nvim ~/.config/nvim
+ln -s ~/dotfiles/zed ~/.config/zed
+ln -s ~/dotfiles/kitty ~/.config/kitty
+ln -s ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
+```
+
+### Neovim
+
+Requires [Neovim](https://neovim.io/) 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
+
+Install language servers:
+
+```
+:Mason
+```
+
+### Zed
+
+Requires [Zed](https://zed.dev/). Settings and keymaps are loaded automatically via the symlink.
+
+After symlinking, recreate the runtime prompts directory (not tracked in git):
+
+```bash
+mkdir -p ~/.config/zed/prompts
+```
+
+## Tools
+
+| Tool | Config | Purpose |
+|---|---|---|
+| [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
+| [Zed](https://zed.dev/) | `zed/` | Secondary editor |
+| [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
+| [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
+| PowerShell | `PowerShell/` | Shell profile |
+
+## Neovim Plugins
+
+- **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML)
+- **Completion**: `blink.cmp`
+- **Syntax**: `nvim-treesitter`
+- **File explorer**: `neo-tree.nvim`
+- **Fuzzy finder**: `telescope.nvim`
+- **Formatter**: `conform.nvim`
+- **Theme**: `tokyonight.nvim`
+- **Statusline**: `lualine.nvim`
+- **AI**: `avante.nvim`
