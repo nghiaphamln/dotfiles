@@ -1,0 +1,68 @@
+// Zed Keymaps
+// Ported from Neovim config — space as leader key
+[
+  // --- Normal mode: leader (space) bindings ---
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      // Save
+      "ctrl-s": "workspace::Save",
+
+      // File explorer (neo-tree equivalent)
+      "space e": "project_panel::ToggleFocus",
+
+      // Find files / search (telescope equivalent)
+      "space f": "file_finder::Toggle",
+      "space /": "pane::DeploySearch",
+      "space s": "outline::Toggle",
+      "space shift-s": "project_symbols::Toggle",
+
+      // Format (conform.nvim equivalent)
+      "space f m": "editor::Format",
+
+      // Splits
+      "space |": "pane::SplitRight",
+      "space -": "pane::SplitDown",
+
+      // Buffer navigation (bufferline equivalent)
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+
+      // Close buffer
+      "space b c": "pane::CloseActiveItem",
+
+      // Diagnostics
+      "space d": "editor::GoToDiagnostic",
+
+      // LSP
+      "space r": "editor::Rename",
+      "space a": "editor::ToggleCodeActions",
+      "space k": "editor::Hover",
+
+      // Diagnostics panel (trouble.nvim equivalent)
+      "space t d": "diagnostics::Deploy",
+
+      // Comments (Comment.nvim equivalent — gcc)
+      "g c c": "editor::ToggleComments"
+    }
+  },
+
+  // --- Normal + Visual mode: pane navigation (ctrl-w) ---
+  {
+    "context": "Dock || Editor",
+    "bindings": {
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown"
+    }
+  },
+
+  // --- Terminal toggle ---
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-\\": "terminal_panel::ToggleFocus"
+    }
+  }
+]
