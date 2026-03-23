@@ -47,7 +47,7 @@
     }
   },
 
-  // --- Normal + Visual mode: pane navigation (ctrl-w) ---
+  // --- Pane navigation (ctrl-w and ctrl-h/l shorthand) ---
   {
     "context": "Dock || Editor",
     "bindings": {
@@ -55,6 +55,23 @@
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown"
+    }
+  },
+
+  // ctrl-h/l: navigate between panes (editor <-> file explorer)
+  // Override VSCode base keymap (Replace / Expand line) in vim normal mode only
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "Dock",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight"
     }
   },
 
