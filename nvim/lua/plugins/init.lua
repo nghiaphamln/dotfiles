@@ -111,7 +111,6 @@ return {
 		},
 		config = function(_, opts)
 			require("neo-tree").setup(opts)
-			-- Auto-open neo-tree on startup
 			vim.api.nvim_create_autocmd("VimEnter", {
 				group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", {}),
 				callback = function()
