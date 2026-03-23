@@ -44,10 +44,7 @@
       "space t d": "diagnostics::Deploy",
 
       // Comments (Comment.nvim equivalent — gcc)
-      "g c c": "editor::ToggleComments",
-
-      // Flash.nvim equivalent — sneak jump
-      ";": ["workspace::SendKeystrokes", "s"]
+      "g c c": "editor::ToggleComments"
     }
   },
 
