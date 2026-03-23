@@ -12,8 +12,9 @@
       "space e": "project_panel::ToggleFocus",
 
       // Find files / search (telescope equivalent)
-      "space f": "file_finder::Toggle",
-      "space /": "pane::DeploySearch",
+      "space f f": "file_finder::Toggle",
+      "space f w": "pane::DeploySearch",
+      "space f b": "tab_switcher::Toggle",
       "space s": "outline::Toggle",
       "space shift-s": "project_symbols::Toggle",
 
