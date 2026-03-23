@@ -12,6 +12,10 @@
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "autosave": "on_focus_change",
+  "relative_line_numbers": true,
+  "scroll_beyond_last_line": "off",
+  "soft_wrap": "none",
+  "tab_size": 2,
   "theme": {
     "mode": "system",
     "light": "One Light",
