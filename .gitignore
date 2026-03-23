@@ -12,6 +12,9 @@ nvim/view/
 vim/undo/
 vim/view/
 
+# Superpowers
+docs/superpowers/
+
 # Temporary files
 *.tmp
 *.swp
