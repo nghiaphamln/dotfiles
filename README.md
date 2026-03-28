@@ -1,49 +1,52 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed IDE, Kitty terminal, IdeaVim, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Kitty, IdeaVim, OpenCode, and PowerShell.
 
 ## Structure
 
 ```
 dotfiles/
-├── nvim/         → ~/.config/nvim
-├── zed/          → ~/.config/zed
-├── kitty/        → ~/.config/kitty
-├── IdeaVim/      → ~/.ideavimrc
-└── PowerShell/   → PowerShell profile
+├── nvim/           → ~/.config/nvim
+├── zed/            → ~/.config/zed
+├── kitty/          → ~/.config/kitty
+├── IdeaVim/        → ~/.ideavimrc
+├── PowerShell/     → PowerShell profile
+├── opencode/       → ~/.config/opencode/{opencode.jsonc,package.json}
+├── skills/
+│   └── superpowers → ../superpowers/skills/   (symlink)
+└── superpowers/    → ~/.config/opencode/superpowers  (git clone obra/superpowers)
 ```
 
-## Installation
-
-Clone the repo and create symlinks:
+## Quick Install
 
 ```bash
 git clone https://github.com/nghiaphamln/dotfiles.git ~/dotfiles
-
-ln -s ~/dotfiles/nvim ~/.config/nvim
-ln -s ~/dotfiles/zed ~/.config/zed
-ln -s ~/dotfiles/kitty ~/.config/kitty
-ln -s ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
+cd ~/dotfiles
 ```
 
-### Neovim
-
-Requires [Neovim](https://neovim.io/) 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
-
-Install language servers:
-
-```
-:Mason
-```
-
-### Zed
-
-Requires [Zed](https://zed.dev/). Settings and keymaps are loaded automatically via the symlink.
-
-After symlinking, recreate the runtime prompts directory (not tracked in git):
+### Editors & Terminal
 
 ```bash
+ln -sf ~/dotfiles/nvim ~/.config/nvim
+ln -sf ~/dotfiles/zed ~/.config/zed
+ln -sf ~/dotfiles/kitty ~/.config/kitty
+ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
 mkdir -p ~/.config/zed/prompts
+```
+
+### OpenCode + Superpowers
+
+Xem hướng dẫn chi tiết trong [opencode/README.md](opencode/README.md).
+
+```bash
+mkdir -p ~/.config/opencode
+
+ln -sf ~/dotfiles/opencode/opencode.jsonc ~/.config/opencode/opencode.jsonc
+ln -sf ~/dotfiles/opencode/package.json ~/.config/opencode/package.json
+ln -sf ~/dotfiles/skills ~/.config/opencode/skills
+ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
+
+# Khai báo API keys — xem opencode/README.md
 ```
 
 ## Tools
@@ -54,10 +57,19 @@ mkdir -p ~/.config/zed/prompts
 | [Zed](https://zed.dev/) | `zed/` | Secondary editor |
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
-| PowerShell | `PowerShell/` | Shell profile |
+| [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
+| PowerShell | `PowerShell/` | Shell profile (Windows) |
 
-## Neovim Plugins
+## Neovim
 
+Requires Neovim 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) tự động cài plugins lần đầu.
+
+Cài language servers:
+```
+:Mason
+```
+
+**Plugins chính:**
 - **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML)
 - **Completion**: `blink.cmp`
 - **Syntax**: `nvim-treesitter`
@@ -67,3 +79,9 @@ mkdir -p ~/.config/zed/prompts
 - **Theme**: `tokyonight.nvim`
 - **Statusline**: `lualine.nvim`
 - **AI**: `avante.nvim`
+
+## Update Superpowers
+
+```bash
+cd ~/dotfiles/superpowers && git pull
+```

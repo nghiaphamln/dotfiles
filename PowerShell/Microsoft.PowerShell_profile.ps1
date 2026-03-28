@@ -8,7 +8,7 @@ if (Test-Path($ChocolateyProfile)) {
 }
 
 # Load Oh My Posh with a custom theme
-oh-my-posh init pwsh --config "C:\Users\phamm\Documents\PowerShell\Theme\zash.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:USERPROFILE\Documents\PowerShell\Theme\zash.omp.json" | Invoke-Expression
 
 # Enable Terminal Icons for enhanced visual experience
 Import-Module -Name Terminal-Icons
@@ -30,10 +30,11 @@ function fcd {
         [string]$Path
     )
 
+    $WorkDir = if ($env:WORK_DIR) { $env:WORK_DIR } else { "D:\working" }
     $directoryMap = @{
-        "nexorion" = "D:\working\nexorion"
-        "sendo" = "D:\working\sendo-farm"
-        "tenefic" = "D:\working\tenefic-games"
+        "nexorion" = "$WorkDir\nexorion"
+        "sendo" = "$WorkDir\sendo-farm"
+        "tenefic" = "$WorkDir\tenefic-games"
     }
 
     if (-not $Path) {

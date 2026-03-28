@@ -12,8 +12,8 @@ nvim/view/
 vim/undo/
 vim/view/
 
-# Superpowers
-docs/superpowers/
+# Superpowers (nested git repo — managed via git pull, not submodule)
+superpowers/
 
 # macOS
 .DS_Store
