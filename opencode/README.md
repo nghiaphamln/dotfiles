@@ -1,23 +1,23 @@
 # OpenCode Configuration
 
-Cấu hình cho [OpenCode](https://opencode.ai/) — AI coding agent chạy trên terminal.
+Configuration for [OpenCode](https://opencode.ai/) — an AI coding agent that runs in the terminal.
 
-## Cấu trúc
+## Structure
 
 ```
 opencode/
-├── opencode.jsonc   → ~/.config/opencode/opencode.jsonc  (config chính)
+├── opencode.jsonc   → ~/.config/opencode/opencode.jsonc  (main config)
 └── package.json     → ~/.config/opencode/package.json    (plugins)
 
 skills/
-└── superpowers      → ../superpowers/skills/  (symlink đến skills của Superpowers)
+└── superpowers      → ../superpowers/skills/  (symlink to Superpowers skills)
 
-superpowers/         → ~/.config/opencode/superpowers     (git clone obra/superpowers)
+superpowers/         → ~/.config/opencode/superpowers     (git clone of obra/superpowers)
 ```
 
-## Cài đặt
+## Setup
 
-### 1. Symlink config files
+### 1. Create symlinks
 
 ```bash
 mkdir -p ~/.config/opencode
@@ -28,11 +28,11 @@ ln -sf ~/dotfiles/skills ~/.config/opencode/skills
 ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
 ```
 
-### 2. Khai báo API keys
+### 2. Set API keys
 
-Config dùng environment variables thay cho API keys thật để an toàn khi lưu trên git public.
+The config uses environment variables instead of hardcoded keys, making it safe to store in a public git repository.
 
-Thêm vào `~/.zshenv`:
+Add the following to `~/.zshenv`:
 
 ```bash
 # OpenCode API keys
@@ -40,13 +40,13 @@ export TENEFIC_API_KEY="your-tenefic-key"
 export TENEFIC_BASE_URL="your-tenefic-base-url"
 ```
 
-Sau khi thêm, reload shell:
+Then reload your shell:
 
 ```bash
 source ~/.zshenv
 ```
 
-### 3. Cài plugins
+### 3. Install plugins
 
 ```bash
 cd ~/.config/opencode && bun install
@@ -54,21 +54,18 @@ cd ~/.config/opencode && bun install
 
 ## Providers
 
-Config hiện tại có 2 provider:
-
-| Provider | Env var | Mô tả |
+| Provider | Env var | Description |
 |---|---|---|
-| `danglamgiau` | `DANGLAMGIAU_API_KEY` | DangLamGiau API |
 | `tenefic` | `TENEFIC_API_KEY`, `TENEFIC_BASE_URL` | Tenefic proxy |
 
-Syntax env var trong `opencode.jsonc`: `{env:VARIABLE_NAME}`.
-Nếu env var chưa được set, OpenCode sẽ thay bằng chuỗi rỗng (không báo lỗi).
+Environment variable syntax in `opencode.jsonc`: `{env:VARIABLE_NAME}`.
+If a variable is not set, OpenCode replaces it with an empty string (no error thrown).
 
 ## Superpowers
 
-[Superpowers](https://github.com/obra/superpowers) là bộ skills giúp AI agent làm việc có quy trình hơn: brainstorming → planning → TDD → code review.
+[Superpowers](https://github.com/obra/superpowers) is a collection of skills that give AI agents a structured development workflow: brainstorming → planning → TDD → code review.
 
-Skills được load tự động khi OpenCode khởi động thông qua chuỗi symlink:
+Skills are loaded automatically when OpenCode starts via the following symlink chain:
 
 ```
 ~/.config/opencode/skills/superpowers
@@ -76,21 +73,21 @@ Skills được load tự động khi OpenCode khởi động thông qua chuỗi
     → dotfiles/superpowers/skills/
 ```
 
-**Skills có sẵn:**
-- `brainstorming` — Khám phá yêu cầu trước khi code
-- `writing-plans` — Tạo implementation plan
-- `executing-plans` — Thực thi plan với subagents
+**Available skills:**
+- `brainstorming` — Explore requirements before writing code
+- `writing-plans` — Create an implementation plan
+- `executing-plans` — Execute a plan using subagents
 - `test-driven-development` — TDD workflow
-- `systematic-debugging` — Debug có hệ thống
-- `requesting-code-review` — Review trước khi merge
-- `receiving-code-review` — Xử lý feedback review
-- `dispatching-parallel-agents` — Chạy nhiều tasks song song
-- `subagent-driven-development` — Phát triển qua subagents
-- `finishing-a-development-branch` — Hoàn tất branch
-- `using-git-worktrees` — Làm việc với git worktrees
-- `verification-before-completion` — Xác minh trước khi claim done
-- `writing-skills` — Tạo skills mới
-- `using-superpowers` — Hướng dẫn tổng quan
+- `systematic-debugging` — Structured debugging process
+- `requesting-code-review` — Review work before merging
+- `receiving-code-review` — Handle review feedback
+- `dispatching-parallel-agents` — Run multiple tasks in parallel
+- `subagent-driven-development` — Development via subagents
+- `finishing-a-development-branch` — Complete and wrap up a branch
+- `using-git-worktrees` — Work with git worktrees
+- `verification-before-completion` — Verify before claiming work is done
+- `writing-skills` — Create new skills
+- `using-superpowers` — General overview and entry point
 
 ### Update Superpowers
 
@@ -98,14 +95,13 @@ Skills được load tự động khi OpenCode khởi động thông qua chuỗi
 cd ~/dotfiles/superpowers && git pull
 ```
 
-## Thêm skills tùy chỉnh
+## Adding Custom Skills
 
-Tạo thư mục skill mới trong `dotfiles/skills/`:
+Create a new skill directory inside `dotfiles/skills/`:
 
 ```bash
 mkdir -p ~/dotfiles/skills/my-skill
-# Tạo file skill
 echo "---\nname: my-skill\n---\n# My Skill\n..." > ~/dotfiles/skills/my-skill/skill.md
 ```
 
-OpenCode tự nhận vì `~/.config/opencode/skills/` đã symlink đến `dotfiles/skills/`.
+OpenCode will pick it up automatically since `~/.config/opencode/skills/` is symlinked to `dotfiles/skills/`.

@@ -14,7 +14,7 @@ dotfiles/
 ├── opencode/       → ~/.config/opencode/{opencode.jsonc,package.json}
 ├── skills/
 │   └── superpowers → ../superpowers/skills/   (symlink)
-└── superpowers/    → ~/.config/opencode/superpowers  (git clone obra/superpowers)
+└── superpowers/    → ~/.config/opencode/superpowers  (git clone of obra/superpowers)
 ```
 
 ## Quick Install
@@ -36,7 +36,7 @@ mkdir -p ~/.config/zed/prompts
 
 ### OpenCode + Superpowers
 
-Xem hướng dẫn chi tiết trong [opencode/README.md](opencode/README.md).
+See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 
 ```bash
 mkdir -p ~/.config/opencode
@@ -46,7 +46,7 @@ ln -sf ~/dotfiles/opencode/package.json ~/.config/opencode/package.json
 ln -sf ~/dotfiles/skills ~/.config/opencode/skills
 ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
 
-# Khai báo API keys — xem opencode/README.md
+# Set API keys in ~/.zshenv — see opencode/README.md
 ```
 
 ## Tools
@@ -62,14 +62,14 @@ ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
 
 ## Neovim
 
-Requires Neovim 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) tự động cài plugins lần đầu.
+Requires Neovim 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
 
-Cài language servers:
+Install language servers:
 ```
 :Mason
 ```
 
-**Plugins chính:**
+**Key plugins:**
 - **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML)
 - **Completion**: `blink.cmp`
 - **Syntax**: `nvim-treesitter`
