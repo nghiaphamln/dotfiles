@@ -20,10 +20,27 @@ if rg -n 'Library/Python/3\.14/bin' "$repo_root/nvim/lua" >/dev/null; then
   exit 1
 fi
 
-if rg -n 'ensure_installed = \{[^}]*"cmake"|ensure_installed = \{[^}]*"cmake-language-server"|ensure_installed = \{[^}]*"cmake-format"' "$repo_root/nvim/lua/plugins/lsp.lua" >/dev/null; then
-  printf 'CMake is still Mason-managed\n' >&2
-  exit 1
-fi
+python3 - "$repo_root/nvim/lua/plugins/lsp.lua" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text()
+
+tool_block_start = text.index('"WhoIsSethDaniel/mason-tool-installer.nvim"')
+tool_block_end = text.index('-- Mason LSPConfig: bridge between Mason and Neovim LSP configs')
+tool_block = text[tool_block_start:tool_block_end]
+
+lsp_block_start = text.index('"mason-org/mason-lspconfig.nvim"')
+lsp_block_end = text.index('-- LSPConfig: configure language servers')
+lsp_block = text[lsp_block_start:lsp_block_end]
+
+tool_markers = ('"cmake-language-server"', '"cmake-format"')
+lsp_markers = ('"cmake"',)
+
+if any(marker in tool_block for marker in tool_markers) or any(marker in lsp_block for marker in lsp_markers):
+    print('CMake is still Mason-managed', file=sys.stderr)
+    raise SystemExit(1)
+PY
 
 XDG_CONFIG_HOME="$repo_root" nvim --headless '+checkhealth' "+w! $health_report" '+qa'
 
