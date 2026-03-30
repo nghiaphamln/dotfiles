@@ -23,6 +23,9 @@ superpowers/
 
 # Nvim backups
 nvim.backup*/
+nvim/.nvim-debug.*
+nvim-startup.log
+github-copilot/
 
 # Temporary files
 *.tmp
