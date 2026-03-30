@@ -3,7 +3,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		event = { "BufReadPre", "BufNewFile" },
+		lazy = false,
 		main = "nvim-treesitter.configs",
 		opts = {
 			ensure_installed = {
@@ -11,6 +11,7 @@ return {
 				"vim",
 				"bash",
 				"markdown",
+				"markdown_inline",
 				"python",
 				"rust",
 				"go",
@@ -19,6 +20,16 @@ return {
 				"c",
 				"cpp",
 				"cmake",
+				"css",
+				"html",
+				"javascript",
+				"latex",
+				"regex",
+				"scss",
+				"svelte",
+				"tsx",
+				"typst",
+				"vue",
 			},
 			highlight = {
 				enable = true,

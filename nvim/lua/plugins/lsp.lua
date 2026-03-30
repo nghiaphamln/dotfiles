@@ -1,81 +1,95 @@
 -- LSP Configuration for Rust, Go, Python, Lua
 
 return {
-	-- Mason: Package manager for LSP, formatters, linters
+	-- Mason: package manager for LSP servers, formatters, linters
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
-		opts = {
-			ensure_installed = {
-				"lua-language-server",
-				"rust-analyzer",
-				"gopls",
-				"pyright",
-				"yaml-language-server",
-				"clangd",
-				"cmake-language-server",
-			},
-		},
+		opts = {},
 	},
 
-	-- Mason Tool Installer: Automatically install formatters and linters
+	-- Mason Tool Installer: automatically install formatters and linters
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		dependencies = { "mason.nvim" },
-		opts = {
-			ensure_installed = {
-				"clang-format",
-				"clangd",
-				"cppcheck",
-				"cmake-language-server",
-				"cmake-format",
+		dependencies = { "mason-org/mason.nvim" },
+			opts = {
+				ensure_installed = {
+					"lua-language-server",
+					"rust-analyzer",
+					"gopls",
+					"pyright",
+					"yaml-language-server",
+					"clangd",
+					"stylua",
+					"clang-format",
+					"cppcheck",
+				},
 			},
 		},
-	},
 
-	-- Mason LSPConfig: Bridge between Mason and LSPConfig
+	-- Mason LSPConfig: bridge between Mason and Neovim LSP configs
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "mason.nvim" },
-		opts = {
-			handlers = {
-				function(server_name)
-					vim.lsp.config(server_name):setup({})
-				end,
-			},
+		dependencies = {
+			"mason-org/mason.nvim",
+			"neovim/nvim-lspconfig",
 		},
+			opts = {
+				ensure_installed = {
+					"lua_ls",
+					"rust_analyzer",
+					"gopls",
+					"pyright",
+					"yamlls",
+					"clangd",
+				},
+				automatic_enable = false,
+			},
 	},
 
-	-- LSPConfig: Configure language servers
+	-- LSPConfig: configure language servers
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "mason-lspconfig.nvim" },
+		dependencies = { "mason-org/mason-lspconfig.nvim" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-			-- Lua LS
-			vim.lsp.config["lua_ls"] = {
+			local function extend(server_name, config)
+				vim.lsp.config[server_name] = vim.tbl_deep_extend("force", vim.lsp.config[server_name] or {}, config)
+			end
+
+			extend("lua_ls", {
 				cmd = { "lua-language-server" },
 				filetypes = { "lua" },
-				root_dir = vim.fs.find(".luarc.json", { upward = true })[1] or vim.fn.getcwd(),
+				root_markers = {
+					".luarc.json",
+					".luarc.jsonc",
+					".stylua.toml",
+					"stylua.toml",
+					"selene.toml",
+					"selene.yml",
+					".git",
+				},
 				capabilities = capabilities,
 				settings = {
 					Lua = {
 						workspace = {
 							checkThirdParty = false,
+							library = {
+								vim.env.VIMRUNTIME,
+							},
 						},
 					},
 				},
-			}
+			})
 
-			-- Rust Analyzer
-			vim.lsp.config["rust_analyzer"] = {
+			extend("rust_analyzer", {
 				cmd = { "rust-analyzer" },
 				filetypes = { "rust" },
-				root_dir = vim.fs.find("Cargo.toml", { upward = true })[1] or vim.fn.getcwd(),
+				root_markers = { "Cargo.toml", "rust-project.json", ".git" },
 				capabilities = capabilities,
 				settings = {
 					["rust-analyzer"] = {
@@ -96,13 +110,12 @@ return {
 						},
 					},
 				},
-			}
+			})
 
-			-- Gopls
-			vim.lsp.config["gopls"] = {
+			extend("gopls", {
 				cmd = { "gopls" },
 				filetypes = { "go", "gomod", "gowork", "gotmpl" },
-				root_dir = vim.fs.find("go.mod", { upward = true })[1] or vim.fn.getcwd(),
+				root_markers = { "go.work", "go.mod", ".git" },
 				capabilities = capabilities,
 				settings = {
 					gopls = {
@@ -112,13 +125,12 @@ return {
 						staticcheck = true,
 					},
 				},
-			}
+			})
 
-			-- Pyright
-			vim.lsp.config["pyright"] = {
+			extend("pyright", {
 				cmd = { "pyright-langserver", "--stdio" },
 				filetypes = { "python" },
-				root_dir = vim.fs.find("pyproject.toml", { upward = true })[1] or vim.fn.getcwd(),
+				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
 				capabilities = capabilities,
 				settings = {
 					python = {
@@ -128,15 +140,19 @@ return {
 						},
 					},
 				},
-			}
+			})
 
-			-- YAML Language Server
-			vim.lsp.config["yamlls"] = {
+			extend("yamlls", {
 				cmd = { "yaml-language-server", "--stdio" },
 				filetypes = { "yaml", "yml" },
-				root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]) or vim.fn.getcwd(),
+				root_markers = { ".git" },
 				capabilities = capabilities,
 				settings = {
+					redhat = {
+						telemetry = {
+							enabled = false,
+						},
+					},
 					yaml = {
 						schemas = {
 							kubernetes = "/*",
@@ -160,10 +176,9 @@ return {
 						validate = true,
 					},
 				},
-			}
+			})
 
-			-- Clangd Language Server for C/C++
-			vim.lsp.config["clangd"] = {
+			extend("clangd", {
 				cmd = {
 					"clangd",
 					"--background-index",
@@ -173,30 +188,45 @@ return {
 					"--function-arg-placeholders=true",
 				},
 				filetypes = { "c", "cpp", "objc", "objcpp" },
-				root_dir = vim.fs.find({ "compile_commands.json", "compile_flags.txt", ".git" }, { upward = true })[1]
-					or vim.fn.getcwd(),
+				root_markers = {
+					".clangd",
+					".clang-tidy",
+					".clang-format",
+					"compile_commands.json",
+					"compile_flags.txt",
+					".git",
+				},
 				capabilities = capabilities,
-				settings = {},
-			}
+			})
 
-			-- CMake Language Server
-			vim.lsp.config["cmake"] = {
+			extend("cmake", {
 				cmd = { "cmake-language-server" },
 				filetypes = { "cmake" },
-				root_dir = vim.fs.find({ "CMakeLists.txt", ".git" }, { upward = true })[1] or vim.fn.getcwd(),
+				root_markers = { "CMakeLists.txt", ".git" },
 				capabilities = capabilities,
-				settings = {},
-			}
+			})
 
-			-- LSP Keymaps
+			for _, server_name in ipairs({
+				"lua_ls",
+				"rust_analyzer",
+				"gopls",
+				"pyright",
+				"yamlls",
+				"clangd",
+				"cmake",
+			}) do
+				vim.lsp.enable(server_name)
+			end
+
 			vim.api.nvim_create_autocmd("LspAttach", {
-				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+				group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 				callback = function(ev)
 					local opts = { buffer = ev.buf, silent = true, noremap = true }
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-					-- Custom keymaps per user preference
 					vim.keymap.set("n", "gi", function()
 						require("telescope.builtin").lsp_implementations()
 					end, opts)
@@ -208,7 +238,6 @@ return {
 					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-					-- Document highlight navigation
 					vim.keymap.set("n", "]]", function()
 						vim.lsp.buf.document_highlight()
 						vim.cmd("silent! normal! n")
@@ -218,12 +247,10 @@ return {
 						vim.cmd("silent! normal! N")
 					end, opts)
 
-					-- Inlay hints
-					if vim.lsp.buf.inlay_hint then
-						vim.lsp.buf.inlay_hint(ev.buf, true)
+					if client and client:supports_method("textDocument/inlayHint") and vim.lsp.inlay_hint then
+						vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 					end
 
-					-- Update diagnostics when cursor moves
 					vim.api.nvim_create_autocmd("CursorHold", {
 						buffer = ev.buf,
 						callback = function()
@@ -231,12 +258,10 @@ return {
 						end,
 					})
 
-					-- Also add keymap to open diagnostics in trouble.nvim
 					vim.keymap.set("n", "<leader>td", "<cmd>Trouble diagnostics toggle<cr>", opts)
 				end,
 			})
 
-			-- Register with which-key (once, outside LspAttach)
 			local wk = require("which-key")
 			wk.add({
 				{ "g", group = "LSP" },
@@ -257,7 +282,7 @@ return {
 		end,
 	},
 
-	-- Blink.cmp: Fast completion with LSP support
+	-- Blink.cmp: fast completion with LSP support
 	{
 		"saghen/blink.cmp",
 		lazy = false,
@@ -265,9 +290,9 @@ return {
 		dependencies = "rafamadriz/friendly-snippets",
 		opts = {
 			fuzzy = {
-				implementation = "prefer_rust", -- Use Rust implementation with fallback to Lua
+				implementation = "prefer_rust",
 				prebuilt_binaries = {
-					force_version = "latest", -- Force using latest prebuilt binaries
+					force_version = "latest",
 				},
 			},
 			snippets = {
@@ -306,7 +331,7 @@ return {
 				completion = {
 					list = { selection = { preselect = false } },
 					menu = {
-						auto_show = function(ctx)
+						auto_show = function()
 							return vim.fn.getcmdtype() == ":"
 						end,
 					},
@@ -320,9 +345,9 @@ return {
 					function(cmp)
 						if cmp.snippet_active() then
 							return cmp.accept()
-						else
-							return cmp.select_next()
 						end
+
+						return cmp.select_next()
 					end,
 					"snippet_forward",
 					"fallback",

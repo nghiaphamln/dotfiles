@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-A modern, feature-rich Neovim configuration with AI integration, LSP support, and extensive customization options.
+A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Treesitter, and a small set of polished UI plugins.
 
 ## Features
 
@@ -8,7 +8,7 @@ A modern, feature-rich Neovim configuration with AI integration, LSP support, an
 
 - **GitHub Copilot Integration** - AI-powered code completion with custom keybindings
 - **Auto-save** - Automatically saves files when leaving insert mode or on text changes
-- **LSP (Language Server Protocol)** - Full language support for Lua, Rust, Go, Python, C/C++, and YAML
+- **LSP (Language Server Protocol)** - Full language support for Lua, Rust, Go, Python, C/C++, YAML, and CMake
 - **Smart Code Completion** - Powered by Blink.cmp with LSP, snippets, and buffer completion
 - **Syntax Highlighting** - Advanced highlighting via Treesitter
 - **File Navigation** - Neo-tree file explorer for project navigation
@@ -16,7 +16,7 @@ A modern, feature-rich Neovim configuration with AI integration, LSP support, an
 
 ### Additional Features
 
-- **Formatting & Linting** - Automatic code formatting and linting
+- **Formatting & Linting** - Conform and nvim-lint integration
 - **Git Integration** - Built-in git signs and hunk navigation
 - **Visual Enhancements** - Custom status line, indentation guides, and rainbow delimiters
 - **Terminal Integration** - Built-in terminal with smart navigation
@@ -25,42 +25,51 @@ A modern, feature-rich Neovim configuration with AI integration, LSP support, an
 
 ## Installation
 
+## Platform Support
+
+- Supported: macOS
+- Not officially supported: Linux, Windows, WSL
+
+This configuration currently assumes a macOS-style environment, Homebrew-managed tools, and terminal/tooling behavior that has only been verified on macOS.
+
 ### Prerequisites
 
-Before installing this Neovim configuration, ensure you have:
+Before installing this configuration, ensure you have:
 
-1. **Neovim 0.9+**:
+1. **Neovim 0.12+**:
 
    ```bash
    # On macOS
    brew install neovim
 
-   # On Ubuntu/Debian
-   sudo apt install neovim
    ```
 
-2. **Required Language Servers** (for LSP support):
+2. **Node.js + npm**:
+   Needed for `pyright`, `prettier`, `@mermaid-js/mermaid-cli`, and `tree-sitter-cli`.
+
+3. **Required macOS tools**:
+   Install the tools intentionally managed outside Mason with Homebrew:
+
+   ```bash
+   brew install clang-format cmake-language-server ghostscript stylua
+   python3 -m pip install --user cmakelang
+   npm install -g @mermaid-js/mermaid-cli tree-sitter-cli@0.25.10
+   ```
+
+   Notes:
+   - `cmake-language-server` is intentionally installed with Homebrew instead of Mason because current Mason packaging rejects Python 3.14.
+   - `cmake-format` comes from the `cmakelang` Python package.
+
+4. **Language tools managed automatically by Mason**:
    - `lua-language-server`
    - `rust-analyzer`
    - `gopls`
    - `pyright`
    - `yaml-language-server`
    - `clangd`
-   - `cmake-language-server`
-
-3. **Additional Tools** (for formatting and linting):
-   - `stylua` (Lua formatter)
-   - `rustfmt` (Rust formatter)
-   - `gofmt` (Go formatter)
-   - `black` and `isort` (Python formatters)
-   - `clang-format` (C/C++ formatter)
-   - `cmake-format` (CMake formatter)
-   - `prettier` (General formatter)
-   - `pylint` (Python linter)
-   - `clippy` (Rust linter)
-   - `selene` (Lua linter)
-   - `golangci-lint` (Go linter)
-   - `cppcheck` (C/C++ linter)
+   - `clang-format`
+   - `stylua`
+   - `cppcheck`
 
 ### Setup
 
@@ -77,7 +86,11 @@ Before installing this Neovim configuration, ensure you have:
    ln -s ~/dotfiles/nvim ~/.config/nvim
    ```
 
-3. **Start Neovim and install plugins**:
+3. **Install the required external tools**:
+
+   - Run the Homebrew/npm/pip commands from the prerequisites section above.
+
+4. **Start Neovim and install plugins and Mason packages**:
 
    ```bash
    nvim
@@ -89,7 +102,7 @@ Before installing this Neovim configuration, ensure you have:
    :Lazy sync
    ```
 
-4. **Configure GitHub Copilot** (optional):
+5. **Configure GitHub Copilot** (optional):
    After installation, authenticate with Copilot:
    ```vim
    :Copilot auth
@@ -128,7 +141,7 @@ Before installing this Neovim configuration, ensure you have:
 #### Navigation
 
 - `;` - Flash navigation (quick movement)
-- `<leader> ` (space) - Leader key prefix
+- `<leader>` - Leader key prefix
 
 ### LSP Keybindings
 
@@ -203,6 +216,7 @@ Before installing this Neovim configuration, ensure you have:
 ### Formatting Operations
 
 - `<leader>fc` - Format buffer
+- `<leader>fm` - Format current file
 
 ### Utility Operations
 
@@ -215,7 +229,7 @@ Before installing this Neovim configuration, ensure you have:
 
 #### LSP Configuration
 
-- **mason.nvim** - Package manager for LSP servers, formatters, and linters
+- **mason.nvim** - Package manager for most LSP servers and developer tools
 - **nvim-lspconfig** - LSP configuration for various language servers
 - **blink.cmp** - Fast, lightweight completion plugin
 - **trouble.nvim** - Pretty diagnostics list
@@ -253,15 +267,15 @@ Before installing this Neovim configuration, ensure you have:
 
 ### Adding Plugins
 
-To add new plugins, create a new file in `~/.config/nvim/lua/plugins/` following the same format as existing plugin files.
+To add new plugins, create a new file in `nvim/lua/plugins/` following the same format as the existing plugin files.
 
 ### Modifying Keybindings
 
-Edit `~/.config/nvim/lua/config/keymaps.lua` to modify existing keybindings or add new ones.
+Edit `nvim/lua/config/keymaps.lua` to modify existing keybindings or add new ones.
 
 ### Modifying Options
 
-Edit `~/.config/nvim/lua/config/options.lua` to change Neovim options like indentation, searching behavior, etc.
+Edit `nvim/lua/config/options.lua` to change Neovim options like indentation, searching behavior, and environment setup.
 
 ## Troubleshooting
 
@@ -271,22 +285,38 @@ If plugins don't install properly:
 
 1. Run `:Lazy sync` to install/update plugins
 2. Check `:Lazy` for any errors and resolve them
+3. Run `./nvim/tests/checkhealth_smoke.sh` from the dotfiles repo to verify the upgraded config
 
 ### LSP Issues
 
 If LSP servers aren't working:
 
-1. Ensure you have the required language servers installed
-2. Run `:Mason` to manage LSP servers
-3. Check the LSP client status with `:LspInfo`
+1. Run `:Mason` to confirm Mason-managed servers are installed
+2. Check the active LSP client state with `:LspInfo`
+3. Confirm Homebrew-managed tools such as `cmake-language-server` are on `PATH`
+4. If Neovim was just upgraded, run `./nvim/tests/checkhealth_smoke.sh`
 
 ### Performance Issues
 
 If Neovim feels slow:
 
-1. Check if treesitter parsers are installed with `:checkhealth treesitter`
+1. Check if Treesitter parsers are installed with `:checkhealth treesitter`
 2. Verify that your terminal supports true colors
 3. Consider disabling some visual plugins if needed
+
+### Health Checks
+
+After changing plugins or upgrading Neovim, run:
+
+```bash
+./nvim/tests/checkhealth_smoke.sh
+```
+
+If `vim.lsp` warns that the log file is too large, truncate it with:
+
+```bash
+: > "$HOME/.local/state/nvim/lsp.log"
+```
 
 ### Copilot Not Working
 

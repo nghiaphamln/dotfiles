@@ -22,7 +22,7 @@ return {
 				go = { "gofmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
-				cmake = { "cmake-format" },
+				cmake = { "cmake_format" },
 				javascript = { "prettier" },
 				json = { "prettier" },
 				markdown = { "prettier" },

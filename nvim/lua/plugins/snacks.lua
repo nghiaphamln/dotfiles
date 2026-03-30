@@ -4,7 +4,16 @@ return {
 	lazy = false,
 	opts = {
 		bigfile = { enabled = true },
+		input = { enabled = true },
+		notifier = { enabled = true },
+		picker = {
+			enabled = true,
+			ui_select = true,
+		},
 		quickfile = { enabled = true },
+		scope = { enabled = true },
+		scroll = { enabled = true },
+		statuscolumn = { enabled = true },
 		terminal = {
 			win = {
 				keys = {
@@ -59,7 +68,14 @@ return {
 				},
 			},
 		},
+		words = { enabled = true },
 	},
+	config = function(_, opts)
+		local snacks = require("snacks")
+		snacks.setup(opts)
+		snacks.input.enable()
+		snacks.picker.setup()
+	end,
 	keys = {
 		{
 			"<leader>.",
