@@ -9,10 +9,10 @@ opencode/
 ├── opencode.jsonc   → ~/.config/opencode/opencode.jsonc  (main config)
 └── package.json     → ~/.config/opencode/package.json    (plugins)
 
-skills/
-└── superpowers      → ../superpowers/skills/  (symlink to Superpowers skills)
-
-superpowers/         → ~/.config/opencode/superpowers     (git clone of obra/superpowers)
+(dotfiles root)
+├── skills/
+│   └── superpowers  → symlink → dotfiles/superpowers/skills
+└── superpowers/     → git clone of obra/superpowers
 ```
 
 ## Setup

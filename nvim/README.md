@@ -1,54 +1,74 @@
 # Neovim Configuration
 
-A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Treesitter, and a small set of polished UI plugins.
+A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Treesitter, and a polished UI.
 
 ## Features
 
-### Core Functionality
+### Core
 
-- **GitHub Copilot Integration** - AI-powered code completion with custom keybindings
-- **Auto-save** - Automatically saves files when leaving insert mode or on text changes
-- **LSP (Language Server Protocol)** - Full language support for Lua, Rust, Go, Python, C/C++, YAML, and CMake
-- **Smart Code Completion** - Powered by Blink.cmp with LSP, snippets, and buffer completion
-- **Syntax Highlighting** - Advanced highlighting via Treesitter
-- **File Navigation** - Neo-tree file explorer for project navigation
-- **Fuzzy Finding** - Telescope for efficient file/buffer searching
+- **LSP** — Full language support for Lua, Rust, Go, Python, C/C++, CMake, YAML
+- **Smart Completion** — Blink.cmp with LSP, snippets, buffer, and Copilot sources
+- **AI Integration** — GitHub Copilot inline suggestions + CopilotChat.nvim
+- **Syntax Highlighting** — Treesitter with 25+ parsers
+- **File Explorer** — Neo-tree with git integration
+- **Fuzzy Finding** — Snacks.picker for files, buffers, grep, LSP symbols, help
+- **Auto-save** — Saves on InsertLeave, BufLeave, FocusLost, and text changes
 
-### Additional Features
+### UI & UX
 
-- **Formatting & Linting** - Conform and nvim-lint integration
-- **Git Integration** - Built-in git signs and hunk navigation
-- **Visual Enhancements** - Custom status line, indentation guides, and rainbow delimiters
-- **Terminal Integration** - Built-in terminal with smart navigation
-- **Flash Navigation** - Quick motion commands for efficient movement
-- **Diagnostic Integration** - Visual error/warning display with Trouble.nvim
+- **Statusline** — Lualine with Copilot status indicator
+- **Buffer Tabs** — Bufferline with pin/close/group operations
+- **Dashboard** — Snacks dashboard with quick actions on startup
+- **Notifications** — Noice.nvim for beautiful messages and cmdline
+- **Indent Guides** — Indent-blankline with custom character
+- **Rainbow Delimiters** — Colorized bracket nesting
+- **Word Highlight** — vim-illuminate highlights word under cursor
+- **Symbol Usage** — Inline reference/definition/implementation counts
+- **Treesitter Context** — Sticky function/class header at top of viewport
+- **Which-key** — Keybinding hints on partial keypress
+
+### Git
+
+- **Gitsigns** — Inline hunks, blame, stage/reset, diff
+- **LazyGit** — Full-featured terminal git client (`<leader>gg`)
+
+### Formatting & Linting
+
+- **Conform.nvim** — Async formatting (stylua, black, isort, rustfmt, gofmt, clang-format, cmake_format, prettier)
+- **nvim-lint** — Auto-lint on write (pylint, clippy, selene, golangci-lint, cppcheck)
+
+### Editing
+
+- **mini.pairs** — Auto-close brackets and quotes
+- **ts-comments.nvim** — Treesitter-aware comment toggling
+- **Flash.nvim** — Rapid cursor movement with `;`
+- **Todo Comments** — Highlight and jump between TODO/FIXME/HACK/NOTE
+
+### Tools
+
+- **Toggleterm** — Floating terminal (`<C-\>`)
+- **Crates.nvim** — Rust dependency management
+- **Markview.nvim** — Rendered markdown preview
+- **Scratch Buffers** — Quick notes via Snacks (`<leader>.`)
 
 ## Installation
 
-## Platform Support
+### Platform Support
 
-- Supported: macOS
-- Not officially supported: Linux, Windows, WSL
-
-This configuration currently assumes a macOS-style environment, Homebrew-managed tools, and terminal/tooling behavior that has only been verified on macOS.
+- **Supported:** macOS
+- **Not officially supported:** Linux, Windows, WSL
 
 ### Prerequisites
 
-Before installing this configuration, ensure you have:
-
-1. **Neovim 0.12+**:
+1. **Neovim 0.12+**
 
    ```bash
-   # On macOS
    brew install neovim
-
    ```
 
-2. **Node.js + npm**:
-   Needed for `pyright`, `prettier`, `@mermaid-js/mermaid-cli`, and `tree-sitter-cli`.
+2. **Node.js + npm** — Needed for pyright, prettier, mermaid-cli, tree-sitter-cli
 
-3. **Required macOS tools**:
-   Install the tools intentionally managed outside Mason with Homebrew:
+3. **macOS tools** (managed outside Mason via Homebrew/npm/pip)
 
    ```bash
    brew install clang-format cmake-language-server ghostscript stylua
@@ -57,40 +77,41 @@ Before installing this configuration, ensure you have:
    ```
 
    Notes:
-   - `cmake-language-server` is intentionally installed with Homebrew instead of Mason because current Mason packaging rejects Python 3.14.
-   - `cmake-format` comes from the `cmakelang` Python package.
+   - `cmake-language-server` is installed with Homebrew because current Mason packaging rejects Python 3.14
+   - `cmake-format` comes from the `cmakelang` Python package
 
-4. **Language tools managed automatically by Mason**:
-   - `lua-language-server`
-   - `rust-analyzer`
-   - `gopls`
-   - `pyright`
-   - `yaml-language-server`
-   - `clangd`
-   - `clang-format`
-   - `stylua`
-   - `cppcheck`
+4. **Mason-managed tools** (installed automatically on first run)
+
+   | Tool | Language |
+   |------|----------|
+   | `lua-language-server` | Lua |
+   | `rust-analyzer` | Rust |
+   | `gopls` | Go |
+   | `pyright` | Python |
+   | `yaml-language-server` | YAML |
+   | `clangd` | C/C++ |
+   | `clang-format` | C/C++ |
+   | `stylua` | Lua |
+   | `cppcheck` | C/C++ |
 
 ### Setup
 
-1. **Backup your existing Neovim configuration** (if any):
+1. **Backup existing config** (if any)
 
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
    ```
 
-2. **Clone this repository** to your Neovim configuration directory:
+2. **Clone and symlink**
 
    ```bash
    git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
    ln -s ~/dotfiles/nvim ~/.config/nvim
    ```
 
-3. **Install the required external tools**:
+3. **Install external tools** — Run the Homebrew/npm/pip commands from prerequisites above
 
-   - Run the Homebrew/npm/pip commands from the prerequisites section above.
-
-4. **Start Neovim and install plugins and Mason packages**:
+4. **Start Neovim and sync plugins**
 
    ```bash
    nvim
@@ -102,217 +123,264 @@ Before installing this configuration, ensure you have:
    :Lazy sync
    ```
 
-5. **Configure GitHub Copilot** (optional):
-   After installation, authenticate with Copilot:
+5. **Authenticate Copilot** (optional)
+
    ```vim
    :Copilot auth
    ```
 
 ## Usage
 
-### Basic Keybindings
+### Keybindings
 
-#### Window Management
+#### General
 
-- `<C-h/j/k/l>` - Navigate between windows
-- `<leader>|` - Vertical split
-- `<leader>-` - Horizontal split
+| Key | Action |
+|-----|--------|
+| `<C-s>` | Save file |
+| `<Esc>` | Clear search highlights |
+| `<leader>e` | Toggle file explorer (Neo-tree) |
+| `<leader>fm` | Format current file |
+| `<leader>ff` | Find files |
+| `<leader>fw` | Find word (grep) |
+| `<leader><leader>` | Recent files |
+| `<leader>fb` | Buffers |
+| `<leader>fh` | Help tags |
+| `<leader>ft` | Find TODOs |
+| `<leader>gg` | Open LazyGit |
+| `<C-\>` | Toggle terminal |
+| `<leader>.` | Toggle scratch buffer |
+| `<leader>S` | Select scratch buffer |
+
+#### Window Navigation
+
+| Key | Action |
+|-----|--------|
+| `<C-h/j/k/l>` | Move between windows |
+| `<leader>\|` | Vertical split |
+| `<leader>-` | Horizontal split |
 
 #### Buffer Management
 
-- `<S-h>` - Previous buffer
-- `<S-l>` - Next buffer
-- `[b` - Previous buffer
-- `]b` - Next buffer
-- `<leader>bp` - Toggle pin buffer
-- `<leader>bP` - Close unpinned buffers
-- `<leader>br` - Close buffers to the right
-- `<leader>bl` - Close buffers to the left
-- `<leader>bo` - Close other buffers (keep only current)
-- `<leader>bc` - Close current buffer
-
-#### File Operations
-
-- `<C-s>` - Save file
-- `<Esc>` - Clear search highlights
-- `<leader>fm` - Format current file
-- `<leader>e` - Toggle file explorer
+| Key | Action |
+|-----|--------|
+| `<S-h>` / `[b` | Previous buffer |
+| `<S-l>` / `]b` | Next buffer |
+| `<leader>bp` | Toggle pin buffer |
+| `<leader>bP` | Close unpinned buffers |
+| `<leader>br` | Close buffers to the right |
+| `<leader>bl` | Close buffers to the left |
+| `<leader>bo` | Close other buffers |
+| `<leader>bc` | Close current buffer |
 
 #### Navigation
 
-- `;` - Flash navigation (quick movement)
-- `<leader>` - Leader key prefix
+| Key | Action |
+|-----|--------|
+| `;` | Flash jump |
+| `<C-space>` | Flash Treesitter selection |
+| `j` / `k` | Move by display line (wrap-aware) |
+| `]t` / `[t` | Next / previous todo |
 
-### LSP Keybindings
+#### LSP
 
-#### Code Navigation
+| Key | Action |
+|-----|--------|
+| `gd` | Go to definition |
+| `gD` | Go to declaration |
+| `gi` | Go to implementation |
+| `gu` | Go to references |
+| `K` | Hover documentation |
+| `<leader>ca` | Code actions |
+| `<leader>rn` | Rename symbol |
+| `[d` | Previous diagnostic |
+| `]d` | Next diagnostic |
+| `]]` / `[[` | Next / previous reference |
+| `<leader>td` | Toggle Trouble diagnostics |
 
-- `gd` - Go to definition
-- `gD` - Go to declaration
-- `gi` - Go to implementation
-- `gu` - Go to references
-- `K` - Show hover documentation
+#### Diagnostics
 
-#### Code Actions
+| Key | Action |
+|-----|--------|
+| `<leader>xx` | Toggle Trouble diagnostics |
+| `<leader>xq` | Toggle QuickFix |
+| `<leader>xl` | Toggle Location List |
 
-- `<leader>ca` - Code actions
-- `<leader>rn` - Rename symbol
-- `[d` - Previous diagnostic
-- `]d` - Next diagnostic
+#### Copilot
 
-#### Advanced LSP Navigation
+| Key | Action |
+|-----|--------|
+| `<C-a>` | Accept suggestion |
+| `<C-n>` | Next suggestion |
+| `<C-p>` | Previous suggestion |
+| `<C-]>` | Dismiss suggestion |
 
-- `]]` - Next reference
-- `[[` - Previous reference
-- `<leader>td` - Toggle diagnostics (Trouble)
+#### Copilot Chat
 
-### GitHub Copilot Keybindings
+| Key | Action |
+|-----|--------|
+| `<leader>cc` | Toggle chat |
+| `<leader>cx` | Clear/reset chat |
+| `<leader>cq` | Quick chat (input prompt) |
+| `<leader>cp` | Prompt actions |
+| `<leader>cb` | Add buffer to chat |
+| `<leader>ce` | Explain code |
+| `<leader>cr` | Review code |
+| `<leader>cf` | Fix bug |
+| `<leader>co` | Optimize code |
 
-- `<C-a>` - Accept Copilot suggestion
-- `<C-n>` - Next Copilot suggestion
-- `<C-p>` - Previous Copilot suggestion
-- `<C-]>` - Dismiss current suggestion
+#### Noice (Messages)
 
-### Copilot Chat Keybindings
+| Key | Action |
+|-----|--------|
+| `<leader>snl` | Last message |
+| `<leader>snh` | Message history |
+| `<leader>sna` | All messages |
+| `<leader>snd` | Dismiss all |
+| `<leader>snt` | Message picker |
+| `<C-f>` / `<C-b>` | Scroll forward/backward |
 
-- `<leader>cc` - Toggle Copilot Chat
-- `<leader>cx` - Clear Chat
-- `<leader>cq` - Quick Chat
-- `<leader>cp` - Prompt Actions
-- `<leader>cb` - Add Buffer to Chat
-- `<leader>ce` - Explain Code
-- `<leader>cr` - Review Code
-- `<leader>cf` - Fix Bug
-- `<leader>co` - Optimize Code
+## Plugin List
 
-### Diagnostic Management
+### Core
 
-- `<leader>xx` - Toggle Trouble diagnostics
-- `<leader>xq` - Toggle QuickFix
-- `<leader>xl` - Toggle Location List
+| Plugin | Purpose |
+|--------|---------|
+| `lazy.nvim` | Plugin manager |
+| `mason.nvim` | LSP/formatter/linter package manager |
+| `mason-lspconfig.nvim` | Bridge between Mason and LSP |
+| `mason-tool-installer.nvim` | Auto-install Mason packages |
+| `nvim-lspconfig` | LSP server configuration |
+| `blink.cmp` | Completion engine |
+| `lazydev.nvim` | Lua development support |
+| `fidget.nvim` | LSP progress indicator |
 
-### File and Search Operations
+### Completion & AI
 
-- `<leader>ff` - Find files
-- `<leader>fw` - Find word in files
-- `<leader><leader>` - Recent files
-- `<leader>fb` - Buffers
-- `<leader>fh` - Help tags
+| Plugin | Purpose |
+|--------|---------|
+| `copilot.lua` | GitHub Copilot inline suggestions |
+| `CopilotChat.nvim` | Chat interface for Copilot |
+| `blink-copilot` | Copilot source for blink.cmp |
+| `friendly-snippets` | Snippet collection |
 
-### Git Operations
+### Editor
 
-- `<leader>gg` - Open LazyGit
+| Plugin | Purpose |
+|--------|---------|
+| `nvim-treesitter` | Syntax highlighting and parsing |
+| `nvim-treesitter-context` | Sticky context header |
+| `rainbow-delimiters.nvim` | Colorized brackets |
+| `indent-blankline.nvim` | Indentation guides |
+| `vim-illuminate` | Word under cursor highlight |
+| `which-key.nvim` | Keybinding hints |
+| `todo-comments.nvim` | TODO/FIXME highlighting |
+| `symbol-usage.nvim` | Inline reference counts |
+| `flash.nvim` | Fast cursor movement |
 
-### Terminal Operations
+### Editing
 
-- `<C-\>` - Toggle terminal
-- `<C-h/j/k/l>` in terminal - Navigate between windows
+| Plugin | Purpose |
+|--------|---------|
+| `mini.pairs` | Auto-close brackets/quotes |
+| `ts-comments.nvim` | Treesitter-aware comments |
+| `conform.nvim` | Code formatting |
+| `nvim-lint` | Code linting |
 
-### Comment Operations
+### UI
 
-- `gcc` - Toggle line comment
-- `gbc` - Toggle block comment
+| Plugin | Purpose |
+|--------|---------|
+| `tokyonight.nvim` | Colorscheme (moon style) |
+| `mini.icons` | File/type icons |
+| `bufferline.nvim` | Buffer tabs |
+| `lualine.nvim` | Statusline |
+| `snacks.nvim` | Dashboard, picker, scratch, notifier |
+| `noice.nvim` | Messages and cmdline UI |
+| `trouble.nvim` | Pretty diagnostics list |
 
-### Formatting Operations
+### File Management
 
-- `<leader>fc` - Format buffer
-- `<leader>fm` - Format current file
+| Plugin | Purpose |
+|--------|---------|
+| `neo-tree.nvim` | File explorer |
 
-### Utility Operations
+### Git
 
-- `<leader>.` - Toggle scratch buffer
-- `<leader>S` - Select scratch buffer
+| Plugin | Purpose |
+|--------|---------|
+| `gitsigns.nvim` | Inline git decorations |
+| `lazygit.nvim` | Terminal git client |
 
-## Plugin Configuration
+### Tools
 
-### Core Plugins
+| Plugin | Purpose |
+|--------|---------|
+| `toggleterm.nvim` | Floating terminal |
+| `markview.nvim` | Markdown rendering |
+| `crates.nvim` | Rust dependency manager |
+| `auto-save.nvim` | Automatic file saving |
 
-#### LSP Configuration
+## Configuration Structure
 
-- **mason.nvim** - Package manager for most LSP servers and developer tools
-- **nvim-lspconfig** - LSP configuration for various language servers
-- **blink.cmp** - Fast, lightweight completion plugin
-- **trouble.nvim** - Pretty diagnostics list
-
-#### File Management
-
-- **neo-tree.nvim** - File explorer with git integration
-- **telescope.nvim** - Fuzzy finder for files, buffers, and more
-- **conform.nvim** - Code formatter
-- **nvim-lint** - Code linter
-
-#### UI Enhancement
-
-- **lualine.nvim** - Fast and customizable status line
-- **which-key.nvim** - Show keybinding hints
-- **indent-blankline.nvim** - Indentation guides
-- **rainbow-delimiters.nvim** - Colorized delimiters
-- **vim-illuminate** - Highlight word under cursor
-
-#### Editing Enhancement
-
-- **treesitter** - Better syntax highlighting
-- **mini.pairs** - Automatic bracket completion
-- **Comment.nvim** - Comment toggling
-- **flash.nvim** - Enhanced motion commands
-- **snacks.nvim** - Collection of Neovim utilities
-
-#### AI Integration
-
-- **copilot.lua** - GitHub Copilot integration
-- **CopilotChat.nvim** - Chat with Copilot in Neovim
-- **auto-save.nvim** - Automatic file saving
+```
+nvim/
+├── init.lua                  # Entry point
+├── lua/
+│   ├── config/
+│   │   ├── init.lua          # Orchestrates config loading
+│   │   ├── options.lua       # Vim options (leader, indent, etc.)
+│   │   ├── keymaps.lua       # Global keymaps
+│   │   ├── autocmds.lua      # Auto commands (yank highlight, Copilot toggle)
+│   │   ├── diagnostics.lua   # Diagnostic settings
+│   │   └── lazy.lua          # lazy.nvim bootstrap
+│   └── plugins/
+│       ├── init.lua          # Core UI: icons, colorscheme, bufferline, neo-tree, lualine
+│       ├── lsp.lua           # LSP servers, blink.cmp, trouble, fidget, lazydev
+│       ├── ai.lua            # Copilot + CopilotChat
+│       ├── editor.lua        # Treesitter, rainbow, indent, illuminate, which-key, todos, symbols
+│       ├── editing.lua       # mini.pairs, ts-comments
+│       ├── format-lint.lua   # conform.nvim, nvim-lint
+│       ├── git.lua           # gitsigns, lazygit
+│       ├── tools.lua         # toggleterm, markview, crates
+│       ├── flash.lua         # flash.nvim
+│       ├── snacks.lua        # Dashboard, picker, scratch, notifier
+│       ├── noice.lua         # Noice.nvim
+│       └── auto-save.lua     # Auto-save
+├── undo/                     # Persistent undo files
+└── tests/                    # Health check scripts
+```
 
 ## Customization
 
 ### Adding Plugins
 
-To add new plugins, create a new file in `nvim/lua/plugins/` following the same format as the existing plugin files.
+Create a new file in `lua/plugins/` following the existing lazy.nvim spec format.
 
 ### Modifying Keybindings
 
-Edit `nvim/lua/config/keymaps.lua` to modify existing keybindings or add new ones.
+Edit `lua/config/keymaps.lua` for global keymaps. Plugin-specific keymaps live in their respective `lua/plugins/*.lua` files.
 
 ### Modifying Options
 
-Edit `nvim/lua/config/options.lua` to change Neovim options like indentation, searching behavior, and environment setup.
+Edit `lua/config/options.lua` for Neovim options (indentation, search, clipboard, etc.).
 
 ## Troubleshooting
 
 ### Plugin Installation Issues
 
-If plugins don't install properly:
-
 1. Run `:Lazy sync` to install/update plugins
-2. Check `:Lazy` for any errors and resolve them
-3. Run `./nvim/tests/checkhealth_smoke.sh` from the dotfiles repo to verify the upgraded config
+2. Check `:Lazy` for any errors
+3. Run `./nvim/tests/checkhealth_smoke.sh` from the dotfiles repo
 
 ### LSP Issues
 
-If LSP servers aren't working:
+1. Run `:Mason` to confirm servers are installed
+2. Check LSP state with `:LspInfo`
+3. Confirm Homebrew tools (`cmake-language-server`, etc.) are on `PATH`
+4. If Neovim was upgraded, run `./nvim/tests/checkhealth_smoke.sh`
 
-1. Run `:Mason` to confirm Mason-managed servers are installed
-2. Check the active LSP client state with `:LspInfo`
-3. Confirm Homebrew-managed tools such as `cmake-language-server` are on `PATH`
-4. If Neovim was just upgraded, run `./nvim/tests/checkhealth_smoke.sh`
-
-### Performance Issues
-
-If Neovim feels slow:
-
-1. Check if Treesitter parsers are installed with `:checkhealth treesitter`
-2. Verify that your terminal supports true colors
-3. Consider disabling some visual plugins if needed
-
-### Health Checks
-
-After changing plugins or upgrading Neovim, run:
-
-```bash
-./nvim/tests/checkhealth_smoke.sh
-```
-
-If `vim.lsp` warns that the log file is too large, truncate it with:
+### LSP Log Too Large
 
 ```bash
 : > "$HOME/.local/state/nvim/lsp.log"
@@ -320,10 +388,17 @@ If `vim.lsp` warns that the log file is too large, truncate it with:
 
 ### Copilot Not Working
 
-1. Run `:Copilot auth` to authenticate with GitHub Copilot
-2. Check Copilot status in the status line
+1. Run `:Copilot auth` to authenticate
+2. Check status in the statusline
 3. Ensure your GitHub account has Copilot access
+4. Check for `.disable-copilot` file in project root
+
+### Performance Issues
+
+1. Check Treesitter parsers: `:checkhealth treesitter`
+2. Verify terminal supports true colors
+3. Consider disabling visual plugins if needed
 
 ## License
 
-This configuration is open source and available under the MIT License.
+MIT

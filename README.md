@@ -6,15 +6,17 @@ Personal development environment configuration for Neovim, Zed, Kitty, IdeaVim, 
 
 ```
 dotfiles/
-├── nvim/           → ~/.config/nvim
-├── zed/            → ~/.config/zed
-├── kitty/          → ~/.config/kitty
-├── IdeaVim/        → ~/.ideavimrc
-├── PowerShell/     → PowerShell profile
-├── opencode/       → ~/.config/opencode/{opencode.jsonc,package.json}
+├── nvim/              → ~/.config/nvim
+├── zed/               → ~/.config/zed
+├── kitty/             → ~/.config/kitty
+├── IdeaVim/           → ~/.ideavimrc
+├── PowerShell/        → PowerShell profile
+├── opencode/          → ~/.config/opencode/{opencode.jsonc,package.json}
+├── github-copilot/    → Copilot version tracking
+├── docs/              → Documentation
 ├── skills/
-│   └── superpowers → ../superpowers/skills/   (symlink)
-└── superpowers/    → ~/.config/opencode/superpowers  (git clone of obra/superpowers)
+│   └── superpowers    → symlink → dotfiles/superpowers/skills
+└── superpowers/       → git clone of obra/superpowers
 ```
 
 ## Quick Install
@@ -59,10 +61,11 @@ ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
 | [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
 | PowerShell | `PowerShell/` | Shell profile (Windows) |
+| GitHub Copilot | `github-copilot/` | Copilot version tracking |
 
 ## Neovim
 
-Requires Neovim 0.10+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
+Requires Neovim 0.12+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
 
 Install language servers:
 ```
@@ -70,15 +73,17 @@ Install language servers:
 ```
 
 **Key plugins:**
-- **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML)
+- **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML, CMake)
 - **Completion**: `blink.cmp`
 - **Syntax**: `nvim-treesitter`
 - **File explorer**: `neo-tree.nvim`
-- **Fuzzy finder**: `telescope.nvim`
+- **Fuzzy finder**: `snacks.picker`
 - **Formatter**: `conform.nvim`
 - **Theme**: `tokyonight.nvim`
 - **Statusline**: `lualine.nvim`
-- **AI**: `avante.nvim`
+- **AI**: `copilot.lua` + `CopilotChat.nvim`
+
+See [nvim/README.md](nvim/README.md) for full documentation.
 
 ## Update Superpowers
 
