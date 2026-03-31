@@ -86,12 +86,12 @@ return {
 				desc = "Quick Chat",
 				mode = { "n", "v" },
 			},
-			-- Prompt actions
+			-- Prompt actions (uses vim.ui.select → snacks handles via ui_select=true)
 			{
 				"<leader>cp",
 				function()
 					local actions = require("CopilotChat.actions")
-					require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+					actions.pick(actions.prompt_actions())
 				end,
 				desc = "Prompt Actions",
 				mode = { "n", "v" },

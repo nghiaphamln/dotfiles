@@ -9,6 +9,12 @@ return {
 		picker = {
 			enabled = true,
 			ui_select = true,
+			sources = {
+				files = {
+					hidden = true,
+					ignored = false,
+				},
+			},
 		},
 		quickfile = { enabled = true },
 		scope = { enabled = true },
@@ -77,19 +83,26 @@ return {
 		snacks.picker.setup()
 	end,
 	keys = {
+		-- Scratch buffers
+		{ "<leader>.", function() require("snacks").scratch() end, desc = "Toggle Scratch Buffer" },
+		{ "<leader>S", function() require("snacks").scratch.select() end, desc = "Select Scratch Buffer" },
+		-- File finding
+		{ "<leader>ff", function() require("snacks").picker.files() end, desc = "Find Files" },
+		{ "<leader>fw", function() require("snacks").picker.grep() end, desc = "Find Word" },
+		{ "<leader><leader>", function() require("snacks").picker.recent() end, desc = "Recent Files" },
+		{ "<leader>fb", function() require("snacks").picker.buffers() end, desc = "Buffers" },
+		{ "<leader>fh", function() require("snacks").picker.help() end, desc = "Help Tags" },
+		-- TODO search
 		{
-			"<leader>.",
+			"<leader>ft",
 			function()
-				require("snacks").scratch()
+				require("snacks").picker.grep({
+					search = "TODO|FIXME|HACK|NOTE|PERF|WARNING",
+					regex = true,
+					title = "TODOs",
+				})
 			end,
-			desc = "Toggle Scratch Buffer",
-		},
-		{
-			"<leader>S",
-			function()
-				require("snacks").scratch.select()
-			end,
-			desc = "Select Scratch Buffer",
+			desc = "Find TODOs",
 		},
 	},
 }

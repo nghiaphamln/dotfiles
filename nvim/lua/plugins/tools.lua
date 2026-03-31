@@ -41,12 +41,12 @@ return {
 					{
 						icon = "  ",
 						desc = "Recently opened files",
-						action = "Telescope oldfiles",
+						action = "lua Snacks.picker.recent()",
 					},
 					{
 						icon = "  ",
 						desc = "Find file",
-						action = "Telescope find_files",
+						action = "lua Snacks.picker.files()",
 					},
 					{
 						icon = "  ",
@@ -56,7 +56,7 @@ return {
 					{
 						icon = "  ",
 						desc = "Find word",
-						action = "Telescope live_grep",
+						action = "lua Snacks.picker.grep()",
 					},
 					{
 						icon = "  ",
