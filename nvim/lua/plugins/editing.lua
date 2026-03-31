@@ -1,5 +1,6 @@
+-- Editing enhancements: auto pairs and smart comments
 return {
-	-- Auto pairs - smarter than nvim-autopairs
+	-- Auto pairs
 	{
 		"echasnovski/mini.pairs",
 		event = "VeryLazy",

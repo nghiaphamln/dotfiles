@@ -228,10 +228,10 @@ return {
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "gi", function()
-						require("telescope.builtin").lsp_implementations()
+						require("snacks").picker.lsp_implementations()
 					end, opts)
 					vim.keymap.set("n", "gu", function()
-						require("telescope.builtin").lsp_references()
+						require("snacks").picker.lsp_references()
 					end, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -247,7 +247,7 @@ return {
 						vim.cmd("silent! normal! N")
 					end, opts)
 
-					if client and client:supports_method("textDocument/inlayHint") and vim.lsp.inlay_hint then
+					if client and vim.lsp.inlay_hint and vim.lsp.buf_is_attached(ev.buf, client.id) and client.server_capabilities.inlayHintProvider then
 						vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 					end
 
@@ -353,6 +353,30 @@ return {
 					"fallback",
 				},
 				["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+			},
+		},
+	},
+
+	-- Fidget: LSP progress notifications
+	{
+		"j-hui/fidget.nvim",
+		event = "LspAttach",
+		opts = {
+			progress = {
+				poll_rate = 0,
+				suppress_on_insert = true,
+			},
+		},
+	},
+
+	-- Lazydev: Neovim Lua development support
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		cmd = "LazyDev",
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 			},
 		},
 	},

@@ -6,12 +6,10 @@ local M = {}
 function M.setup()
 	-- Load options first (before lazy.nvim initialization)
 	require("config.options")
+	require("config.diagnostics")
 
 	-- Initialize lazy.nvim plugin manager
 	require("config.lazy")
-
-	-- Load utilities
-	require("config.utils")
 
 	-- Load keymaps and autocmds after plugins load
 	vim.api.nvim_create_autocmd("User", {

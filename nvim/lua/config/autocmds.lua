@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Auto-create missing undo directory
-local undo_dir = os.getenv("HOME") .. "/.config/nvim/undo"
+local undo_dir = vim.fn.stdpath("config") .. "/undo"
 if vim.fn.isdirectory(undo_dir) == 0 then
 	vim.fn.mkdir(undo_dir, "p")
 end

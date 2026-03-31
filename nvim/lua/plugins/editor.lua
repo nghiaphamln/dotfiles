@@ -102,12 +102,64 @@ return {
 		},
 	},
 
+	-- Todo Comments: Highlight TODO/FIXME/HACK/NOTE
+	{
+		"folke/todo-comments.nvim",
+		event = "VeryLazy",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{ "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo" },
+			{ "[t", function() require("todo-comments").jump_prev() end, desc = "Prev Todo" },
+			{ "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Find Todos" },
+		},
+		opts = {},
+	},
+
 	-- Symbol Usage: Highlight symbol usage in the buffer
 	{
 		"Wansmer/symbol-usage.nvim",
-		event = "BufReadPre",
+		event = "LspAttach",
 		config = function()
-			require("symbol-usage").setup()
+			require("symbol-usage").setup({
+				request_pending_text = false,
+				text_format = function(symbol)
+					local res = {}
+					local round_start = { "", "SymbolUsageRounding" }
+					local round_end = { "", "SymbolUsageRounding" }
+
+					if symbol.references and symbol.references > 0 then
+						table.insert(res, round_start)
+						table.insert(res, { "󰌹 " .. symbol.references, "SymbolUsageRef" })
+						table.insert(res, round_end)
+					end
+
+					if symbol.definition and symbol.definition > 0 then
+						if #res > 0 then table.insert(res, { " ", "NonText" }) end
+						table.insert(res, round_start)
+						table.insert(res, { "󰳽 " .. symbol.definition, "SymbolUsageDef" })
+						table.insert(res, round_end)
+					end
+
+					if symbol.implementation and symbol.implementation > 0 then
+						if #res > 0 then table.insert(res, { " ", "NonText" }) end
+						table.insert(res, round_start)
+						table.insert(res, { "󰡱 " .. symbol.implementation, "SymbolUsageImpl" })
+						table.insert(res, round_end)
+					end
+
+					return res
+				end,
+			})
+
+			-- Auto-refresh sau khi LSP attach để tránh stuck loading khi gopls index xong
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("SymbolUsageRefresh", { clear = true }),
+				callback = function()
+					vim.defer_fn(function()
+						require("symbol-usage").refresh()
+					end, 2000)
+				end,
+			})
 		end,
 	},
 }
