@@ -30,7 +30,6 @@ return {
 	-- Copilot Chat
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
 		cmd = "CopilotChat",
 		dependencies = {
 			{ "zbirenbaum/copilot.lua" },

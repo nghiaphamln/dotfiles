@@ -1,4 +1,4 @@
--- Miscellaneous Tools: Terminal, Dashboard, Markdown, Crates
+-- Miscellaneous Tools: Terminal, Markdown, Crates
 return {
 	-- Toggleterm: Terminal
 	{
@@ -21,61 +21,11 @@ return {
 		},
 	},
 
-	-- Dashboard: Startup screen
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {
-			theme = "hyper",
-			config = {
-				header = {
-					"███╗   ██╗ ██████╗ ██╗  ██╗██╗ █████╗     ██████╗ ███╗   ███╗",
-					"████╗  ██║██╔════╝ ██║  ██║██║██╔══██╗    ██╔══██╗████╗ ████║",
-					"██╔██╗ ██║██║  ███╗███████║██║███████║    ██████╔╝██╔████╔██║",
-					"██║╚██╗██║██║   ██║██╔══██║██║██╔══██║    ██╔═══╝ ██║╚██╔╝██║",
-					"██║ ╚████║╚██████╔╝██║  ██║██║██║  ██║    ██║     ██║ ╚═╝ ██║",
-					"╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝    ╚═╝     ╚═╝     ╚═╝",
-				},
-				center = {
-					{
-						icon = "  ",
-						desc = "Recently opened files",
-						action = "lua Snacks.picker.recent()",
-					},
-					{
-						icon = "  ",
-						desc = "Find file",
-						action = "lua Snacks.picker.files()",
-					},
-					{
-						icon = "  ",
-						desc = "File explorer",
-						action = "Neotree toggle",
-					},
-					{
-						icon = "  ",
-						desc = "Find word",
-						action = "lua Snacks.picker.grep()",
-					},
-					{
-						icon = "  ",
-						desc = "Open config",
-						action = "edit $MYVIMRC",
-					},
-				},
-			},
-		},
-	},
-
 	-- Render Markdown: Better markdown display
 	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		event = "VeryLazy",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		opts = {
-			latex = { enabled = false },
-		},
+		"OXY2DEV/markview.nvim",
+		lazy = false,
+		opts = {},
 	},
 
 	-- Crates: Rust dependency manager

@@ -1,5 +1,18 @@
--- Minimal plugins: colorscheme, file manager, statusline
+-- Minimal plugins: colorscheme, icons, file manager, statusline
 return {
+	-- Icons: mini.icons (replaces nvim-web-devicons, mocks its API)
+	{
+		"echasnovski/mini.icons",
+		lazy = false,
+		priority = 900,
+		opts = {},
+		config = function(_, opts)
+			require("mini.icons").setup(opts)
+			-- Mock nvim-web-devicons API so all plugins using it work transparently
+			require("mini.icons").mock_nvim_web_devicons()
+		end,
+	},
+
 	-- Colorscheme
 	{
     "folke/tokyonight.nvim",
@@ -111,10 +124,13 @@ return {
 		},
 		config = function(_, opts)
 			require("neo-tree").setup(opts)
+			-- Only auto-open when nvim is launched with a file argument (not on dashboard)
 			vim.api.nvim_create_autocmd("VimEnter", {
 				group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", {}),
 				callback = function()
-					vim.cmd("Neotree show")
+					if vim.fn.argc() > 0 then
+						vim.cmd("Neotree show")
+					end
 				end,
 			})
 		end,

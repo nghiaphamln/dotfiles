@@ -4,6 +4,35 @@ return {
 	lazy = false,
 	opts = {
 		bigfile = { enabled = true },
+		dashboard = {
+			enabled = true,
+			preset = {
+				header = [[
+███╗   ██╗ ██████╗ ██╗  ██╗██╗ █████╗     ██████╗ ███╗   ███╗
+████╗  ██║██╔════╝ ██║  ██║██║██╔══██╗    ██╔══██╗████╗ ████║
+██╔██╗ ██║██║  ███╗███████║██║███████║    ██████╔╝██╔████╔██║
+██║╚██╗██║██║   ██║██╔══██║██║██╔══██║    ██╔═══╝ ██║╚██╔╝██║
+██║ ╚████║╚██████╔╝██║  ██║██║██║  ██║    ██║     ██║ ╚═╝ ██║
+╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝    ╚═╝     ╚═╝     ╚═╝]],
+				keys = {
+					{ icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.picker.files()" },
+					{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.picker.recent()" },
+					{ icon = " ", key = "e", desc = "File Explorer", action = ":Neotree toggle" },
+					{ icon = " ", key = "w", desc = "Find Word", action = ":lua Snacks.picker.grep()" },
+					{ icon = " ", key = "c", desc = "Open Config", action = ":edit $MYVIMRC" },
+					{ icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+				},
+			},
+			sections = {
+				{ section = "header" },
+				{ section = "keys", gap = 1, padding = 1 },
+				{ section = "recent_files", indent = 2, padding = 1 },
+				{ section = "startup" },
+			},
+		},
+		explorer = { enabled = false },
+		image = { enabled = false }, -- disabled due to languagetree nil node bug in Neovim 0.12
 		input = { enabled = true },
 		notifier = { enabled = true },
 		picker = {
