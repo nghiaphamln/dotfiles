@@ -46,7 +46,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 ### Tools
 
-- **Snacks Terminal** — Floating terminal (`<C-\>`)
+- **Toggleterm** — Floating terminal (`<C-\>`)
 - **Crates.nvim** — Rust dependency management
 - **Markview.nvim** — Rendered markdown preview
 - **Scratch Buffers** — Quick notes via Snacks (`<leader>.`)
@@ -315,7 +315,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 | Plugin | Purpose |
 |--------|---------|
-| `snacks.nvim` terminal | Floating terminal |
+| `toggleterm.nvim` | Floating terminal |
 | `markview.nvim` | Markdown rendering |
 | `crates.nvim` | Rust dependency manager |
 | `auto-save.nvim` | Automatic file saving |
@@ -341,7 +341,7 @@ nvim/
 │       ├── editing.lua       # mini.pairs, ts-comments
 │       ├── format-lint.lua   # conform.nvim, nvim-lint
 │       ├── git.lua           # gitsigns, lazygit
-│       ├── tools.lua         # markview, crates
+│       ├── tools.lua         # toggleterm, markview, crates
 │       ├── flash.lua         # flash.nvim
 │       ├── snacks.lua        # Dashboard, picker, scratch, notifier
 │       ├── noice.lua         # Noice.nvim

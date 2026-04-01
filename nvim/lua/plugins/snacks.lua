@@ -112,19 +112,6 @@ return {
 		snacks.picker.setup()
 	end,
 	keys = {
-		{
-			"<C-\\>",
-			mode = { "n", "t" },
-			function()
-				require("snacks").terminal.toggle(nil, {
-					win = { style = "terminal" },
-					start_insert = true,
-					auto_insert = true,
-					auto_close = true,
-				})
-			end,
-			desc = "Toggle Terminal",
-		},
 		-- Scratch buffers
 		{ "<leader>.", function() require("snacks").scratch() end, desc = "Toggle Scratch Buffer" },
 		{ "<leader>S", function() require("snacks").scratch.select() end, desc = "Select Scratch Buffer" },
