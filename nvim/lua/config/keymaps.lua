@@ -36,7 +36,7 @@ map("n", "<leader>fm", "<Cmd>lua require('conform').format({ async = true })<CR>
 -- gcc - toggle line comment
 -- gbc - toggle block comment
 
--- Terminal (handled by toggleterm plugin)
+	-- Terminal (handled by snacks.nvim)
 
 -- Close current buffer safely (don't quit Neovim if it's the last buffer)
 map("n", "<leader>bc", function()

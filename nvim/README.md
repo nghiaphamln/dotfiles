@@ -7,12 +7,12 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 ### Core
 
 - **LSP** — Full language support for Lua, Rust, Go, Python, C/C++, CMake, YAML
-- **Smart Completion** — Blink.cmp with LSP, snippets, buffer, and Copilot sources
+- **Smart Completion** — Blink.cmp with LSP, snippets, path, and buffer sources
 - **AI Integration** — GitHub Copilot inline suggestions + CopilotChat.nvim
 - **Syntax Highlighting** — Treesitter with 25+ parsers
 - **File Explorer** — Neo-tree with git integration
 - **Fuzzy Finding** — Snacks.picker for files, buffers, grep, LSP symbols, help
-- **Auto-save** — Saves on InsertLeave, BufLeave, FocusLost, and text changes
+- **Auto-save** — Saves on BufLeave, QuitPre, and VimSuspend
 
 ### UI & UX
 
@@ -46,7 +46,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 ### Tools
 
-- **Toggleterm** — Floating terminal (`<C-\>`)
+- **Snacks Terminal** — Floating terminal (`<C-\>`)
 - **Crates.nvim** — Rust dependency management
 - **Markview.nvim** — Rendered markdown preview
 - **Scratch Buffers** — Quick notes via Snacks (`<leader>.`)
@@ -261,7 +261,6 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 |--------|---------|
 | `copilot.lua` | GitHub Copilot inline suggestions |
 | `CopilotChat.nvim` | Chat interface for Copilot |
-| `blink-copilot` | Copilot source for blink.cmp |
 | `friendly-snippets` | Snippet collection |
 
 ### Editor
@@ -316,7 +315,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 | Plugin | Purpose |
 |--------|---------|
-| `toggleterm.nvim` | Floating terminal |
+| `snacks.nvim` terminal | Floating terminal |
 | `markview.nvim` | Markdown rendering |
 | `crates.nvim` | Rust dependency manager |
 | `auto-save.nvim` | Automatic file saving |
@@ -342,7 +341,7 @@ nvim/
 │       ├── editing.lua       # mini.pairs, ts-comments
 │       ├── format-lint.lua   # conform.nvim, nvim-lint
 │       ├── git.lua           # gitsigns, lazygit
-│       ├── tools.lua         # toggleterm, markview, crates
+│       ├── tools.lua         # markview, crates
 │       ├── flash.lua         # flash.nvim
 │       ├── snacks.lua        # Dashboard, picker, scratch, notifier
 │       ├── noice.lua         # Noice.nvim

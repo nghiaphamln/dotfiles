@@ -11,7 +11,7 @@ return {
 			suggestion = {
 				enabled = true,
 				auto_trigger = true,
-				hide_during_completion = false,
+				hide_during_completion = true,
 				keymap = {
 					accept = "<C-a>", -- Accept suggestion with Ctrl+a
 					next = "<C-n>", -- Next suggestion with Ctrl+n
@@ -187,31 +187,5 @@ return {
 				end,
 			})
 		end,
-	},
-
-	-- Copilot CMP source integration (for completion)
-	{
-		"saghen/blink.cmp",
-		optional = true,
-		dependencies = { "fang2hou/blink-copilot" },
-		opts = {
-			fuzzy = {
-				implementation = "prefer_rust", -- Use Rust implementation with fallback to Lua
-				prebuilt_binaries = {
-					force_version = "latest", -- Force using latest prebuilt binaries
-				},
-			},
-			sources = {
-				default = { "copilot" },
-				providers = {
-					copilot = {
-						name = "copilot",
-						module = "blink-copilot",
-						score_offset = 100,
-						async = true,
-					},
-				},
-			},
-		},
 	},
 }

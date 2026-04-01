@@ -1,13 +1,13 @@
 return {
 	"okuuva/auto-save.nvim",
 	cmd = "ASToggle",
-	event = { "InsertLeave", "TextChanged" },
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		enabled = true,
 		trigger_events = {
-			immediate_save = { "BufLeave", "FocusLost", "QuitPre", "VimSuspend" },
-			defer_save = { "InsertLeave", "TextChanged" },
-			cancel_deferred_save = { "InsertEnter" },
+			immediate_save = { "BufLeave", "QuitPre", "VimSuspend" },
+			defer_save = {},
+			cancel_deferred_save = {},
 		},
 		condition = function(buf)
 			local filter = {
