@@ -41,6 +41,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 - **mini.pairs** — Auto-close brackets and quotes
 - **ts-comments.nvim** — Treesitter-aware comment toggling
+- **nvim-spider** — Subword-aware `w/e/b/ge` motions for code navigation
 - **Flash.nvim** — Rapid cursor movement with `;`
 - **Todo Comments** — Highlight and jump between TODO/FIXME/HACK/NOTE
 
@@ -177,6 +178,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 | Key | Action |
 |-----|--------|
+| `w` / `e` / `b` / `ge` | Spider subword motions |
 | `;` | Flash jump |
 | `<C-space>` | Flash Treesitter selection |
 | `j` / `k` | Move by display line (wrap-aware) |
@@ -283,6 +285,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 |--------|---------|
 | `mini.pairs` | Auto-close brackets/quotes |
 | `ts-comments.nvim` | Treesitter-aware comments |
+| `nvim-spider` | Subword-aware word motions |
 | `conform.nvim` | Code formatting |
 | `nvim-lint` | Code linting |
 
