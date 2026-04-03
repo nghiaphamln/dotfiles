@@ -6,7 +6,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 ### Core
 
-- **LSP** — Full language support for Lua, Rust, Go, Python, C/C++, CMake, YAML
+- **LSP** — Full language support for Lua, Rust, Go, Python, C/C++, CMake, YAML, .NET/C#
 - **Smart Completion** — Blink.cmp with LSP, snippets, path, and buffer sources
 - **AI Integration** — GitHub Copilot inline suggestions + CopilotChat.nvim
 - **Syntax Highlighting** — Treesitter with 25+ parsers
@@ -34,7 +34,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 ### Formatting & Linting
 
-- **Conform.nvim** — Async formatting (stylua, black, isort, rustfmt, gofmt, clang-format, cmake_format, prettier)
+- **Conform.nvim** — Async formatting (stylua, csharpier, black, isort, rustfmt, gofmt, clang-format, cmake_format, prettier)
 - **nvim-lint** — Auto-lint on write (pylint, clippy, selene, golangci-lint, cppcheck)
 
 ### Editing
@@ -69,7 +69,9 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 2. **Node.js + npm** — Needed for pyright, prettier, mermaid-cli, tree-sitter-cli
 
-3. **macOS tools** (managed outside Mason via Homebrew/npm/pip)
+3. **.NET SDK** — Needed for Roslyn language server support
+
+4. **macOS tools** (managed outside Mason via Homebrew/npm/pip)
 
    ```bash
    brew install clang-format cmake-language-server ghostscript stylua
@@ -81,7 +83,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    - `cmake-language-server` is installed with Homebrew because current Mason packaging rejects Python 3.14
    - `cmake-format` comes from the `cmakelang` Python package
 
-4. **Mason-managed tools** (installed automatically on first run)
+5. **Mason-managed tools** (installed automatically on first run)
 
    | Tool | Language |
    |------|----------|
@@ -91,9 +93,15 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    | `pyright` | Python |
    | `yaml-language-server` | YAML |
    | `clangd` | C/C++ |
+   | `roslyn` | .NET / C# |
    | `clang-format` | C/C++ |
+   | `csharpier` | .NET / C# |
    | `stylua` | Lua |
    | `cppcheck` | C/C++ |
+
+   Notes:
+   - `roslyn` is installed via an extra Mason registry: `github:Crashdummyy/mason-registry`
+   - `dotnet` must be available in `PATH` for Roslyn to run
 
 ### Setup
 
@@ -141,7 +149,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 | `<C-s>` | Save file |
 | `<Esc>` | Clear search highlights |
 | `<leader>e` | Toggle file explorer (Neo-tree) |
-| `<leader>fm` | Format current file |
+| `<leader>fc` | Format current file |
 | `<leader>ff` | Find files |
 | `<leader>fw` | Find word (grep) |
 | `<leader><leader>` | Recent files |
@@ -195,9 +203,6 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 | `K` | Hover documentation |
 | `<leader>ca` | Code actions |
 | `<leader>rn` | Rename symbol |
-| `[d` | Previous diagnostic |
-| `]d` | Next diagnostic |
-| `]]` / `[[` | Next / previous reference |
 | `<leader>td` | Toggle Trouble diagnostics |
 
 #### Diagnostics
@@ -288,6 +293,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 | `nvim-spider` | Subword-aware word motions |
 | `conform.nvim` | Code formatting |
 | `nvim-lint` | Code linting |
+| `roslyn.nvim` | .NET / C# language support |
 
 ### UI
 
@@ -380,7 +386,8 @@ Edit `lua/config/options.lua` for Neovim options (indentation, search, clipboard
 1. Run `:Mason` to confirm servers are installed
 2. Check LSP state with `:LspInfo`
 3. Confirm Homebrew tools (`cmake-language-server`, etc.) are on `PATH`
-4. If Neovim was upgraded, run `./nvim/tests/checkhealth_smoke.sh`
+4. For `.NET/C#`, verify `dotnet --version` works and open a `.cs` file inside a folder containing a `.sln` or `.csproj`
+5. If Neovim was upgraded, run `./nvim/tests/checkhealth_smoke.sh`
 
 ### LSP Log Too Large
 

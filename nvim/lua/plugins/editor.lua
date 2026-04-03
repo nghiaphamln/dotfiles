@@ -11,6 +11,7 @@ return {
 				"lua", "vim", "vimdoc", "bash",
 				"markdown", "markdown_inline",
 				"python", "rust", "go",
+				"c_sharp",
 				"json", "yaml", "c", "cpp", "cmake",
 				"css", "html", "javascript",
 				"latex", "regex", "scss", "svelte", "tsx", "typst", "vue",

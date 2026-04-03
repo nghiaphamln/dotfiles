@@ -16,6 +16,7 @@ return {
 		},
 		opts = {
 			formatters_by_ft = {
+				cs = { "csharpier" },
 				lua = { "stylua" },
 				python = { "black", "isort" },
 				rust = { "rustfmt" },

@@ -6,7 +6,12 @@ return {
 		"mason-org/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
-		opts = {},
+		opts = {
+			registries = {
+				"github:mason-org/mason-registry",
+				"github:Crashdummyy/mason-registry",
+			},
+		},
 	},
 
 	-- Mason Tool Installer: automatically install formatters and linters
@@ -21,7 +26,9 @@ return {
 					"pyright",
 					"yaml-language-server",
 					"clangd",
+					"roslyn",
 					"stylua",
+					"csharpier",
 					"clang-format",
 					"cppcheck",
 				},
@@ -47,6 +54,56 @@ return {
 				},
 				automatic_enable = false,
 			},
+	},
+
+	-- Roslyn: C# and Razor language server integration
+	{
+		"seblyng/roslyn.nvim",
+		ft = { "cs", "razor" },
+		dependencies = { "mason-org/mason.nvim" },
+		opts = {
+			filewatching = "auto",
+			broad_search = true,
+			lock_target = false,
+			silent = false,
+		},
+		config = function(_, opts)
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			require("roslyn").setup(opts)
+			vim.lsp.config("roslyn", {
+				capabilities = vim.tbl_deep_extend("force", capabilities, {
+					textDocument = {
+						diagnostic = {
+							dynamicRegistration = true,
+						},
+					},
+				}),
+				settings = {
+					["csharp|background_analysis"] = {
+						dotnet_analyzer_diagnostics_scope = "openFiles",
+						dotnet_compiler_diagnostics_scope = "openFiles",
+					},
+					["csharp|completion"] = {
+						dotnet_show_completion_items_from_unimported_namespaces = true,
+						dotnet_show_name_completion_suggestions = true,
+					},
+					["csharp|inlay_hints"] = {
+						csharp_enable_inlay_hints_for_implicit_object_creation = true,
+						csharp_enable_inlay_hints_for_implicit_variable_types = true,
+						csharp_enable_inlay_hints_for_types = true,
+						dotnet_enable_inlay_hints_for_parameters = true,
+						dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+					},
+					["csharp|code_lens"] = {
+						dotnet_enable_references_code_lens = true,
+					},
+					["csharp|formatting"] = {
+						dotnet_organize_imports_on_format = true,
+					},
+				},
+			})
+		end,
 	},
 
 	-- LSPConfig: configure language servers
@@ -235,18 +292,6 @@ return {
 					end, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-					vim.keymap.set("n", "]]", function()
-						vim.lsp.buf.document_highlight()
-						vim.cmd("silent! normal! n")
-					end, opts)
-					vim.keymap.set("n", "[[", function()
-						vim.lsp.buf.document_highlight()
-						vim.cmd("silent! normal! N")
-					end, opts)
-
 					if client and vim.lsp.inlay_hint and vim.lsp.buf_is_attached(ev.buf, client.id) and client.server_capabilities.inlayHintProvider then
 						vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 					end
@@ -272,11 +317,7 @@ return {
 				{ "K", desc = "Hover" },
 				{ "<leader>rn", desc = "Rename" },
 				{ "<leader>ca", desc = "Code action" },
-				{ "[d", desc = "Previous diagnostic" },
-				{ "]d", desc = "Next diagnostic" },
-				{ "]]", desc = "Next reference" },
-				{ "[[", desc = "Prev reference" },
-				{ "<leader>t", group = "toggle" },
+					{ "<leader>t", group = "toggle" },
 				{ "<leader>td", desc = "Toggle diagnostics (Trouble)" },
 			})
 		end,

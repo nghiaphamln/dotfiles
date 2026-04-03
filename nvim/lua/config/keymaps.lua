@@ -29,9 +29,6 @@ map("n", "<Esc>", "<Cmd>nohl<CR>", opts)
 -- File Explorer
 map("n", "<leader>e", "<Cmd>Neotree toggle<CR>", opts)
 
--- Format
-map("n", "<leader>fm", "<Cmd>lua require('conform').format({ async = true })<CR>", opts)
-
 -- Comment (handled by Comment.nvim plugin)
 -- gcc - toggle line comment
 -- gbc - toggle block comment
