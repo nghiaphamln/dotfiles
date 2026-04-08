@@ -13,10 +13,7 @@ dotfiles/
 ├── PowerShell/        → PowerShell profile
 ├── opencode/          → ~/.config/opencode/{opencode.jsonc,package.json}
 ├── github-copilot/    → Copilot version tracking
-├── docs/              → Documentation
-├── skills/
-│   └── superpowers    → symlink → dotfiles/superpowers/skills
-└── superpowers/       → git clone of obra/superpowers
+└── docs/              → Documentation
 ```
 
 ## Quick Install
@@ -45,11 +42,11 @@ mkdir -p ~/.config/opencode
 
 ln -sf ~/dotfiles/opencode/opencode.jsonc ~/.config/opencode/opencode.jsonc
 ln -sf ~/dotfiles/opencode/package.json ~/.config/opencode/package.json
-ln -sf ~/dotfiles/skills ~/.config/opencode/skills
-ln -sf ~/dotfiles/superpowers ~/.config/opencode/superpowers
 
 # Set API keys in ~/.zshenv — see opencode/README.md
 ```
+
+Superpowers is installed by OpenCode from the `plugin` entry in `opencode/opencode.jsonc`.
 
 ## Tools
 
@@ -88,5 +85,5 @@ See [nvim/README.md](nvim/README.md) for full documentation.
 ## Update Superpowers
 
 ```bash
-cd ~/dotfiles/superpowers && git pull
+restart OpenCode
 ```

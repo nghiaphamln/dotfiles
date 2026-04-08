@@ -1,23 +1,21 @@
 # OpenCode Configuration
 
-This directory contains the OpenCode configuration that is symlinked into `~/.config/opencode` from this dotfiles repo.
+This directory contains the OpenCode configuration symlinked into `~/.config/opencode` from this dotfiles repo.
 
 The current setup is centered around:
 - a global `opencode.jsonc` config stored in dotfiles
 - a custom OpenAI-compatible provider named `tenefic`
-- shared skills loaded from the dotfiles-managed `skills/` and `superpowers/` directories
-- an optional `package.json` in the config directory for local plugin or custom tool dependencies
+- the `superpowers` OpenCode plugin installed from git via the `plugin` config key
+- an optional `package.json` in the config directory for plugin-related dependencies
 
 ## Current Layout
 
 ```text
 dotfiles/
-├── opencode/
-│   ├── opencode.jsonc
-│   ├── package.json
-│   └── README.md
-├── skills/
-└── superpowers/
+└── opencode/
+    ├── opencode.jsonc
+    ├── package.json
+    └── README.md
 ```
 
 Runtime layout:
@@ -25,9 +23,7 @@ Runtime layout:
 ```text
 ~/.config/opencode/
 ├── opencode.jsonc  -> /path/to/your/dotfiles/opencode/opencode.jsonc
-├── package.json    -> /path/to/your/dotfiles/opencode/package.json
-├── skills          -> /path/to/your/dotfiles/skills
-└── superpowers     -> /path/to/your/dotfiles/superpowers
+└── package.json    -> /path/to/your/dotfiles/opencode/package.json
 ```
 
 ## What This Repo Configures
@@ -40,6 +36,7 @@ OpenCode docs primarily show `~/.config/opencode/opencode.json`, but OpenCode su
 
 Current config responsibilities:
 - declare the custom provider `tenefic`
+- install `superpowers` via the `plugin` array
 - define the models exposed through that provider
 - attach per-model cost metadata for OpenCode features that read pricing from model definitions
 - configure model limits, modalities, and variants
@@ -66,22 +63,21 @@ It is configured as a custom OpenAI-compatible provider via:
 
 Both values are resolved from environment variables.
 
-### Skills
+### Plugins and skills
 
-This setup expects OpenCode skills to be available through the symlinked `skills/` directory.
+`opencode.jsonc` installs `superpowers` directly from git:
 
-`superpowers/` is also symlinked because the current workflow depends on the Superpowers skill collection being available from dotfiles.
+```json
+{
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+}
+```
 
-In practice, this means OpenCode can discover skills from the config directory without copying those files into `~/.config/opencode` manually.
+OpenCode loads the plugin, and the plugin registers its own skills at runtime. No manual `skills/` or `superpowers/` symlinks are required.
 
 ### package.json
 
-`package.json` exists in the config directory so local plugins or custom tools can declare dependencies if needed.
-
-Important note about the current state:
-- the repo currently has a dependency on `@opencode-ai/plugin`
-- there are no local plugin files currently present in the active OpenCode plugin directories for this setup
-- so the dependency is currently optional for day-to-day use unless local plugins are added later
+`package.json` exists in the config directory so OpenCode can resolve plugin-related dependencies if needed.
 
 ## Environment Variables
 
@@ -112,7 +108,7 @@ OpenCode variable substitution uses the form:
 
 Make sure these variables are set before launching OpenCode, because this config references them directly.
 
-## Symlink Setup
+## Setup
 
 Create the config directory if needed:
 
@@ -126,9 +122,9 @@ Create or refresh symlinks:
 DOTFILES_DIR="/path/to/your/dotfiles"
 ln -sf "$DOTFILES_DIR/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
 ln -sf "$DOTFILES_DIR/opencode/package.json" ~/.config/opencode/package.json
-ln -sf "$DOTFILES_DIR/skills" ~/.config/opencode/skills
-ln -sf "$DOTFILES_DIR/superpowers" ~/.config/opencode/superpowers
 ```
+
+Then restart OpenCode so it installs or refreshes the `superpowers` plugin from the configured git source.
 
 ## How OpenCode Loads This
 
@@ -142,20 +138,13 @@ Useful behavior from current OpenCode docs:
 For this repo, that means:
 - this directory provides the global baseline
 - project repos can still override model, permissions, commands, or other settings
-- skill discovery is influenced by the symlinked skill directories, not only by `opencode.jsonc`
+- skill discovery for `superpowers` comes from the plugin, not from dotfiles-managed skill directories
 
 ## Plugins And Dependencies
 
-OpenCode supports two different plugin-related paths:
+OpenCode supports plugins declared in config via the `plugin` key and local plugins placed in config plugin directories.
 
-1. npm plugins declared in config via the `plugin` key
-2. local plugins placed in config plugin directories such as `~/.config/opencode/plugins/`
-
-This repo currently does not declare any npm plugins in `opencode.jsonc`.
-
-This setup also does not currently have local plugin source files in the active OpenCode plugin directories.
-
-That means the current `package.json` is best treated as dependency scaffolding for future local plugin or custom tool development, not as proof that plugins are active today.
+This repo uses the config-based approach for `superpowers`.
 
 ## Verification Commands
 
@@ -165,11 +154,13 @@ Check the symlinks actually in use:
 ls -la ~/.config/opencode
 ```
 
-Inspect the resolved OpenCode config:
+Check that the plugin is present in the resolved config:
 
 ```bash
 opencode debug config
 ```
+
+Look for `plugin` including `superpowers@git+https://github.com/obra/superpowers.git`.
 
 Inspect available models from the UI:
 
@@ -186,6 +177,7 @@ Inspect credentials or connect a provider interactively:
 ## Notes About The Current State
 
 - The config is valid for a custom provider setup.
+- The config installs `superpowers` via OpenCode's native plugin mechanism.
 - The repo currently sets `model` to `tenefic/gpt-5.4` and `small_model` to `tenefic/gpt-5.4-mini`.
 - The OpenCode schema supports per-model `cost` metadata under `provider.<name>.models.<model>.cost`.
 - This repo currently fills that metadata using OpenAI public pricing as the reference source, not guaranteed Tenefic billing rates.
