@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "tenefic/gpt-5.2",
+  "model": "tenefic/gpt-5.4",
   "small_model": "tenefic/gpt-5.4-mini",
   "provider": {
     "tenefic": {

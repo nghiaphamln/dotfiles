@@ -45,7 +45,7 @@ Current config responsibilities:
 - inject provider credentials through environment variables
 
 Current default model selection:
-- `model`: `tenefic/gpt-5.2`
+- `model`: `tenefic/gpt-5.4`
 - `small_model`: `tenefic/gpt-5.4-mini`
 
 ### Provider model setup
@@ -180,7 +180,7 @@ Inspect credentials or connect a provider interactively:
 ## Notes About The Current State
 
 - The config is valid for a custom provider setup.
-- The repo currently sets `model` to `tenefic/gpt-5.2` and `small_model` to `tenefic/gpt-5.4-mini`.
+- The repo currently sets `model` to `tenefic/gpt-5.4` and `small_model` to `tenefic/gpt-5.4-mini`.
 - There is no built-in cost configuration in the OpenCode schema for custom pricing tables.
 - Cost tracking, if needed, should usually live in the provider or proxy layer rather than in `opencode.jsonc`.
 - `README.md` is intended to document the actual setup in this dotfiles repo, not to replace the full OpenCode docs.
