@@ -1,16 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "superpowers@git+https://github.com/obra/superpowers.git"
-  ],
   "model": "tenefic/gpt-5.4",
   "small_model": "tenefic/gpt-5.4-mini",
   "provider": {
     "tenefic": {
       "name": "Tenefic Provider",
       "options": {
-        "baseURL": "{env:TENEFIC_BASE_URL}",
-        "apiKey": "{env:TENEFIC_API_KEY}"
+        "baseURL": "{env:TENEFIC_3_BASE_URL}",
+        "apiKey": "{env:TENEFIC_3_API_KEY}"
       },
       "models": {
         "gpt-5.4": {
