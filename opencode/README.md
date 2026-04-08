@@ -41,12 +41,18 @@ OpenCode docs primarily show `~/.config/opencode/opencode.json`, but OpenCode su
 Current config responsibilities:
 - declare the custom provider `tenefic`
 - define the models exposed through that provider
+- attach per-model cost metadata for OpenCode features that read pricing from model definitions
 - configure model limits, modalities, and variants
 - inject provider credentials through environment variables
 
 Current default model selection:
 - `model`: `tenefic/gpt-5.4`
 - `small_model`: `tenefic/gpt-5.4-mini`
+
+Current model pricing metadata:
+- `cost` is defined per model in `opencode.jsonc`
+- pricing values currently follow OpenAI public pricing pages as reference metadata
+- these values are useful for estimation and UI features, but may differ from the actual rates billed by `tenefic`
 
 ### Provider model setup
 
@@ -181,7 +187,8 @@ Inspect credentials or connect a provider interactively:
 
 - The config is valid for a custom provider setup.
 - The repo currently sets `model` to `tenefic/gpt-5.4` and `small_model` to `tenefic/gpt-5.4-mini`.
-- There is no built-in cost configuration in the OpenCode schema for custom pricing tables.
+- The OpenCode schema supports per-model `cost` metadata under `provider.<name>.models.<model>.cost`.
+- This repo currently fills that metadata using OpenAI public pricing as the reference source, not guaranteed Tenefic billing rates.
 - Cost tracking, if needed, should usually live in the provider or proxy layer rather than in `opencode.jsonc`.
 - `README.md` is intended to document the actual setup in this dotfiles repo, not to replace the full OpenCode docs.
 
