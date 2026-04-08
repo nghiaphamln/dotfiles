@@ -2,6 +2,9 @@
   "$schema": "https://opencode.ai/config.json",
   "model": "tenefic/gpt-5.4",
   "small_model": "tenefic/gpt-5.4-mini",
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ],
   "provider": {
     "tenefic": {
       "name": "Tenefic Provider",
