@@ -167,8 +167,8 @@
     "tenefic-codex": {
       "name": "Tenefic Codex Provider",
       "options": {
-        "baseURL": "{env:TENEFIC_BASE_URL}",
-        "apiKey": "{env:TENEFIC_API_KEY}"
+        "baseURL": "{env:CODEX_BASE_URL}",
+        "apiKey": "{env:CODEX_API_KEY}"
       },
       "models": {
         "gpt-5.4": {
