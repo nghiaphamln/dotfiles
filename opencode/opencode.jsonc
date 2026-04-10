@@ -1,7 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "tenefic/gpt-5.4",
-  "small_model": "tenefic/gpt-5.4-mini",
+  "model": "tenefic-llm/gpt-5.4",
+  "small_model": "tenefic-llm/gpt-5.4-mini",
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git"
   ],
@@ -321,6 +321,11 @@
       "models": {
         "gpt-5.4": {
           "name": "GPT 5.4 (1M Context)",
+          "options": {
+            "reasoningEffort": "high",
+            "reasoningSummary": "detailed",
+            "textVerbosity": "medium"
+          },
           "cost": {
             "input": 2.5,
             "output": 15,

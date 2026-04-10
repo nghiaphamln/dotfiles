@@ -43,8 +43,12 @@ Current config responsibilities:
 - inject provider credentials through environment variables
 
 Current default model selection:
-- `model`: `tenefic/gpt-5.4`
-- `small_model`: `tenefic/gpt-5.4-mini`
+- `model`: `tenefic-llm/gpt-5.4`
+- `small_model`: `tenefic-llm/gpt-5.4-mini`
+
+Default reasoning behavior:
+- `tenefic-llm/gpt-5.4` sets model `options.reasoningEffort` to `high`
+- it also keeps `reasoningSummary: detailed` and `textVerbosity: medium`
 
 Current model pricing metadata:
 - `cost` is defined per model in `opencode.jsonc`
@@ -178,7 +182,7 @@ Inspect credentials or connect a provider interactively:
 
 - The config is valid for a custom provider setup.
 - The config installs `superpowers` via OpenCode's native plugin mechanism.
-- The repo currently sets `model` to `tenefic/gpt-5.4` and `small_model` to `tenefic/gpt-5.4-mini`.
+- The repo currently sets `model` to `tenefic-llm/gpt-5.4` and `small_model` to `tenefic-llm/gpt-5.4-mini`.
 - The OpenCode schema supports per-model `cost` metadata under `provider.<name>.models.<model>.cost`.
 - This repo currently fills that metadata using OpenAI public pricing as the reference source, not guaranteed Tenefic billing rates.
 - Cost tracking, if needed, should usually live in the provider or proxy layer rather than in `opencode.jsonc`.
