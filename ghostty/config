@@ -8,9 +8,26 @@ cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
 
-# macOS icon
+# macOS icon & titlebar
 macos-icon = custom
 macos-custom-icon = ~/.config/ghostty/icon.icns
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+
+# Window
+window-padding-x = 8
+window-padding-y = 4
+window-padding-balance = true
+background-opacity = 0.95
+background-blur = true
+
+# Behavior
+mouse-hide-while-typing = true
+bell-features = no-system,no-audio
+confirm-close-surface = true
+
+# Quick terminal (global hotkey: Cmd+`)
+keybind = global:cmd+grave_accent=toggle_quick_terminal
 
 # Colors — GruvBox Dark Hard (matches kitty)
 background = 1d2021
