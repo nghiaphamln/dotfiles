@@ -26,9 +26,6 @@ mouse-hide-while-typing = true
 bell-features = no-system,no-audio
 confirm-close-surface = true
 
-# Quick terminal (global hotkey: Cmd+`)
-keybind = global:cmd+grave_accent=toggle_quick_terminal
-
 # Colors — GruvBox Dark Hard (matches kitty)
 background = 1d2021
 foreground = ebdbb2
