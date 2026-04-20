@@ -1,3 +1,8 @@
+---
+name: systematic-debugging
+description: Use when encountering any bug, test failure, or unexpected behavior. Hard gate — no fixes without root cause investigation first.
+---
+
 # Systematic Debugging
 
 ## Overview

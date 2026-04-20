@@ -1,3 +1,8 @@
+---
+name: brainstorming
+description: Use before any creative work — explores intent, requirements, and design before implementation. Hard gate against coding without an approved spec.
+---
+
 # Brainstorming Ideas Into Designs
 
 Help turn ideas into fully formed designs and specs through natural collaborative dialogue.

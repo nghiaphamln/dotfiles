@@ -1,3 +1,8 @@
+---
+name: test-driven-development
+description: Use when implementing any feature or bugfix. Write failing test first, watch it fail, then write minimal code to pass. No production code without a failing test first.
+---
+
 # Test-Driven Development (TDD)
 
 ## Overview

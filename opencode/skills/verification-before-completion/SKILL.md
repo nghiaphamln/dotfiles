@@ -1,3 +1,8 @@
+---
+name: verification-before-completion
+description: Use before claiming work is complete. Requires running verification commands and confirming output — no completion claims without fresh evidence.
+---
+
 # Verification Before Completion
 
 ## Overview
