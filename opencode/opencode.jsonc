@@ -1,28 +1,24 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "tenefic-llm/gpt-5.4",
-  "small_model": "tenefic-llm/gpt-5.4-mini",
+  "model": "aicheap/gpt-5.4",
+  "small_model": "aicheap/gpt-5.4-mini",
+  "instructions": [
+    "skills/brainstorming/SKILL.md",
+    "skills/systematic-debugging/SKILL.md",
+    "skills/verification-before-completion/SKILL.md",
+    "skills/test-driven-development/SKILL.md"
+  ],
   "plugin": [],
-  "mcp": {
-    "figma-mcp-go": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@vkhanhqui/figma-mcp-go@latest"
-      ]
-    }
-  },
   "provider": {
-    "tenefic": {
-      "name": "Tenefic Provider",
+    "aicheap": {
+      "name": "AI Cheap Provider",
       "options": {
         "baseURL": "{env:TENEFIC_BASE_URL}",
         "apiKey": "{env:TENEFIC_API_KEY}"
       },
       "models": {
         "gpt-5.4": {
-          "name": "GPT 5.4",
+          "name": "GPT 5.4 (400K Context)",
           "cost": {
             "input": 2.5,
             "output": 15,
