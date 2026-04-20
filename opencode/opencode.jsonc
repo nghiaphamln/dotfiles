@@ -3,10 +3,7 @@
   "model": "aicheap/gpt-5.4",
   "small_model": "aicheap/gpt-5.4-mini",
   "instructions": [
-    "skills/brainstorming/SKILL.md",
-    "skills/systematic-debugging/SKILL.md",
-    "skills/verification-before-completion/SKILL.md",
-    "skills/test-driven-development/SKILL.md"
+    "skills/iron-laws.md"
   ],
   "plugin": [],
   "provider": {
