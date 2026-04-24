@@ -14,12 +14,58 @@
         "apiKey": "{env:TENEFIC_API_KEY}"
       },
       "models": {
+        "gpt-5.5": {
+          "name": "GPT 5.5",
+          "cost": {
+            "input": 5,
+            "output": 30
+          },
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "none": {
+              "reasoningEffort": "none",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            },
+            "xhigh": {
+              "reasoningEffort": "xhigh",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            }
+          }
+        },
         "gpt-5.4": {
           "name": "GPT 5.4",
           "cost": {
             "input": 2.5,
-            "output": 15,
-            "cache_read": 0.25
+            "output": 15
           },
           "limit": {
             "context": 400000,
@@ -66,8 +112,7 @@
           "name": "GPT 5.4 mini",
           "cost": {
             "input": 0.75,
-            "output": 4.5,
-            "cache_read": 0.075
+            "output": 4.5
           },
           "limit": {
             "context": 400000,
@@ -114,12 +159,58 @@
         "apiKey": "{env:CODEX_API_KEY}"
       },
       "models": {
+        "gpt-5.5": {
+          "name": "GPT 5.5",
+          "cost": {
+            "input": 5,
+            "output": 30
+          },
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "none": {
+              "reasoningEffort": "none",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            },
+            "xhigh": {
+              "reasoningEffort": "xhigh",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            }
+          }
+        },
         "gpt-5.4": {
           "name": "GPT 5.4",
           "cost": {
             "input": 2.5,
-            "output": 15,
-            "cache_read": 0.25
+            "output": 15
           },
           "limit": {
             "context": 400000,
@@ -166,8 +257,7 @@
           "name": "GPT 5.4 mini",
           "cost": {
             "input": 0.75,
-            "output": 4.5,
-            "cache_read": 0.075
+            "output": 4.5
           },
           "limit": {
             "context": 400000,
