@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix. Write failing test first, watch it fail, then write minimal code to pass. No production code without a failing test first.
+description: Use when implementing app-level features or bugfixes in a repository that has a test framework set up. Write failing test first, watch it fail, then write minimal code to pass. SKIP for dotfiles, config files, shell scripts, infrastructure, throwaway prototypes, generated code, or repos without a test runner.
 ---
 
 # Test-Driven Development (TDD)

@@ -36,6 +36,8 @@ Use for ANY technical issue:
 - Previous fix didn't work
 - You don't fully understand the issue
 
+**Abridged process for trivial bugs:** When the root cause is obvious from a single error message (typo, missing import, undefined variable, off-by-one with clear fix), you may collapse Phases 1–3 into one short paragraph stating the cause, then go to Phase 4. The Iron Law still applies — you must state the cause before fixing — but you do not need formal pattern analysis or hypothesis testing for cases where the error message names the cause directly.
+
 ## The Four Phases
 
 You MUST complete each phase before proceeding to the next.

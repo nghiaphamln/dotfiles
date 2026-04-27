@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: MUST invoke at the start of plan mode and before any new feature, refactor, or non-trivial change. Explores intent, constraints, and proposes 2-3 approaches via dialogue. HARD GATE — no code, scaffolding, or implementation action until the user explicitly approves the design.
+description: Invoke at the start of plan mode and before any new feature, refactor, or non-trivial change. Explores intent, constraints, and proposes 2-3 approaches via dialogue. HARD GATE — no code, scaffolding, or implementation until the user approves the design. SKIP for mechanical changes the user has already specified (rename, typo, single-line fix, config tweak, dependency bump, formatting).
 ---
 
 # Brainstorming Ideas Into Designs
