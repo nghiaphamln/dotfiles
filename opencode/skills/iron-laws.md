@@ -55,3 +55,29 @@ Red flags:
 - "I'll add tests after"
 
 For full methodology: invoke `test-driven-development` skill.
+
+## Tool Concurrency
+
+**PARALLEL ONLY WHEN TRULY INDEPENDENT. WHEN IN DOUBT, SEQUENTIAL.**
+
+Two tool calls are independent only if neither's output is the other's input AND neither writes state the other reads. Violating this causes stale reads, edit conflicts, and lost shell state.
+
+**Safe to parallelize (no shared mutable state):**
+- Read on different files
+- Grep / Glob on different patterns or paths
+- WebFetch + local Read
+- git status + git diff + git log (read-only snapshot, before any write)
+- Independent searches that inform separate decisions
+
+**Must be sequential:**
+- Edit/Write followed by Read of the same file (Read sees pre-edit content if parallel)
+- Two Edits/Writes touching the same file (second fails — first changed the text)
+- Bash `cd X` followed by another Bash command (shell state does not persist across calls — use absolute paths instead)
+- Any write followed by `git status` / `git diff` / build / test relying on that write
+- Any command whose output the next call needs to read or branch on
+
+Red flags:
+- Batching an Edit with a same-file Read in one response
+- Batching `cd` with the command that depends on the new directory
+- Running verification (`git status`, tests) parallel with the Edit it should verify
+- "It'll probably finish in order" — order is not guaranteed
