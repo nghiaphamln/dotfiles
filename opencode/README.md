@@ -78,14 +78,24 @@ Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). E
 
 In addition, `skills/iron-laws.md` is loaded eagerly via the `instructions` array in `opencode.jsonc`. It is a condensed reminder of the four iron laws and points the agent to invoke the relevant skill for full methodology.
 
-| Skill | Purpose |
-|---|---|
-| `brainstorming` | Design-first workflow — explore intent, propose approaches, get user approval before any code |
-| `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding |
-| `verification-before-completion` | Evidence before claims — run verification commands before declaring anything done |
-| `test-driven-development` | Write failing test first, watch it fail, then implement minimal code to pass |
+| Skill | Purpose | Source |
+|---|---|---|
+| `brainstorming` | Design-first workflow — explore intent, propose approaches, get user approval before any code | local |
+| `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding | local |
+| `verification-before-completion` | Evidence before claims — run verification commands before declaring anything done | local |
+| `test-driven-development` | Write failing test first, watch it fail, then implement minimal code to pass | local |
+| `defuddle` | Extract clean Markdown from web pages — strip clutter to save tokens during research | symlink → `~/Work/repos/obsidian-skills` |
 
-Skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed.
+The four methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed. `defuddle` is a symlink to [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) — promoted to global because it is useful in any project, not just Obsidian vaults.
+
+To set up the `defuddle` symlink target on a fresh machine:
+
+```bash
+mkdir -p ~/Work/repos
+git clone https://github.com/kepano/obsidian-skills.git ~/Work/repos/obsidian-skills
+```
+
+The four other kepano skills (`obsidian-markdown`, `obsidian-bases`, `obsidian-cli`, `json-canvas`) stay project-local in the `nghia-brain` vault since they only matter when working inside an Obsidian vault.
 
 ## Verification
 
