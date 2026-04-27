@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use before claiming work is complete. Requires running verification commands and confirming output — no completion claims without fresh evidence.
+description: Use before claiming a task with a verifiable outcome (tests, build, lint, runtime behavior) is complete. Run the verification command and confirm output — no success claims without fresh evidence. SKIP for pure explanation, code review, read-only exploration, or doc/comment-only edits where no command applies — the spirit ("no false certainty") still applies, but invent no verification command where none exists.
 ---
 
 # Verification Before Completion
@@ -88,10 +88,21 @@ Skip any step = lying, not verifying
 ## When To Apply
 
 **ALWAYS before:**
-- ANY variation of success/completion claims
-- ANY expression of satisfaction
+- Claiming tests/build/lint pass
+- Claiming a bug is fixed or feature works
 - Committing, PR creation, task completion
 - Moving to next task
+
+## When NOT To Apply
+
+The skill governs **verifiable outcomes**. Skip the formal gate when:
+- Pure explanation, exploration, or code review (no claim of execution success)
+- Doc/comment-only edits with no compile or render step
+- Conversational acknowledgments ("got it", "sounds good") that are not completion claims
+- UI tweaks where the user verifies visually
+- Tasks where no command can prove the claim
+
+In these cases, state results plainly without false certainty. The principle is "no lying about success", not "always run a command".
 
 ## The Bottom Line
 
