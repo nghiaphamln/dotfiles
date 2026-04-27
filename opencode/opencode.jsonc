@@ -10,7 +10,7 @@
     "aicheap": {
       "name": "AI Cheap Provider",
       "options": {
-        "baseURL": "{env:AI_CHEAP_API_KEY}",
+        "baseURL": "{env:AI_CHEAP_BASE_URL}",
         "apiKey": "{env:AI_CHEAP_API_KEY}"
       },
       "models": {
