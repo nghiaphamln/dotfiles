@@ -74,11 +74,13 @@ Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NA
 
 ### Skills
 
-Skills are loaded as system instructions via the `instructions` array in `opencode.jsonc`. They are sourced from the `skills/` directory (symlinked from dotfiles).
+Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them from `~/.config/opencode/skills/` (symlinked from this dotfiles repo) and exposes them to agents via the `skill` tool — the agent invokes `skill({ name: "..." })` on demand to load the full content.
+
+In addition, `skills/iron-laws.md` is loaded eagerly via the `instructions` array in `opencode.jsonc`. It is a condensed reminder of the four iron laws and points the agent to invoke the relevant skill for full methodology.
 
 | Skill | Purpose |
 |---|---|
-| `brainstorming` | Design-first workflow — explore intent, propose approaches, write spec before any code |
+| `brainstorming` | Design-first workflow — explore intent, propose approaches, get user approval before any code |
 | `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding |
 | `verification-before-completion` | Evidence before claims — run verification commands before declaring anything done |
 | `test-driven-development` | Write failing test first, watch it fail, then implement minimal code to pass |

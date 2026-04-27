@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Use before any creative work — explores intent, requirements, and design through dialogue before implementation. No coding until design is approved.
+description: MUST invoke at the start of plan mode and before any new feature, refactor, or non-trivial change. Explores intent, constraints, and proposes 2-3 approaches via dialogue. HARD GATE — no code, scaffolding, or implementation action until the user explicitly approves the design.
 ---
 
 # Brainstorming Ideas Into Designs

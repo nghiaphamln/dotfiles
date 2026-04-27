@@ -2,6 +2,20 @@
 
 Core behavioral rules. For full guidance, invoke the relevant skill.
 
+## Brainstorming
+
+**NO CODE BEFORE DESIGN APPROVAL.**
+
+For any new feature, refactor, or non-trivial change: explore intent and constraints, propose 2-3 approaches with trade-offs, and get explicit user approval before writing or scaffolding anything. Plan mode especially: invoke `brainstorming` skill at the start.
+
+Red flags:
+- Writing code in the first turn of a feature request
+- Proposing a single approach without alternatives
+- Skipping clarifying questions because the request "seems clear"
+- "I'll just sketch it out" before user approves the design
+
+For full methodology: invoke `brainstorming` skill.
+
 ## Debugging
 
 **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.**
