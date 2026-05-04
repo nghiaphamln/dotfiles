@@ -8,7 +8,6 @@ This directory contains the OpenCode configuration symlinked into `~/.config/ope
 dotfiles/
 └── opencode/
     ├── opencode.jsonc
-    ├── package.json
     ├── README.md
     └── skills/
         ├── brainstorming/SKILL.md
@@ -22,7 +21,6 @@ Runtime layout (after symlinks):
 ```text
 ~/.config/opencode/
 ├── opencode.jsonc  -> dotfiles/opencode/opencode.jsonc
-├── package.json    -> dotfiles/opencode/package.json
 └── skills/         -> dotfiles/opencode/skills/
 ```
 
@@ -32,7 +30,6 @@ Runtime layout (after symlinks):
 DOTFILES_DIR="/path/to/your/dotfiles"
 mkdir -p ~/.config/opencode
 ln -sf "$DOTFILES_DIR/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
-ln -sf "$DOTFILES_DIR/opencode/package.json"   ~/.config/opencode/package.json
 ln -sf "$DOTFILES_DIR/opencode/skills"         ~/.config/opencode/skills
 ```
 
@@ -40,13 +37,11 @@ ln -sf "$DOTFILES_DIR/opencode/skills"         ~/.config/opencode/skills
 
 ### Providers
 
-Three custom OpenAI-compatible providers are configured:
+One custom OpenAI-compatible provider is configured:
 
 | Provider | Env vars | Notes |
 |---|---|---|
-| `aicheap` | `TENEFIC_BASE_URL`, `TENEFIC_API_KEY` | Default provider, 400K context |
-| `tenefic-codex` | `CODEX_BASE_URL`, `CODEX_API_KEY` | 1M context variant |
-| `tenefic-llm` | `LLM_BASE_URL`, `LLM_API_KEY` | 1M context, reasoning set to `high` by default |
+| `aicheap` | `AI_CHEAP_BASE_URL`, `AI_CHEAP_API_KEY` | Default provider, 400K context |
 
 Default models:
 - `model`: `aicheap/gpt-5.4`
@@ -58,16 +53,8 @@ Each model supports reasoning variants (`none`, `low`, `medium`, `high`, `xhigh`
 
 ```bash
 # aicheap provider
-export TENEFIC_BASE_URL="..."
-export TENEFIC_API_KEY="..."
-
-# tenefic-codex provider
-export CODEX_BASE_URL="..."
-export CODEX_API_KEY="..."
-
-# tenefic-llm provider
-export LLM_BASE_URL="..."
-export LLM_API_KEY="..."
+export AI_CHEAP_BASE_URL="..."
+export AI_CHEAP_API_KEY="..."
 ```
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax.
@@ -84,18 +71,8 @@ In addition, `skills/iron-laws.md` is loaded eagerly via the `instructions` arra
 | `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding | local |
 | `verification-before-completion` | Evidence before claims — run verification commands before declaring anything done | local |
 | `test-driven-development` | Write failing test first, watch it fail, then implement minimal code to pass | local |
-| `defuddle` | Extract clean Markdown from web pages — strip clutter to save tokens during research | symlink → `~/Work/repos/obsidian-skills` |
 
-The four methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed. `defuddle` is a symlink to [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) — promoted to global because it is useful in any project, not just Obsidian vaults.
-
-To set up the `defuddle` symlink target on a fresh machine:
-
-```bash
-mkdir -p ~/Work/repos
-git clone https://github.com/kepano/obsidian-skills.git ~/Work/repos/obsidian-skills
-```
-
-The four other kepano skills (`obsidian-markdown`, `obsidian-bases`, `obsidian-cli`, `json-canvas`) stay project-local in the `nghia-brain` vault since they only matter when working inside an Obsidian vault.
+The four methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed.
 
 ## Verification
 

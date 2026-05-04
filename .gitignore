@@ -32,3 +32,6 @@ github-copilot/
 *.swp
 *.swo
 *~
+
+# OpenCode local plugin dependencies
+opencode/package.json

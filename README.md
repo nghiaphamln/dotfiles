@@ -11,7 +11,7 @@ dotfiles/
 ├── kitty/             → ~/.config/kitty
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-├── opencode/          → ~/.config/opencode/{opencode.jsonc,package.json}
+├── opencode/          → ~/.config/opencode/{opencode.jsonc,skills/}
 ├── github-copilot/    → Copilot version tracking
 └── docs/              → Documentation
 ```
@@ -33,7 +33,7 @@ ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
 mkdir -p ~/.config/zed/prompts
 ```
 
-### OpenCode + Superpowers
+### OpenCode
 
 See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 
@@ -41,12 +41,12 @@ See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 mkdir -p ~/.config/opencode
 
 ln -sf ~/dotfiles/opencode/opencode.jsonc ~/.config/opencode/opencode.jsonc
-ln -sf ~/dotfiles/opencode/package.json ~/.config/opencode/package.json
+ln -sf ~/dotfiles/opencode/skills ~/.config/opencode/skills
 
 # Set API keys in ~/.zshenv — see opencode/README.md
 ```
 
-Superpowers is installed by OpenCode from the `plugin` entry in `opencode/opencode.jsonc`.
+OpenCode setup details, provider environment variables, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
 
 ## Tools
 
@@ -82,7 +82,7 @@ Install language servers:
 
 See [nvim/README.md](nvim/README.md) for full documentation.
 
-## Update Superpowers
+## Update OpenCode Config
 
 ```bash
 restart OpenCode
