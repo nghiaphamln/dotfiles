@@ -5,9 +5,18 @@
   "instructions": [
     "skills/iron-laws.md"
   ],
+  "agent": {
+    "build": {
+      "variant": "high"
+    },
+    "plan": {
+      "variant": "xhigh"
+    }
+  },
   "plugin": [],
   "provider": {
     "aicheap": {
+      "npm": "@ai-sdk/openai",
       "name": "AI Cheap Provider",
       "options": {
         "baseURL": "{env:AI_CHEAP_BASE_URL}",
