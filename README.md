@@ -11,7 +11,7 @@ dotfiles/
 ├── kitty/             → ~/.config/kitty
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-├── opencode/          → ~/.config/opencode/{opencode.jsonc,skills/}
+├── opencode/          → ~/.config/opencode/{opencode.jsonc,plugins/,skills/}
 ├── github-copilot/    → Copilot version tracking
 └── docs/              → Documentation
 ```
@@ -41,12 +41,15 @@ See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 mkdir -p ~/.config/opencode
 
 ln -sf ~/dotfiles/opencode/opencode.jsonc ~/.config/opencode/opencode.jsonc
+ln -sfn ~/dotfiles/opencode/plugins ~/.config/opencode/plugins
 ln -sf ~/dotfiles/opencode/skills ~/.config/opencode/skills
 
 # Set API keys in ~/.zshenv — see opencode/README.md
+# Optional token optimization for shell output:
+# brew install rtk && restart OpenCode
 ```
 
-OpenCode setup details, provider environment variables, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
+OpenCode setup details, provider environment variables, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
 
 ## Tools
 

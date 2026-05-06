@@ -9,6 +9,8 @@ dotfiles/
 └── opencode/
     ├── opencode.jsonc
     ├── README.md
+    ├── plugins/
+    │   └── rtk.ts
     └── skills/
         ├── brainstorming/SKILL.md
         ├── systematic-debugging/SKILL.md
@@ -21,6 +23,7 @@ Runtime layout (after symlinks):
 ```text
 ~/.config/opencode/
 ├── opencode.jsonc  -> dotfiles/opencode/opencode.jsonc
+├── plugins/        -> dotfiles/opencode/plugins/
 └── skills/         -> dotfiles/opencode/skills/
 ```
 
@@ -30,6 +33,7 @@ Runtime layout (after symlinks):
 DOTFILES_DIR="/path/to/your/dotfiles"
 mkdir -p ~/.config/opencode
 ln -sf "$DOTFILES_DIR/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
+ln -sfn "$DOTFILES_DIR/opencode/plugins"      ~/.config/opencode/plugins
 ln -sf "$DOTFILES_DIR/opencode/skills"         ~/.config/opencode/skills
 ```
 
@@ -59,6 +63,23 @@ export AI_CHEAP_API_KEY="..."
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax.
 
+### Plugins
+
+OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`. This repo manages that directory via symlink.
+
+| Plugin | Purpose | Requirement |
+|---|---|---|
+| `rtk.ts` | Rewrites shell commands through `rtk rewrite` so verbose outputs are token-optimized before they reach the model | `rtk` in PATH |
+
+Install RTK separately, then restart OpenCode:
+
+```bash
+brew install rtk
+rtk init --show
+```
+
+The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`; keeping it in dotfiles makes the OpenCode setup reproducible.
+
 ### Skills
 
 Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them from `~/.config/opencode/skills/` (symlinked from this dotfiles repo) and exposes them to agents via the `skill` tool — the agent invokes `skill({ name: "..." })` on demand to load the full content.
@@ -80,6 +101,12 @@ The four methodology skills are adapted from [obra/superpowers](https://github.c
 # Check symlinks
 ls -la ~/.config/opencode
 
+# Check plugins are reachable
+ls ~/.config/opencode/plugins/
+
 # Check skills are reachable
 ls ~/.config/opencode/skills/
+
+# Check RTK rewrite behavior
+rtk rewrite "git status"
 ```
