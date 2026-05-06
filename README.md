@@ -46,7 +46,7 @@ ln -sf ~/dotfiles/opencode/skills ~/.config/opencode/skills
 
 # Set API keys in ~/.zshenv — see opencode/README.md
 # Optional token optimization for shell output:
-# brew install rtk && restart OpenCode
+# brew install rtk terminal-notifier && restart OpenCode
 ```
 
 OpenCode setup details, provider environment variables, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).

@@ -7,6 +7,11 @@ This directory contains the OpenCode configuration symlinked into `~/.config/ope
 ```text
 dotfiles/
 └── opencode/
+    ├── assets/
+    │   ├── opencode-logo-dark.png
+    │   ├── opencode-logo-dark.svg
+    │   ├── opencode-logo-light.png
+    │   └── opencode-logo-light.svg
     ├── opencode.jsonc
     ├── README.md
     ├── plugins/
@@ -71,18 +76,18 @@ OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`. This repo 
 | Plugin | Purpose | Requirement |
 |---|---|---|
 | `rtk.ts` | Rewrites shell commands through `rtk rewrite` so verbose outputs are token-optimized before they reach the model | `rtk` in PATH |
-| `notify.ts` | Sends native macOS notifications when OpenCode finishes, errors, asks a question, or needs permission | macOS |
+| `notify.ts` | Sends native macOS notifications when OpenCode finishes, errors, asks a question, or needs permission | macOS, `terminal-notifier` for custom icon |
 
 Install RTK separately, then restart OpenCode:
 
 ```bash
-brew install rtk
+brew install rtk terminal-notifier
 rtk init --show
 ```
 
 The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`; keeping it in dotfiles makes the OpenCode setup reproducible.
 
-`notify.ts` is a local, dependency-free plugin for macOS. It intentionally stays small and only sends generic notifications so it is easy to audit and safe to keep in dotfiles.
+`notify.ts` is a local macOS plugin. It prefers `terminal-notifier` so notifications can use the checked-in OpenCode logo assets and auto-switch between light/dark variants based on the current macOS appearance. It falls back to AppleScript if that binary is unavailable.
 
 ### Skills
 
