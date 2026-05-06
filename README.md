@@ -51,6 +51,8 @@ ln -sf ~/dotfiles/opencode/skills ~/.config/opencode/skills
 
 OpenCode setup details, provider environment variables, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
 
+The checked-in OpenCode plugins currently cover token-optimized shell rewrites via RTK and native macOS notifications for long-running sessions.
+
 ## Tools
 
 | Tool | Config | Purpose |

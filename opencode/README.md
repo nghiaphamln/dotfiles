@@ -10,6 +10,7 @@ dotfiles/
     ├── opencode.jsonc
     ├── README.md
     ├── plugins/
+    │   ├── notify.ts
     │   └── rtk.ts
     └── skills/
         ├── brainstorming/SKILL.md
@@ -70,6 +71,7 @@ OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`. This repo 
 | Plugin | Purpose | Requirement |
 |---|---|---|
 | `rtk.ts` | Rewrites shell commands through `rtk rewrite` so verbose outputs are token-optimized before they reach the model | `rtk` in PATH |
+| `notify.ts` | Sends native macOS notifications when OpenCode finishes, errors, asks a question, or needs permission | macOS |
 
 Install RTK separately, then restart OpenCode:
 
@@ -79,6 +81,8 @@ rtk init --show
 ```
 
 The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`; keeping it in dotfiles makes the OpenCode setup reproducible.
+
+`notify.ts` is a local, dependency-free plugin for macOS. It intentionally stays small and only sends generic notifications so it is easy to audit and safe to keep in dotfiles.
 
 ### Skills
 
