@@ -28,9 +28,13 @@ return {
 					"clangd",
 					"roslyn",
 					"stylua",
+					"black",
 					"csharpier",
 					"clang-format",
 					"cppcheck",
+					"isort",
+					"prettier",
+					"pylint",
 				},
 			},
 		},
@@ -113,6 +117,7 @@ return {
 		dependencies = { "mason-org/mason-lspconfig.nvim" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local python = require("config.python")
 
 			local function extend(server_name, config)
 				vim.lsp.config[server_name] = vim.tbl_deep_extend("force", vim.lsp.config[server_name] or {}, config)
@@ -185,15 +190,28 @@ return {
 			})
 
 			extend("pyright", {
-				cmd = { "pyright-langserver", "--stdio" },
+				cmd = python.resolve_pyright_cmd(),
 				filetypes = { "python" },
-				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+				root_markers = python.root_markers,
 				capabilities = capabilities,
+				on_new_config = function(new_config, root_dir)
+					new_config.cmd = python.resolve_pyright_cmd()
+
+					local python_path = python.resolve_project_python(root_dir)
+					if python_path then
+						new_config.settings = vim.tbl_deep_extend("force", new_config.settings or {}, {
+							python = {
+								pythonPath = python_path,
+							},
+						})
+					end
+				end,
 				settings = {
 					python = {
 						analysis = {
 							autoSearchPaths = true,
 							diagnosticMode = "workspace",
+							useLibraryCodeForTypes = true,
 						},
 					},
 				},

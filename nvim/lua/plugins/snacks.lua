@@ -108,6 +108,7 @@ return {
 	config = function(_, opts)
 		local snacks = require("snacks")
 		snacks.setup(opts)
+		snacks.dashboard.setup()
 		snacks.input.enable()
 		snacks.picker.setup()
 	end,

@@ -41,7 +41,6 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 - **mini.pairs** — Auto-close brackets and quotes
 - **ts-comments.nvim** — Treesitter-aware comment toggling
-- **nvim-spider** — Subword-aware `w/e/b/ge` motions for code navigation
 - **Flash.nvim** — Rapid cursor movement with `;`
 - **Todo Comments** — Highlight and jump between TODO/FIXME/HACK/NOTE
 
@@ -82,6 +81,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    Notes:
    - `cmake-language-server` is installed with Homebrew because current Mason packaging rejects Python 3.14
    - `cmake-format` comes from the `cmakelang` Python package
+   - `tree-sitter-cli` and `mmdc` are external prerequisites checked by the repo smoke tests
 
 5. **Mason-managed tools** (installed automatically on first run)
 
@@ -91,6 +91,10 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    | `rust-analyzer` | Rust |
    | `gopls` | Go |
    | `pyright` | Python |
+   | `black` | Python |
+   | `isort` | Python |
+   | `pylint` | Python |
+   | `prettier` | JSON / JS / Markdown / YAML |
    | `yaml-language-server` | YAML |
    | `clangd` | C/C++ |
    | `roslyn` | .NET / C# |
@@ -137,6 +141,20 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    ```vim
    :Copilot auth
    ```
+
+### Python Projects
+
+- Recommended project layout: create a local `.venv` in the repo root with `python3 -m venv .venv`
+- When `.venv/bin/python` exists, Neovim prefers that interpreter for `pyright`
+- Python tools resolve in this order: project `.venv` -> Mason-managed executable -> global `PATH`
+- If Python LSP stops attaching, open `:Mason` and reinstall `pyright`
+
+### Prettier-backed Formats
+
+- `json`, `javascript`, `markdown`, and `yaml` use `prettier` for `<leader>fc`
+- Executable resolution order is: project `node_modules/.bin/prettier` -> Mason-managed `prettier` -> global `PATH`
+- If these filetypes stop formatting, open `:Mason` and reinstall `prettier`
+- If `pyright`, `yamlls`, or `prettier` suddenly disappear, check `~/.local/share/nvim/mason/bin/*` for broken symlinks and reinstall the affected Mason packages
 
 ## Usage
 
@@ -186,7 +204,6 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 
 | Key | Action |
 |-----|--------|
-| `w` / `e` / `b` / `ge` | Spider subword motions |
 | `;` | Flash jump |
 | `<C-space>` | Flash Treesitter selection |
 | `j` / `k` | Move by display line (wrap-aware) |
@@ -290,7 +307,6 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
 |--------|---------|
 | `mini.pairs` | Auto-close brackets/quotes |
 | `ts-comments.nvim` | Treesitter-aware comments |
-| `nvim-spider` | Subword-aware word motions |
 | `conform.nvim` | Code formatting |
 | `nvim-lint` | Code linting |
 | `roslyn.nvim` | .NET / C# language support |
@@ -388,6 +404,9 @@ Edit `lua/config/options.lua` for Neovim options (indentation, search, clipboard
 3. Confirm Homebrew tools (`cmake-language-server`, etc.) are on `PATH`
 4. For `.NET/C#`, verify `dotnet --version` works and open a `.cs` file inside a folder containing a `.sln` or `.csproj`
 5. If Neovim was upgraded, run `./nvim/tests/checkhealth_smoke.sh`
+6. For Python, confirm the project has `.venv/bin/python`; if `pyright` still fails, reinstall `pyright` in `:Mason`
+7. For JSON / JS / Markdown / YAML, confirm `prettier` exists either in project `node_modules/.bin` or in `:Mason`
+8. If `:checkhealth nvim-treesitter` complains, install `tree-sitter-cli`; if `Snacks.image` complains about Mermaid, install `mmdc`
 
 ### LSP Log Too Large
 

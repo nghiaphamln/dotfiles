@@ -42,6 +42,10 @@ if any(marker in tool_block for marker in tool_markers) or any(marker in lsp_blo
     raise SystemExit(1)
 PY
 
+bash "$repo_root/nvim/tests/python_venv_smoke.sh"
+bash "$repo_root/nvim/tests/prettier_smoke.sh"
+bash "$repo_root/nvim/tests/yaml_lsp_smoke.sh"
+
 XDG_CONFIG_HOME="$repo_root" nvim --headless '+checkhealth' "+w! $health_report" '+qa'
 
 if rg -n 'WARNING Log size:' "$health_report" >/dev/null; then
@@ -56,6 +60,11 @@ fi
 
 if rg -n "Tool not found: 'mmdc'" "$health_report" >/dev/null; then
   printf 'mermaid-cli is missing\n' >&2
+  exit 1
+fi
+
+if rg -n 'tree-sitter-cli not found' "$health_report" >/dev/null; then
+  printf 'tree-sitter-cli is missing\n' >&2
   exit 1
 fi
 
