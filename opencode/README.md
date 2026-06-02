@@ -47,14 +47,15 @@ ln -sf "$DOTFILES_DIR/opencode/skills"         ~/.config/opencode/skills
 
 ### Providers
 
-One custom OpenAI-compatible provider is configured:
+Two OpenAI-compatible providers are configured:
 
 | Provider | Env vars | Notes |
 |---|---|---|
 | `aicheap` | `AI_CHEAP_BASE_URL`, `AI_CHEAP_API_KEY` | Default provider, 400K context |
+| `llm` | `LLM_BASE_URL`, `LLM_API_KEY` | Secondary provider, `gpt-5.5`, 272K context |
 
 Default models:
-- `model`: `aicheap/gpt-5.4`
+- `model`: `aicheap/gpt-5.5`
 - `small_model`: `aicheap/gpt-5.4-mini`
 
 Each model supports reasoning variants (`none`, `low`, `medium`, `high`, `xhigh`) configurable per-session.
@@ -65,6 +66,10 @@ Each model supports reasoning variants (`none`, `low`, `medium`, `high`, `xhigh`
 # aicheap provider
 export AI_CHEAP_BASE_URL="..."
 export AI_CHEAP_API_KEY="..."
+
+# llm provider
+export LLM_BASE_URL="..."
+export LLM_API_KEY="..."
 ```
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax.

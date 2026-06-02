@@ -11,6 +11,7 @@ shell-integration-features = no-cursor
 # macOS icon & titlebar
 macos-icon = custom
 macos-custom-icon = ~/.config/ghostty/icon.icns
+macos-option-as-alt = true
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 
