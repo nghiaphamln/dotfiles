@@ -33,7 +33,7 @@ Do NOT write any code, scaffold any project, or take any implementation action u
 - Lead with your recommended approach and why
 - Scale each section to its complexity — a few sentences if simple, up to 200-300 words if nuanced
 - Cover what's relevant: architecture, components, data flow, error handling, testing
-- Ask after each section whether it looks right before continuing
+- For small or moderate designs, present one concise design and ask once. For large designs, ask after major sections.
 
 ## Key Principles
 

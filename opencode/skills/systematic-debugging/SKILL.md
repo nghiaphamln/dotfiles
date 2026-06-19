@@ -38,94 +38,23 @@ Use for ANY technical issue:
 
 **Abridged process for trivial bugs:** When the root cause is obvious from a single error message (typo, missing import, undefined variable, off-by-one with clear fix), you may collapse Phases 1–3 into one short paragraph stating the cause, then go to Phase 4. The Iron Law still applies — you must state the cause before fixing — but you do not need formal pattern analysis or hypothesis testing for cases where the error message names the cause directly.
 
-## The Four Phases
+## Investigation Ladder
 
-You MUST complete each phase before proceeding to the next.
+Complete the smallest investigation that proves the cause. Do not perform ceremony when a single error message already names the cause, but do not guess.
 
-### Phase 1: Root Cause Investigation
+1. Read the full error, stack trace, logs, or failing output.
+2. Reproduce the issue when feasible, or identify the exact observed symptom.
+3. Check recent changes: current diff, recent commits, dependency/config changes, and environment differences.
+4. Find similar working code and compare patterns.
+5. Trace the bad value or behavior to its source.
+6. State one hypothesis with evidence.
+7. Test the hypothesis with the smallest command, inspection, or temporary diagnostic.
+8. Fix the root cause with one focused change.
+9. Verify the original symptom and relevant regressions.
 
-**BEFORE attempting ANY fix:**
+For multi-component systems, add diagnostics at component boundaries before proposing fixes. Identify where data first becomes wrong, then investigate that component.
 
-1. **Read Error Messages Carefully**
-   - Don't skip past errors or warnings
-   - They often contain the exact solution
-   - Read stack traces completely
-   - Note line numbers, file paths, error codes
-
-2. **Reproduce Consistently**
-   - Can you trigger it reliably?
-   - What are the exact steps?
-   - Does it happen every time?
-   - If not reproducible → gather more data, don't guess
-
-3. **Check Recent Changes**
-   - What changed that could cause this?
-   - Git diff, recent commits
-   - New dependencies, config changes
-   - Environmental differences
-
-4. **Gather Evidence in Multi-Component Systems**
-
-   **WHEN system has multiple components:**
-
-   **BEFORE proposing fixes, add diagnostic instrumentation:**
-   ```
-   For EACH component boundary:
-     - Log what data enters component
-     - Log what data exits component
-     - Verify environment/config propagation
-     - Check state at each layer
-
-   Run once to gather evidence showing WHERE it breaks
-   THEN analyze evidence to identify failing component
-   THEN investigate that specific component
-   ```
-
-5. **Trace Data Flow**
-   - Where does bad value originate?
-   - What called this with bad value?
-   - Keep tracing up until you find the source
-   - Fix at source, not at symptom
-
-### Phase 2: Pattern Analysis
-
-**Find the pattern before fixing:**
-
-1. **Find Working Examples** — Locate similar working code in same codebase
-2. **Compare Against References** — Read reference implementation COMPLETELY
-3. **Identify Differences** — List every difference, however small
-4. **Understand Dependencies** — What settings, config, environment does this need?
-
-### Phase 3: Hypothesis and Testing
-
-**Scientific method:**
-
-1. **Form Single Hypothesis** — State clearly: "I think X is the root cause because Y"
-2. **Test Minimally** — Make the SMALLEST possible change to test hypothesis
-3. **Verify Before Continuing** — Did it work? Yes → Phase 4. No → Form NEW hypothesis
-4. **When You Don't Know** — Say "I don't understand X". Don't pretend to know.
-
-### Phase 4: Implementation
-
-**Fix the root cause, not the symptom:**
-
-1. **Create Failing Test Case** — Simplest possible reproduction. MUST have before fixing.
-2. **Implement Single Fix** — Address the root cause. ONE change at a time. No "while I'm here" improvements.
-3. **Verify Fix** — Test passes? No other tests broken? Issue actually resolved?
-4. **If Fix Doesn't Work:**
-   - STOP
-   - If < 3 fixes tried: Return to Phase 1 with new information
-   - **If ≥ 3 fixes tried: STOP and question the architecture**
-   - DON'T attempt Fix #4 without architectural discussion
-
-5. **If 3+ Fixes Failed: Question Architecture**
-
-   Pattern indicating architectural problem:
-   - Each fix reveals new shared state/coupling in different place
-   - Fixes require massive refactoring
-   - Each fix creates new symptoms elsewhere
-
-   **STOP and question fundamentals before attempting more fixes.**
+If three fix attempts fail, stop and question the architecture or assumptions before trying a fourth fix.
 
 ## Red Flags - STOP and Follow Process
 
@@ -138,7 +67,7 @@ If you catch yourself thinking:
 - "One more fix attempt" (when already tried 2+)
 - Each fix reveals new problem in different place
 
-**ALL of these mean: STOP. Return to Phase 1.**
+**ALL of these mean: STOP. Return to investigation.**
 
 ## Common Rationalizations
 
@@ -150,11 +79,6 @@ If you catch yourself thinking:
 | "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
 | "One more fix attempt" (after 2+ failures) | 3+ failures = architectural problem. Question pattern, don't fix again. |
 
-## Quick Reference
+## Implementation Rule
 
-| Phase | Key Activities | Success Criteria |
-|-------|---------------|------------------|
-| **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
-| **2. Pattern** | Find working examples, compare | Identify differences |
-| **3. Hypothesis** | Form theory, test minimally | Confirmed or new hypothesis |
-| **4. Implementation** | Create test, fix, verify | Bug resolved, tests pass |
+Prefer a failing test before fixing app-level behavior. If tests are unavailable or the issue is config/runtime-only, use the smallest command, log, or inspection that reproduces the original symptom.

@@ -1,0 +1,32 @@
+{
+  "providers": {
+    "openai-codex": {
+      "modelOverrides": {
+        "gpt-5.5": {
+          "contextWindow": 500000,
+          "maxTokens": 128000,
+          "cost": {
+            "input": 5,
+            "output": 30
+          }
+        },
+        "gpt-5.4": {
+          "contextWindow": 500000,
+          "maxTokens": 128000,
+          "cost": {
+            "input": 2.5,
+            "output": 15
+          }
+        },
+        "gpt-5.4-mini": {
+          "contextWindow": 400000,
+          "maxTokens": 128000,
+          "cost": {
+            "input": 0.75,
+            "output": 4.5
+          }
+        }
+      }
+    }
+  }
+}

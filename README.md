@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Kitty, IdeaVim, OpenCode, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Kitty, IdeaVim, OpenCode, Pi, and PowerShell.
 
 ## Structure
 
@@ -11,7 +11,8 @@ dotfiles/
 ├── kitty/             → ~/.config/kitty
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-├── opencode/          → ~/.config/opencode/{opencode.jsonc,plugins/,skills/}
+├── opencode/          → ~/.config/opencode
+├── pi/                → ~/.pi/agent/{settings.json,models.json,skills/,prompts/}
 ├── github-copilot/    → Copilot version tracking
 └── docs/              → Documentation
 ```
@@ -38,20 +39,33 @@ mkdir -p ~/.config/zed/prompts
 See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 
 ```bash
-mkdir -p ~/.config/opencode
-
-ln -sf ~/dotfiles/opencode/opencode.jsonc ~/.config/opencode/opencode.jsonc
-ln -sfn ~/dotfiles/opencode/plugins ~/.config/opencode/plugins
-ln -sf ~/dotfiles/opencode/skills ~/.config/opencode/skills
+ln -sfn ~/dotfiles/opencode ~/.config/opencode
 
 # Set API keys in ~/.zshenv — see opencode/README.md
 # Optional token optimization for shell output:
-# brew install rtk terminal-notifier && restart OpenCode
+# brew install rtk && restart OpenCode
 ```
 
-OpenCode setup details, provider environment variables, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
+OpenCode setup details, provider environment variables, workflow commands, TUI attention, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
 
-The checked-in OpenCode plugins currently cover token-optimized shell rewrites via RTK and native macOS notifications for long-running sessions.
+The checked-in OpenCode plugin currently covers token-optimized shell rewrites via RTK.
+
+### Pi Coding Agent
+
+See [pi/README.md](pi/README.md) for detailed setup instructions.
+
+```bash
+mkdir -p ~/.pi/agent
+
+ln -sf ~/dotfiles/pi/agent/settings.json ~/.pi/agent/settings.json
+ln -sf ~/dotfiles/pi/agent/models.json ~/.pi/agent/models.json
+ln -sf ~/dotfiles/pi/agent/APPEND_SYSTEM.md ~/.pi/agent/APPEND_SYSTEM.md
+ln -sf ~/dotfiles/pi/agent/AGENTS.md ~/.pi/agent/AGENTS.md
+ln -sfn ~/dotfiles/pi/agent/skills ~/.pi/agent/skills
+ln -sfn ~/dotfiles/pi/agent/prompts ~/.pi/agent/prompts
+```
+
+Pi setup keeps `~/.pi/agent/auth.json`, sessions, logs, and runtime files local. Only reproducible config is symlinked from dotfiles.
 
 ## Tools
 
@@ -62,6 +76,7 @@ The checked-in OpenCode plugins currently cover token-optimized shell rewrites v
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
 | [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
+| [Pi](https://pi.dev/) | `pi/` | AI coding agent (terminal) |
 | PowerShell | `PowerShell/` | Shell profile (Windows) |
 | GitHub Copilot | `github-copilot/` | Copilot version tracking |
 

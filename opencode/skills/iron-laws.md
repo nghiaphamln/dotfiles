@@ -6,7 +6,7 @@ Core behavioral rules. For full guidance, invoke the relevant skill.
 
 **NO CODE BEFORE DESIGN APPROVAL.**
 
-For any new feature, refactor, or non-trivial change: explore intent and constraints, propose 2-3 approaches with trade-offs, and get explicit user approval before writing or scaffolding anything. Plan mode especially: invoke `brainstorming` skill at the start.
+For any new feature, refactor, or non-trivial change: explore intent and constraints, propose 2-3 approaches with trade-offs, and get explicit user approval before writing or scaffolding anything. Skip this gate for mechanical changes the user already specified, such as renames, typo fixes, single-line edits, config tweaks, dependency bumps, and formatting. Plan mode especially: invoke `brainstorming` skill at the start.
 
 Red flags:
 - Writing code in the first turn of a feature request
@@ -15,6 +15,46 @@ Red flags:
 - "I'll just sketch it out" before user approves the design
 
 For full methodology: invoke `brainstorming` skill.
+
+## Karpathy Guidelines
+
+**THINK FIRST. KEEP IT SIMPLE. CHANGE SURGICALLY. VERIFY THE GOAL.**
+
+Before implementing: surface assumptions, ask when unclear, prefer the smallest correct approach, touch only required lines, and define how success will be verified.
+
+Red flags:
+- Adding features, abstractions, flexibility, or config not requested
+- Refactoring adjacent code while solving a narrow task
+- Hiding uncertainty or silently choosing between ambiguous interpretations
+- Making broad edits that do not trace directly to the user request
+
+For full methodology: invoke `karpathy-guidelines` skill.
+
+## Context Discovery
+
+**MATCH THE REPOSITORY BEFORE WRITING CODE.**
+
+Before implementing in unfamiliar or non-trivial code: read project guidance, find similar working code, identify local patterns, and determine verification commands. Load only the context needed for the task.
+
+Red flags:
+- Writing generic code without checking existing patterns
+- Ignoring project-local `AGENTS.md`, `CONTRIBUTING.md`, scripts, or tests
+- Guessing conventions that can be discovered from nearby code
+
+For full methodology: invoke `context-discovery` skill.
+
+## Security And Secrets
+
+**NEVER EXPOSE SECRETS OR WEAKEN SECURITY BY ACCIDENT.**
+
+For auth, permissions, env files, tokens, network boundaries, shell commands, and sensitive data: avoid real secrets, inspect safe examples, and check common security failure modes before changing behavior.
+
+Red flags:
+- Reading or printing `.env`, tokens, keys, cookies, sessions, or auth files
+- Adding logs that include request bodies, headers, credentials, or PII
+- Weakening validation, auth checks, TLS, sandboxing, or permissions without explicit approval
+
+For full methodology: invoke `security-and-secrets` skill.
 
 ## Debugging
 
@@ -43,11 +83,24 @@ Red flags:
 
 For full methodology: invoke `verification-before-completion` skill.
 
+## Code Review
+
+**FINDINGS FIRST. CORRECTNESS OVER SUMMARIES.**
+
+When reviewing changes: prioritize bugs, regressions, security issues, missing tests, and overbroad edits. Return findings first with file and line references where possible.
+
+Red flags:
+- Starting a review with a broad summary instead of findings
+- Focusing on style while missing behavior or security risk
+- Saying no issues without mentioning residual testing gaps
+
+For full methodology: invoke `code-review` skill.
+
 ## Testing
 
 **NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST.**
 
-Write the test. Run it. Watch it fail. Then write the minimal code to make it pass. If you didn't see it fail, you don't know if it tests the right thing.
+For app-level feature or bugfix work in a repository with a test framework: write the test, run it, watch it fail, then write the minimal code to make it pass. If you didn't see it fail, you don't know if it tests the right thing. Skip this gate for dotfiles, config files, shell scripts, infrastructure, generated code, throwaway prototypes, and repos without a test runner.
 
 Red flags:
 - Writing code before the test exists

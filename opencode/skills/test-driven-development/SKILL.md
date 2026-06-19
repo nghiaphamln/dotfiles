@@ -13,16 +13,20 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 ## When to Use
 
-**Always:**
+**Use for app-level code:**
 - New features
 - Bug fixes
 - Refactoring
 - Behavior changes
 
-**Exceptions (ask the user):**
+**Skip by default:**
+- Dotfiles and configuration files
+- Shell scripts and infrastructure
 - Throwaway prototypes
 - Generated code
-- Configuration files
+- Repositories without a test runner
+
+If the user explicitly wants tests for one of these cases, follow the closest practical red-green loop.
 
 ## The Iron Law
 
@@ -30,12 +34,7 @@ Write the test first. Watch it fail. Write minimal code to pass.
 NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 ```
 
-Write code before the test? Delete it. Start over.
-
-**No exceptions:**
-- Don't keep it as "reference"
-- Don't "adapt" it while writing tests
-- Delete means delete
+For app-level production code with a test framework, writing code before the test means restarting from the test. Do not keep prewritten code as a hidden reference unless the user explicitly opts out of TDD for this task.
 
 ## Red-Green-Refactor
 
@@ -135,7 +134,7 @@ Next failing test for next feature.
 - "Tests after achieve the same purpose"
 - "Already spent X hours, deleting is wasteful"
 
-**All of these mean: Delete code. Start over with TDD.**
+**All of these mean: stop and restart from the test unless the user explicitly opts out of TDD for this task.**
 
 ## Example: Bug Fix
 
@@ -166,7 +165,7 @@ function submitForm(data: FormData) {
 
 Before marking work complete:
 
-- [ ] Every new function/method has a test
+- [ ] New behavior is covered by focused tests where applicable
 - [ ] Watched each test fail before implementing
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test
@@ -175,11 +174,11 @@ Before marking work complete:
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
 
-Can't check all boxes? You skipped TDD. Start over.
+If required boxes are not applicable, say why. If they are applicable and unchecked, restart from the missing red-green step.
 
 ## Final Rule
 
 ```
-Production code → test exists and failed first
-Otherwise → not TDD
+App-level production behavior with a test runner -> test exists and failed first
+Otherwise -> use the closest practical verification path
 ```

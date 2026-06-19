@@ -7,7 +7,7 @@ description: Use before claiming a task with a verifiable outcome (tests, build,
 
 ## Overview
 
-Claiming work is complete without verification is dishonesty, not efficiency.
+Claiming work is complete without verification is unreliable and creates avoidable rework.
 
 **Core principle:** Evidence before claims, always.
 
@@ -32,7 +32,7 @@ BEFORE claiming any status or expressing satisfaction:
    - If YES: State claim WITH evidence
 5. ONLY THEN: Make the claim
 
-Skip any step = lying, not verifying
+Skip any step = unverified claim
 ```
 
 ## Common Failures
@@ -63,7 +63,7 @@ Skip any step = lying, not verifying
 | "Just this once" | No exceptions |
 | "Linter passed" | Linter ≠ compiler |
 | "Partial check is enough" | Partial proves nothing |
-| "Different words so rule doesn't apply" | Spirit over letter |
+| "Different words so rule doesn't apply" | The requirement is evidence, not phrasing |
 
 ## Key Patterns
 
@@ -102,10 +102,10 @@ The skill governs **verifiable outcomes**. Skip the formal gate when:
 - UI tweaks where the user verifies visually
 - Tasks where no command can prove the claim
 
-In these cases, state results plainly without false certainty. The principle is "no lying about success", not "always run a command".
+In these cases, state results plainly without false certainty. The principle is evidence-based reporting, not running commands for their own sake.
 
 ## The Bottom Line
 
 Run the command. Read the output. THEN claim the result.
 
-This is non-negotiable.
+This is the default requirement for verifiable outcomes.
