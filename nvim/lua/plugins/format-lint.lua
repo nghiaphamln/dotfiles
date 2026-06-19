@@ -9,7 +9,7 @@ return {
 			{
 				"<leader>fc",
 				function()
-					require("conform").format({ async = true })
+					require("conform").format({ async = false, timeout_ms = 5000 })
 				end,
 				desc = "Format buffer",
 			},
@@ -30,7 +30,7 @@ return {
 			formatters_by_ft = {
 				cs = { "csharpier" },
 				lua = { "stylua" },
-				python = { "black", "isort" },
+				python = { "isort", "black" },
 				rust = { "rustfmt" },
 				go = { "gofmt" },
 				c = { "clang-format" },

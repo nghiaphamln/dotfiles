@@ -7,6 +7,9 @@ font-thicken = true
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/ripple_cursor.glsl
+custom-shader-animation = always
 
 # macOS icon & titlebar
 macos-icon = custom

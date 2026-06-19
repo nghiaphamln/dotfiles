@@ -73,9 +73,12 @@ return {
 		},
 		config = function(_, opts)
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+			local roslyn_cmd = mason_bin .. "/roslyn"
 
 			require("roslyn").setup(opts)
 			vim.lsp.config("roslyn", {
+				cmd = { roslyn_cmd, "--stdio" },
 				capabilities = vim.tbl_deep_extend("force", capabilities, {
 					textDocument = {
 						diagnostic = {
@@ -345,6 +348,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		lazy = false,
+		version = "1.*",
 		build = "cargo build --release",
 		dependencies = "rafamadriz/friendly-snippets",
 		opts = {

@@ -25,6 +25,12 @@ return {
 	{
 		"OXY2DEV/markview.nvim",
 		lazy = false,
+		init = function()
+			-- Disable markview's blink integration. Its VimEnter hook assumes
+			-- package.loaded["blink.cmp"] is a module table, which is not true in
+			-- our startup path and crashes before the editor finishes loading.
+			vim.g.markview_blink_loaded = true
+		end,
 		opts = {},
 	},
 
