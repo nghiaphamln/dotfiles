@@ -1,20 +1,43 @@
 {
   "lastChangelogVersion": "0.79.7",
   "theme": "dark",
+  "quietStartup": true,
+  "collapseChangelog": true,
+  "defaultProjectTrust": "ask",
+  "enableInstallTelemetry": false,
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "openai-codex/gpt-5.5",
+    "openai-codex/gpt-5.4",
+    "openai-codex/gpt-5.4-mini"
+  ],
+  "enableSkillCommands": true,
+  "retry": {
+    "enabled": true,
+    "maxRetries": 3,
+    "baseDelayMs": 2000
+  },
   "compaction": {
     "enabled": true,
     "reserveTokens": 32768,
     "keepRecentTokens": 40000
   },
+  "smartFetchDefaultMaxChars": 50000,
+  "smartFetchDefaultTimeoutMs": 15000,
+  "smartFetchDefaultBatchConcurrency": 4,
   "packages": [
     "npm:pi-rtk-optimizer",
     "npm:@diegopetrucci/pi-notify",
     "git:github.com/DietrichGebert/ponytail",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-rewind",
-    "npm:@markoonakic/pi-working-line"
+    "npm:@markoonakic/pi-working-line",
+    "npm:pi-tool-display",
+    "npm:pi-read-map",
+    "npm:pi-cache-optimizer",
+    "npm:pi-permission-system",
+    "npm:pi-smart-fetch"
   ]
 }
