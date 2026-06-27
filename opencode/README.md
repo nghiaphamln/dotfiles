@@ -60,7 +60,7 @@ Two OpenAI-compatible providers are configured:
 | `llm` | `LLM_BASE_URL`, `LLM_API_KEY` | Secondary provider, `gpt-5.5`, 272K context |
 
 Default models:
-- `model`: `aicheap/gpt-5.5`
+- `model`: `aicheap/gpt-5.4`
 - `small_model`: `aicheap/gpt-5.4-mini`
 
 `aicheap/gpt-5.4` and `aicheap/gpt-5.5` default to high reasoning options. `aicheap/gpt-5.4-mini` defaults to low reasoning for lightweight `small_model` tasks. Each model also supports reasoning variants (`none`, `low`, `medium`, `high`, `xhigh`) configurable per-session.
@@ -76,6 +76,8 @@ Recommended daily flow:
 5. Use `git-conventions` before branch creation, staging, commits, or commit messages.
 
 OpenCode also loads `AGENTS.md` globally for personal operating rules and `skills/iron-laws.md` eagerly for methodology gates.
+
+Built-in LSP and formatter support are enabled with default OpenCode behavior.
 
 ### Permissions
 
@@ -96,7 +98,7 @@ Custom workflow commands live in `commands/`:
 
 ### TUI
 
-`tui.jsonc` enables native OpenCode attention notifications and sounds for done/question/permission/error events. This replaces the removed custom notification plugin.
+`tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, and native OpenCode attention notifications/sounds for done/question/permission/error events. This replaces the removed custom notification plugin.
 
 ### Environment Variables
 

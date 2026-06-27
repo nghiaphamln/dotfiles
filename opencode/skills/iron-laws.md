@@ -30,19 +30,6 @@ Red flags:
 
 For full methodology: invoke `karpathy-guidelines` skill.
 
-## Context Discovery
-
-**MATCH THE REPOSITORY BEFORE WRITING CODE.**
-
-Before implementing in unfamiliar or non-trivial code: read project guidance, find similar working code, identify local patterns, and determine verification commands. Load only the context needed for the task.
-
-Red flags:
-- Writing generic code without checking existing patterns
-- Ignoring project-local `AGENTS.md`, `CONTRIBUTING.md`, scripts, or tests
-- Guessing conventions that can be discovered from nearby code
-
-For full methodology: invoke `context-discovery` skill.
-
 ## Security And Secrets
 
 **NEVER EXPOSE SECRETS OR WEAKEN SECURITY BY ACCIDENT.**

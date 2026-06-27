@@ -11,7 +11,6 @@ dotfiles/
         ├── AGENTS.md
         ├── APPEND_SYSTEM.md
         ├── models.json
-        ├── pi-permissions.jsonc
         ├── prompts/
         │   └── plan.md
         ├── settings.json
@@ -30,7 +29,6 @@ Runtime layout after symlinks:
 ├── AGENTS.md          -> dotfiles/pi/agent/AGENTS.md
 ├── APPEND_SYSTEM.md   -> dotfiles/pi/agent/APPEND_SYSTEM.md
 ├── models.json        -> dotfiles/pi/agent/models.json
-├── pi-permissions.jsonc -> dotfiles/pi/agent/pi-permissions.jsonc
 ├── prompts/           -> dotfiles/pi/agent/prompts/
 ├── settings.json      -> dotfiles/pi/agent/settings.json
 └── skills/            -> dotfiles/pi/agent/skills/
@@ -46,7 +44,6 @@ mkdir -p ~/.pi/agent
 
 ln -sf "$DOTFILES_DIR/pi/agent/settings.json" ~/.pi/agent/settings.json
 ln -sf "$DOTFILES_DIR/pi/agent/models.json" ~/.pi/agent/models.json
-ln -sf "$DOTFILES_DIR/pi/agent/pi-permissions.jsonc" ~/.pi/agent/pi-permissions.jsonc
 ln -sf "$DOTFILES_DIR/pi/agent/APPEND_SYSTEM.md" ~/.pi/agent/APPEND_SYSTEM.md
 ln -sf "$DOTFILES_DIR/pi/agent/AGENTS.md" ~/.pi/agent/AGENTS.md
 ln -sfn "$DOTFILES_DIR/pi/agent/skills" ~/.pi/agent/skills
@@ -60,8 +57,7 @@ ln -sfn "$DOTFILES_DIR/pi/agent/prompts" ~/.pi/agent/prompts
 - Thinking level: `high`.
 - Model metadata override: `gpt-5.4` and `gpt-5.5` use 500K context; `gpt-5.4-mini` uses 400K context; all use 128K max output tokens.
 - UI/privacy: quiet startup, collapsed changelog, install telemetry disabled, and project trust defaults to `ask`.
-- Package-managed extensions: RTK output optimization, notifications, Ponytail, structured user questions, rewind/checkpoints, working-line status, tool display rendering, read maps for large files, cache optimization, permission gates, and smart web fetching.
-- Permissions: `pi-permission-system` allows routine read/search/list tools, asks before shell/edit/write/network-style tools, asks before external-directory access, and denies obvious secret file patterns.
+- Package-managed extensions: RTK output optimization, notifications, Ponytail, structured user questions, rewind/checkpoints, working-line status, tool display rendering, read maps for large files, cache optimization, and smart web fetching.
 - Smart fetch: `pi-smart-fetch` registers `web_fetch` and `batch_web_fetch` with conservative defaults: 50K chars, 15s timeout, and batch concurrency 4.
 - Cache optimization: `pi-cache-optimizer` improves provider-side prompt/cache behavior and exposes `/cache-optimizer` diagnostics.
 - Compaction: enabled, with larger reserve and recent-token budgets than Pi defaults.
@@ -86,8 +82,6 @@ alias piplan='pi --tools read,grep,find,ls'
 ```
 
 Use `piplan` when you want tool-level protection against edits, writes, and mutating shell commands.
-
-The global permission policy provides similar protection inside normal Pi sessions, but `piplan` is still useful when you want a hard CLI-level read-only tool allowlist.
 
 ## Verification
 

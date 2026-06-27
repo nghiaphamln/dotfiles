@@ -1,9 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "aicheap/gpt-5.5",
+  "model": "aicheap/gpt-5.4",
   "small_model": "aicheap/gpt-5.4-mini",
   "snapshot": true,
   "share": "manual",
+  "lsp": true,
+  "formatter": true,
   "instructions": [
     "skills/iron-laws.md"
   ],

@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.79.7",
+  "lastChangelogVersion": "0.79.8",
   "theme": "dark",
   "quietStartup": true,
   "collapseChangelog": true,
@@ -37,7 +37,6 @@
     "npm:pi-tool-display",
     "npm:pi-read-map",
     "npm:pi-cache-optimizer",
-    "npm:pi-permission-system",
     "npm:pi-smart-fetch"
   ]
 }
