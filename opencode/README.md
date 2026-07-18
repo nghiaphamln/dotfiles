@@ -56,14 +56,16 @@ Two OpenAI-compatible providers are configured:
 
 | Provider | Env vars | Notes |
 |---|---|---|
-| `aicheap` | `AI_CHEAP_BASE_URL`, `AI_CHEAP_API_KEY` | Default provider, 500K context for `gpt-5.4` and `gpt-5.5` |
-| `llm` | `LLM_BASE_URL`, `LLM_API_KEY` | Secondary provider, `gpt-5.5`, 272K context |
+| `aicheap` | `AI_CHEAP_BASE_URL`, `AI_CHEAP_API_KEY` | Default provider; GPT-5.6 Sol, Terra, and Luna use the gateway's 372K context limit |
+| `llm` | `LLM_BASE_URL`, `LLM_API_KEY` | ChatGPT Free-backed gateway; GPT-5.6 Terra uses the gateway's 272K context limit; Sol and Luna are unavailable |
 
 Default models:
-- `model`: `aicheap/gpt-5.4`
-- `small_model`: `aicheap/gpt-5.4-mini`
+- `model`: `aicheap/gpt-5.6-sol`
+- `small_model`: `aicheap/gpt-5.6-luna`
 
-`aicheap/gpt-5.4` and `aicheap/gpt-5.5` default to high reasoning options. `aicheap/gpt-5.4-mini` defaults to low reasoning for lightweight `small_model` tasks. Each model also supports reasoning variants (`none`, `low`, `medium`, `high`, `xhigh`) configurable per-session.
+GPT-5.6 Sol and Terra default to high reasoning, while GPT-5.6 Luna defaults to low and serves as the lightweight `small_model`. The `aicheap` entries expose `none`, `low`, `medium`, `high`, `xhigh`, and `max`; the `llm` provider supports `none`, `low`, `medium`, and `high` only. The `aicheap` provider has all three models; `llm` has Terra only.
+
+The `llm` gateway uses a ChatGPT Free account. Its usage quota is dynamic and enforced server-side, so it cannot be represented in OpenCode's model metadata. OpenAI officially lists Terra as the GPT-5.6 model available to Free and Go users in Codex, so this provider exposes Terra only.
 
 ### Workflow
 
