@@ -1,0 +1,157 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "background": "#1d2021",
+    "dark": "#3c3836",
+    "gray": "#928374",
+    "foreground": "#ebdbb2",
+    "red": "#fb4934",
+    "green": "#b8bb26",
+    "yellow": "#fabd2f",
+    "blue": "#83a598",
+    "purple": "#d3869b",
+    "aqua": "#8ec07c",
+    "orange": "#fe8019"
+  },
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "p:dark",
+          "foreground": "p:yellow",
+          "leading_diamond": "\ue0b6",
+          "style": "diamond",
+          "template": " {{ .Icon }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "os"
+        },
+        {
+          "background": "p:blue",
+          "foreground": "p:background",
+          "leading_diamond": " \ue0b6",
+          "options": {
+            "folder_icon": "…",
+            "folder_separator_icon": "/",
+            "home_icon": "~",
+            "max_depth": 2,
+            "style": "agnoster_short"
+          },
+          "style": "diamond",
+          "template": " \uf07b {{ .Path }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "path"
+        },
+        {
+          "background": "p:green",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:yellow{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:red{{ end }}",
+            "{{ if or (gt .Ahead 0) (gt .Behind 0) }}p:purple{{ end }}"
+          ],
+          "foreground": "p:background",
+          "leading_diamond": " \ue0b6",
+          "options": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "diamond",
+          "template": " {{ if .UpstreamIcon }}{{ .UpstreamIcon }} {{ end }}{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "git"
+        },
+        {
+          "background": "p:purple",
+          "foreground": "p:background",
+          "leading_diamond": " \ue0b6",
+          "options": {
+            "style": "roundrock",
+            "threshold": 500
+          },
+          "style": "diamond",
+          "template": " \ueba2 {{ .FormattedMs }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "executiontime"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "foreground": "p:green",
+          "options": {
+            "fetch_package_manager": true
+          },
+          "style": "plain",
+          "template": "\ue718 {{ .Full }} ",
+          "type": "node"
+        },
+        {
+          "foreground": "p:yellow",
+          "options": {
+            "display_mode": "files",
+            "fetch_virtual_env": true
+          },
+          "style": "plain",
+          "template": "\ue235 {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} ",
+          "type": "python"
+        },
+        {
+          "foreground": "p:aqua",
+          "style": "plain",
+          "template": "\ue626 {{ .Full }} ",
+          "type": "go"
+        },
+        {
+          "foreground": "p:orange",
+          "style": "plain",
+          "template": "\ue7a8 {{ .Full }} ",
+          "type": "rust"
+        },
+        {
+          "foreground": "p:gray",
+          "options": {
+            "time_format": "15:04"
+          },
+          "style": "plain",
+          "template": "\uf017 {{ .CurrentDate | date .Format }}",
+          "type": "time"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "p:green",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:red{{ end }}"
+          ],
+          "options": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "template": "\u2570\u2500{{ if gt .Code 0 }}\uf00d {{ .Code }} {{ end }}\u276f",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "console_title_template": "{{ .Folder }} — zsh",
+  "final_space": true,
+  "secondary_prompt": {
+    "foreground": "p:yellow",
+    "template": "\u276f\u276f "
+  },
+  "transient_prompt": {
+    "foreground": "p:gray",
+    "template": "\u276f "
+  },
+  "version": 4
+}

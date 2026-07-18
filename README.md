@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Kitty, IdeaVim, OpenCode, Pi, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Kitty, Zsh, IdeaVim, OpenCode, Pi, and PowerShell.
 
 ## Structure
 
@@ -9,6 +9,7 @@ dotfiles/
 ├── nvim/              → ~/.config/nvim
 ├── zed/               → ~/.config/zed
 ├── kitty/             → ~/.config/kitty
+├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
 ├── opencode/          → ~/.config/opencode
@@ -32,6 +33,20 @@ ln -sf ~/dotfiles/zed ~/.config/zed
 ln -sf ~/dotfiles/kitty ~/.config/kitty
 ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
 mkdir -p ~/.config/zed/prompts
+```
+
+### Zsh and Oh My Posh
+
+The custom prompt matches the Gruvbox Dark palette used by Ghostty and expects a Nerd Font.
+
+```bash
+brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew install --cask font-jetbrains-mono-nerd-font
+
+mkdir -p ~/.config/oh-my-posh
+ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
+ln -sf ~/dotfiles/zsh/gruvbox.omp.json ~/.config/oh-my-posh/gruvbox.omp.json
+exec zsh
 ```
 
 ### OpenCode
@@ -74,6 +89,7 @@ Pi setup keeps `~/.pi/agent/auth.json`, sessions, logs, and runtime files local.
 | [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
 | [Zed](https://zed.dev/) | `zed/` | Secondary editor |
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
+| [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
 | [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
 | [Pi](https://pi.dev/) | `pi/` | AI coding agent (terminal) |
