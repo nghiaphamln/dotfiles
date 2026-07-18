@@ -17,27 +17,29 @@ return {
 	-- Mason Tool Installer: automatically install formatters and linters
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		lazy = false,
 		dependencies = { "mason-org/mason.nvim" },
-			opts = {
-				ensure_installed = {
-					"lua-language-server",
-					"rust-analyzer",
-					"gopls",
-					"pyright",
-					"yaml-language-server",
-					"clangd",
-					"roslyn",
-					"stylua",
-					"black",
-					"csharpier",
-					"clang-format",
-					"cppcheck",
-					"isort",
-					"prettier",
-					"pylint",
-				},
+		opts = {
+			ensure_installed = {
+				"lua-language-server",
+				"rust-analyzer",
+				"gopls",
+				"pyright",
+				"yaml-language-server",
+				"clangd",
+				"roslyn",
+				"stylua",
+				"black",
+				"csharpier",
+				"clang-format",
+				"isort",
+				"prettier",
+				"pylint",
 			},
+			auto_update = false,
+			run_on_start = true,
 		},
+	},
 
 	-- Mason LSPConfig: bridge between Mason and Neovim LSP configs
 	{
@@ -47,17 +49,17 @@ return {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
 		},
-			opts = {
-				ensure_installed = {
-					"lua_ls",
-					"rust_analyzer",
-					"gopls",
-					"pyright",
-					"yamlls",
-					"clangd",
-				},
-				automatic_enable = false,
+		opts = {
+			ensure_installed = {
+				"lua_ls",
+				"rust_analyzer",
+				"gopls",
+				"pyright",
+				"yamlls",
+				"clangd",
 			},
+			automatic_enable = false,
+		},
 	},
 
 	-- Roslyn: C# and Razor language server integration
@@ -313,7 +315,12 @@ return {
 					end, opts)
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-					if client and vim.lsp.inlay_hint and vim.lsp.buf_is_attached(ev.buf, client.id) and client.server_capabilities.inlayHintProvider then
+					if
+						client
+						and vim.lsp.inlay_hint
+						and vim.lsp.buf_is_attached(ev.buf, client.id)
+						and client.server_capabilities.inlayHintProvider
+					then
 						vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 					end
 
@@ -338,7 +345,7 @@ return {
 				{ "K", desc = "Hover" },
 				{ "<leader>rn", desc = "Rename" },
 				{ "<leader>ca", desc = "Code action" },
-					{ "<leader>t", group = "toggle" },
+				{ "<leader>t", group = "toggle" },
 				{ "<leader>td", desc = "Toggle diagnostics (Trouble)" },
 			})
 		end,

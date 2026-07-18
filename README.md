@@ -37,11 +37,19 @@ mkdir -p ~/.config/zed/prompts
 
 ### Zsh and Oh My Posh
 
-The custom prompt matches the Gruvbox Dark palette used by Ghostty and expects a Nerd Font.
+The custom prompt matches the Gruvbox Dark palette used by Ghostty and expects a Nerd Font. History-based inline command suggestions are provided by `zsh-autosuggestions`, and Node.js versions are managed by `nvm`.
 
 ```bash
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew install zsh-autosuggestions
 brew install --cask font-jetbrains-mono-nerd-font
+
+PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash'
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm install --lts
+
+curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir "$HOME/.dotnet"
 
 mkdir -p ~/.config/oh-my-posh
 ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
@@ -98,9 +106,9 @@ Pi setup keeps `~/.pi/agent/auth.json`, sessions, logs, and runtime files local.
 
 ## Neovim
 
-Requires Neovim 0.12+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) will auto-install plugins on first run.
+Requires Neovim 0.12+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) installs plugins at the versions pinned in `nvim/lazy-lock.json`, and Mason installs the declared language tools automatically.
 
-Install language servers:
+Inspect installed language tools:
 ```
 :Mason
 ```

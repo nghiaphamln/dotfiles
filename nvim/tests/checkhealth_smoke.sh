@@ -42,6 +42,33 @@ if any(marker in tool_block for marker in tool_markers) or any(marker in lsp_blo
     raise SystemExit(1)
 PY
 
+python3 - "$repo_root/nvim/lua/plugins/editor.lua" <<'PY'
+from pathlib import Path
+import os
+import re
+import sys
+
+text = Path(sys.argv[1]).read_text()
+match = re.search(
+    r'require\("nvim-treesitter\.install"\)\.install\(\{(.*?)\}\)',
+    text,
+    re.DOTALL,
+)
+if not match:
+    print("Unable to find the configured Treesitter parser list", file=sys.stderr)
+    raise SystemExit(1)
+
+languages = re.findall(r'"([a-z0-9_]+)"', match.group(1))
+
+data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local" / "share"))
+parser_dir = data_home / "nvim" / "site" / "parser"
+missing = [language for language in languages if not (parser_dir / f"{language}.so").is_file()]
+
+if missing:
+    print(f'Missing configured Treesitter parsers: {", ".join(missing)}', file=sys.stderr)
+    raise SystemExit(1)
+PY
+
 bash "$repo_root/nvim/tests/python_venv_smoke.sh"
 bash "$repo_root/nvim/tests/prettier_smoke.sh"
 bash "$repo_root/nvim/tests/yaml_lsp_smoke.sh"
@@ -65,11 +92,6 @@ fi
 
 if rg -n 'tree-sitter-cli not found' "$health_report" >/dev/null; then
   printf 'tree-sitter-cli is missing\n' >&2
-  exit 1
-fi
-
-if rg -n 'Missing Treesitter languages:' "$health_report" >/dev/null; then
-  printf 'treesitter languages are missing\n' >&2
   exit 1
 fi
 

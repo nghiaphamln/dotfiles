@@ -66,21 +66,38 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    brew install neovim
    ```
 
-2. **Node.js + npm** — Needed for pyright, prettier, mermaid-cli, tree-sitter-cli
-
-3. **.NET SDK** — Needed for Roslyn language server support
-
-4. **macOS tools** (managed outside Mason via Homebrew/npm/pip)
+2. **Node.js LTS + npm via NVM** — Needed for pyright, prettier, mermaid-cli, tree-sitter-cli
 
    ```bash
-   brew install clang-format cmake-language-server ghostscript stylua
-   python3 -m pip install --user cmakelang
-   npm install -g @mermaid-js/mermaid-cli tree-sitter-cli@0.25.10
+   PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash'
+   export NVM_DIR="$HOME/.nvm"
+   source "$NVM_DIR/nvm.sh"
+   nvm install --lts
+   ```
+
+3. **.NET 10 LTS SDK** — Needed for Roslyn and CSharpier
+
+   ```bash
+   curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir "$HOME/.dotnet"
+   ```
+
+   `zsh/.zshrc` exports `DOTNET_ROOT` and adds the per-user SDK to `PATH`.
+
+4. **macOS tools** (managed outside Mason via Homebrew/npm/pipx)
+
+   ```bash
+   brew install cmake-language-server cppcheck fd ghostscript imagemagick lazygit pipx tectonic
+   pipx install cmakelang
+   npm install -g @mermaid-js/mermaid-cli --allow-scripts=puppeteer
+   npm install -g tree-sitter-cli@0.26.11 --allow-scripts=tree-sitter-cli
    ```
 
    Notes:
    - `cmake-language-server` is installed with Homebrew because current Mason packaging rejects Python 3.14
-   - `cmake-format` comes from the `cmakelang` Python package
+   - `cmake-format` comes from the isolated `cmakelang` environment managed by pipx
+   - `cppcheck` is installed with Homebrew because it is not available in the current Mason registry
+   - `fd` and `lazygit` power Snacks file search and the LazyGit integration
+   - ImageMagick, Ghostscript, Tectonic, and Mermaid CLI support image, PDF, LaTeX, and diagram rendering
    - `tree-sitter-cli` and `mmdc` are external prerequisites checked by the repo smoke tests
 
 5. **Mason-managed tools** (installed automatically on first run)
@@ -101,11 +118,11 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    | `clang-format` | C/C++ |
    | `csharpier` | .NET / C# |
    | `stylua` | Lua |
-   | `cppcheck` | C/C++ |
 
    Notes:
    - `roslyn` is installed via an extra Mason registry: `github:Crashdummyy/mason-registry`
    - `dotnet` must be available in `PATH` for Roslyn to run
+   - `cppcheck` is managed outside Mason via Homebrew
 
 ### Setup
 
@@ -122,19 +139,15 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    ln -s ~/dotfiles/nvim ~/.config/nvim
    ```
 
-3. **Install external tools** — Run the Homebrew/npm/pip commands from prerequisites above
+3. **Install external tools** — Run the Homebrew/npm/pipx commands from prerequisites above
 
-4. **Start Neovim and sync plugins**
+4. **Start Neovim**
 
    ```bash
    nvim
    ```
 
-   Then run:
-
-   ```vim
-   :Lazy sync
-   ```
+   lazy.nvim installs plugins at the versions pinned in `lazy-lock.json`, and Mason installs the declared language tools automatically. Use `:Lazy restore` if an existing installation has drifted from the lockfile.
 
 5. **Authenticate Copilot** (optional)
 
@@ -393,7 +406,7 @@ Edit `lua/config/options.lua` for Neovim options (indentation, search, clipboard
 
 ### Plugin Installation Issues
 
-1. Run `:Lazy sync` to install/update plugins
+1. Run `:Lazy restore` to reinstall the plugin versions pinned in `lazy-lock.json`
 2. Check `:Lazy` for any errors
 3. Run `./nvim/tests/checkhealth_smoke.sh` from the dotfiles repo
 

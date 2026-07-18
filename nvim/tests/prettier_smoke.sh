@@ -42,6 +42,10 @@ assert(
 	"prettier should prefer node_modules/.bin"
 )
 
+-- Mason intentionally prepends its bin directory during startup. Re-prepend the
+-- fixture directory so this branch tests Conform's global PATH fallback itself.
+vim.env.PATH = project_dir .. "/fallback-bin:" .. vim.env.PATH
+
 local fallback_info = formatter_info(fallback_project .. "/data.json")
 assert(fallback_info.available, "prettier fallback should still be available")
 assert(
