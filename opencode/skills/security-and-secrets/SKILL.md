@@ -1,15 +1,15 @@
 ---
 name: security-and-secrets
-description: Use for auth, authorization, secrets, env files, tokens, credentials, permissions, network calls, shell commands, dependency/config security, or privacy-sensitive changes. Prevents secret exposure and checks common security failure modes.
+description: Use when a task materially affects authentication, authorization, secret or credential handling, sensitive data, permission or trust boundaries, untrusted input, or an explicit security review. Do not invoke merely because an ordinary task uses shell commands, networking, dependencies, or config.
 ---
 
 # Security And Secrets
 
-Use this whenever a task touches credentials, auth, permissions, network boundaries, subprocesses, config, or sensitive data.
+Use this when a task materially changes credentials, auth, permissions, trust boundaries, sensitive data handling, or code that processes untrusted input. Ordinary shell, network, dependency, and config work does not require this skill unless it has a concrete security-sensitive aspect.
 
 ## Hard Rules
 
-- Do not read `.env`, `.env.*`, auth files, tokens, private keys, session stores, or credential files unless the user explicitly approves and the task requires it.
+- Do not read real environment files such as `.env`, `.env.local`, or `.env.production`, or auth files, tokens, private keys, session stores, or credential files unless the user explicitly approves and the task requires it. Safe templates such as `.env.example` and `.env.sample` may be read.
 - Never print, copy, summarize, or commit secrets.
 - Prefer `.env.example`, docs, schemas, or key names over real values.
 - Do not add logging that can expose secrets, tokens, PII, request bodies, cookies, or authorization headers.

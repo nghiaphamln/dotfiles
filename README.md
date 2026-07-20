@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Kitty, Zsh, IdeaVim, OpenCode, Pi, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Kitty, Zsh, IdeaVim, Codex CLI, OpenCode, Pi, and PowerShell.
 
 ## Structure
 
@@ -12,6 +12,7 @@ dotfiles/
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
+├── codex/             → ~/.codex/AGENTS.md
 ├── opencode/          → ~/.config/opencode
 ├── pi/                → ~/.pi/agent/{settings.json,models.json,skills/,prompts/}
 ├── github-copilot/    → Copilot version tracking
@@ -73,6 +74,17 @@ OpenCode setup details, provider environment variables, workflow commands, TUI a
 
 The checked-in OpenCode plugin currently covers token-optimized shell rewrites via RTK.
 
+### Codex CLI
+
+The global `AGENTS.md` adapts the MIT-licensed [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills/tree/main/skills/karpathy-guidelines) guidelines as concise, always-on personal defaults. Repository and nested instruction files can still add more specific guidance.
+
+```bash
+mkdir -p ~/.codex
+ln -sf ~/dotfiles/codex/AGENTS.md ~/.codex/AGENTS.md
+```
+
+Only `AGENTS.md` is symlinked. Authentication, configuration, sessions, skills, caches, and other runtime state remain local in `~/.codex`.
+
 ### Pi Coding Agent
 
 See [pi/README.md](pi/README.md) for detailed setup instructions.
@@ -99,6 +111,7 @@ Pi setup keeps `~/.pi/agent/auth.json`, sessions, logs, and runtime files local.
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
 | [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
+| [Codex CLI](https://developers.openai.com/codex/cli/) | `codex/` | AI coding agent with global Karpathy-style guidance |
 | [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
 | [Pi](https://pi.dev/) | `pi/` | AI coding agent (terminal) |
 | PowerShell | `PowerShell/` | Shell profile (Windows) |

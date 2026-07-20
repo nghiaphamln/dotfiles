@@ -1,23 +1,27 @@
 ---
 name: test-driven-development
-description: Use when implementing app-level features or bugfixes in a repository that has a test framework set up. Write failing test first, watch it fail, then write minimal code to pass. SKIP for dotfiles, config files, shell scripts, infrastructure, throwaway prototypes, generated code, or repos without a test runner.
+description: Use when implementing app-level features, bug fixes, behavior changes, or pure refactors in a repository with a test framework. Use red-green-refactor for changed behavior and a green-before/green-after baseline for pure refactors. SKIP for dotfiles, config files, shell scripts, infrastructure, throwaway prototypes, generated code, or repos without a test runner.
 ---
 
 # Test-Driven Development (TDD)
 
 ## Overview
 
-Write the test first. Watch it fail. Write minimal code to pass.
+For new or changed behavior, write the test first, watch it fail, then write minimal code to pass. For a pure refactor, establish a green baseline and keep it green.
 
-**Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
+**Core principle:** A test intended to prove new behavior must fail for the expected reason before the implementation makes it pass.
 
 ## When to Use
 
-**Use for app-level code:**
+**Use red-green-refactor for app-level behavior changes:**
 - New features
 - Bug fixes
-- Refactoring
 - Behavior changes
+
+**Use a green baseline for pure refactors:**
+- Run the relevant existing checks before editing.
+- Add a passing characterization test first when important behavior lacks coverage.
+- Refactor without changing behavior, then run the same checks again.
 
 **Skip by default:**
 - Dotfiles and configuration files
@@ -26,15 +30,17 @@ Write the test first. Watch it fail. Write minimal code to pass.
 - Generated code
 - Repositories without a test runner
 
-If the user explicitly wants tests for one of these cases, follow the closest practical red-green loop.
+If the user explicitly wants tests for one of these cases, follow the closest practical test and verification loop.
 
 ## The Iron Law
 
 ```
-NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+NO NEW OR CHANGED PRODUCTION BEHAVIOR WITHOUT A FAILING TEST FIRST
 ```
 
-For app-level production code with a test framework, writing code before the test means restarting from the test. Do not keep prewritten code as a hidden reference unless the user explicitly opts out of TDD for this task.
+This gate applies only to new or changed behavior written during the current task. Never delete, revert, or overwrite pre-existing code or user work to manufacture a red phase. If you wrote implementation code first and can safely undo only your own current-task changes, return to the failing test; otherwise preserve the work, add the strongest regression test available, and report the actual sequence honestly.
+
+Pure behavior-preserving refactors do not need a failing test. They need relevant checks passing before and after the refactor.
 
 ## Red-Green-Refactor
 
@@ -96,7 +102,7 @@ Write simplest code to pass the test. Don't add features, refactor other code, o
 Run all tests. Confirm:
 - Test passes
 - Other tests still pass
-- Output pristine (no errors, warnings)
+- No new relevant errors or warnings were introduced; report pre-existing noise instead of expanding scope to clean it up
 
 **Test fails?** Fix code, not test.
 
@@ -121,20 +127,18 @@ Next failing test for next feature.
 | "I'll test after" | Tests passing immediately prove nothing. |
 | "Tests after achieve same goals" | Tests-after = "what does this do?" Tests-first = "what should this do?" |
 | "Already manually tested" | Ad-hoc ≠ systematic. No record, can't re-run. |
-| "Deleting X hours is wasteful" | Sunk cost fallacy. Keeping unverified code is technical debt. |
-| "Keep as reference, write tests first" | You'll adapt it. That's testing after. Delete means delete. |
+| "The implementation already exists" | Preserve pre-existing or user-written code. Add a regression or characterization test and do not claim a test-first sequence you did not observe. |
 | "TDD will slow me down" | TDD faster than debugging. Pragmatic = test-first. |
 
-## Red Flags - STOP and Start Over
+## Red Flags - Stop and Re-establish the Test Loop
 
-- Code before test
+- New or changed behavior written during the current task before its test
 - Test passes immediately (without seeing it fail first)
 - Can't explain why test failed
 - Rationalizing "just this once"
 - "Tests after achieve the same purpose"
-- "Already spent X hours, deleting is wasteful"
 
-**All of these mean: stop and restart from the test unless the user explicitly opts out of TDD for this task.**
+**If the agent's own current-task behavior change was written first, return to the failing test when that can be done without touching pre-existing or user work. Otherwise preserve the work, add the best regression test available, and disclose that the red phase was not observed.**
 
 ## Example: Bug Fix
 
@@ -170,15 +174,18 @@ Before marking work complete:
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test
 - [ ] All tests pass
-- [ ] Output pristine (no errors, warnings)
+- [ ] No new relevant errors or warnings were introduced
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
+- [ ] Pure refactors had relevant checks pass before and after
 
-If required boxes are not applicable, say why. If they are applicable and unchecked, restart from the missing red-green step.
+If required boxes are not applicable, say why. If an applicable red-green step was missed, preserve existing work, add the strongest verification now, and report the gap honestly.
 
 ## Final Rule
 
 ```
-App-level production behavior with a test runner -> test exists and failed first
-Otherwise -> use the closest practical verification path
+New or changed app behavior with a test runner -> test exists and failed first
+Pure refactor -> relevant checks pass before and after
+Pre-existing or user-written behavior -> preserve it and add regression or characterization coverage
+Otherwise -> use the closest practical verification path and report limitations
 ```

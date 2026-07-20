@@ -3,8 +3,6 @@ description: Analyze a task in Plan mode without editing files
 agent: plan
 ---
 
-Use the `brainstorming` skill when applicable.
-
 Analyze the request and repository context first.
 
 Do not edit files. Do not write code. Do not run mutating commands.

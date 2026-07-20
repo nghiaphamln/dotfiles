@@ -17,7 +17,7 @@ Random fixes waste time and create new bugs. Quick patches mask underlying issue
 NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ```
 
-If you haven't completed Phase 1, you cannot propose fixes.
+If you cannot state an evidence-backed cause, you cannot propose a fix.
 
 ## When to Use
 
@@ -36,7 +36,7 @@ Use for ANY technical issue:
 - Previous fix didn't work
 - You don't fully understand the issue
 
-**Abridged process for trivial bugs:** When the root cause is obvious from a single error message (typo, missing import, undefined variable, off-by-one with clear fix), you may collapse Phases 1–3 into one short paragraph stating the cause, then go to Phase 4. The Iron Law still applies — you must state the cause before fixing — but you do not need formal pattern analysis or hypothesis testing for cases where the error message names the cause directly.
+**Abridged process for trivial bugs:** When the root cause is obvious from a single error message (typo, missing import, undefined variable, off-by-one with clear fix), state the cause in one short paragraph, make the focused fix, and verify it. The Iron Law still applies, but obvious cases do not require formal pattern analysis or hypothesis testing.
 
 ## Investigation Ladder
 

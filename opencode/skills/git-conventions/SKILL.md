@@ -103,7 +103,7 @@ Good:
 
 ```text
 feat(pi): add git convention skill
-fix(pi): keep ponytail behind workflow gates
+fix(pi): keep plan workflow read-only
 docs(opencode): document skill setup
 ```
 

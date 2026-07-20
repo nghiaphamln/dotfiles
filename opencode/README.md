@@ -24,14 +24,10 @@ dotfiles/
     ├── plugins/
     │   └── rtk.ts
     └── skills/
-        ├── brainstorming/SKILL.md
         ├── code-review/SKILL.md
-        ├── context-discovery/SKILL.md
         ├── git-conventions/SKILL.md
-        ├── karpathy-guidelines/SKILL.md
         ├── security-and-secrets/SKILL.md
         ├── systematic-debugging/SKILL.md
-        ├── verification-before-completion/SKILL.md
         └── test-driven-development/SKILL.md
 ```
 
@@ -74,16 +70,17 @@ Recommended daily flow:
 1. Use Build mode directly for small mechanical changes.
 2. Use Plan mode before non-trivial features, refactors, unclear tasks, or reviews.
 3. Use `systematic-debugging` for bugs and unexpected failures before fixing.
-4. Use `verification-before-completion` before claiming work is done.
-5. Use `git-conventions` before branch creation, staging, commits, or commit messages.
+4. Use `test-driven-development` for app-level features and bug fixes when the repository has a test runner.
+5. Run the relevant verification before claiming work is done.
+6. Use `git-conventions` before branch creation, staging, commits, or commit messages.
 
-OpenCode also loads `AGENTS.md` globally for personal operating rules and `skills/iron-laws.md` eagerly for methodology gates.
+OpenCode loads `AGENTS.md` globally for concise, always-on operating rules. Task-specific workflows remain in skills and are loaded on demand.
 
 Built-in LSP and formatter support are enabled with default OpenCode behavior.
 
 ### Permissions
 
-This config relies on OpenCode's default agents and permissions. Personal guardrails live in `AGENTS.md` and the methodology skills instead of custom `permission` or `agent` overrides in `opencode.jsonc`.
+This config uses OpenCode's default agent permissions without additional overrides. Behavioral guardrails live in `AGENTS.md`, task-specific skills, and explicit command workflows.
 
 File watching ignores noisy generated folders like `node_modules`, `.git`, `dist`, `build`, and `.cache`.
 
@@ -139,21 +136,19 @@ The RTK plugin only uses type imports and has no checked-in local package depend
 
 Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them from `~/.config/opencode/skills/` (symlinked from this dotfiles repo) and exposes them to agents via the `skill` tool — the agent invokes `skill({ name: "..." })` on demand to load the full content.
 
-In addition, `skills/iron-laws.md` is loaded eagerly via the `instructions` array in `opencode.jsonc`. It is a condensed reminder of the always-on methodology rules and points the agent to invoke the relevant skill for full guidance.
+General principles such as surfacing assumptions, keeping changes surgical, tracking multi-step work, and verifying success criteria live in `AGENTS.md`. Skills are reserved for workflows that benefit from detailed task-specific procedures.
+
+The working-style principles in `AGENTS.md` are adapted from the MIT-licensed [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) project.
 
 | Skill | Purpose | Source |
 |---|---|---|
-| `brainstorming` | Design-first workflow — explore intent, propose approaches, get user approval before any code | local |
 | `code-review` | Findings-first review workflow focused on bugs, regressions, missing tests, and security risks | local |
-| `context-discovery` | Inspect project rules, patterns, dependencies, and verification commands before changing code | local |
 | `git-conventions` | Branch naming, Conventional Commits, scopes, staging safety, and verification before commit | local |
-| `karpathy-guidelines` | Think first, keep changes simple and surgical, surface assumptions, and define verifiable success criteria | local, adapted from [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
-| `security-and-secrets` | Secret handling, auth changes, injection risks, and safe logging/review checks | local |
+| `security-and-secrets` | Security-sensitive auth, secret, permission, trust-boundary, and untrusted-input workflows | local |
 | `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding | local |
-| `verification-before-completion` | Evidence before claims — run verification commands before declaring anything done | local |
-| `test-driven-development` | Write failing test first, watch it fail, then implement minimal code to pass | local |
+| `test-driven-development` | Red-green-refactor for behavior changes; green-before/green-after checks for pure refactors | local |
 
-The core methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed.
+The debugging and TDD methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed.
 
 ## Verification
 

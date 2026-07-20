@@ -6,9 +6,6 @@
   "share": "manual",
   "lsp": true,
   "formatter": true,
-  "instructions": [
-    "skills/iron-laws.md"
-  ],
   "plugin": [],
   "compaction": {
     "auto": true,
