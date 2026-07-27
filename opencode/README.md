@@ -26,6 +26,7 @@ dotfiles/
     └── skills/
         ├── code-review/SKILL.md
         ├── git-conventions/SKILL.md
+        ├── karpathy-guidelines/SKILL.md
         ├── security-and-secrets/SKILL.md
         ├── systematic-debugging/SKILL.md
         └── test-driven-development/SKILL.md
@@ -136,7 +137,7 @@ The RTK plugin only uses type imports and has no checked-in local package depend
 
 Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them from `~/.config/opencode/skills/` (symlinked from this dotfiles repo) and exposes them to agents via the `skill` tool — the agent invokes `skill({ name: "..." })` on demand to load the full content.
 
-General principles such as surfacing assumptions, keeping changes surgical, tracking multi-step work, and verifying success criteria live in `AGENTS.md`. Skills are reserved for workflows that benefit from detailed task-specific procedures.
+`AGENTS.md` only routes agents to the relevant task-specific skill. The full guidance for surfacing assumptions, keeping changes surgical, tracking multi-step work, and verifying success criteria lives in `karpathy-guidelines`.
 
 The working-style principles in `AGENTS.md` are adapted from the MIT-licensed [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) project.
 
@@ -144,6 +145,7 @@ The working-style principles in `AGENTS.md` are adapted from the MIT-licensed [m
 |---|---|---|
 | `code-review` | Findings-first review workflow focused on bugs, regressions, missing tests, and security risks | local |
 | `git-conventions` | Branch naming, Conventional Commits, scopes, staging safety, and verification before commit | local |
+| `karpathy-guidelines` | Full guidance for simple, surgical, goal-driven engineering work | local, adapted from multica-ai/andrej-karpathy-skills (MIT) |
 | `security-and-secrets` | Security-sensitive auth, secret, permission, trust-boundary, and untrusted-input workflows | local |
 | `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding | local |
 | `test-driven-development` | Red-green-refactor for behavior changes; green-before/green-after checks for pure refactors | local |
