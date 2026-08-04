@@ -33,3 +33,7 @@ if [[ -r "$_zsh_autosuggestions" ]]; then
   source "$_zsh_autosuggestions"
 fi
 unset _zsh_autosuggestions
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/nghiapm/.local/bin:$PATH"
