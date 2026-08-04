@@ -7,29 +7,18 @@ This directory contains the OpenCode configuration symlinked into `~/.config/ope
 ```text
 dotfiles/
 └── opencode/
-    ├── AGENTS.md
     ├── assets/
     │   ├── opencode-logo-dark.png
     │   ├── opencode-logo-dark.svg
     │   ├── opencode-logo-light.png
     │   └── opencode-logo-light.svg
-    ├── commands/
-    │   ├── commit-msg.md
-    │   ├── create-pull-request.md
-    │   ├── plan.md
-    │   └── review.md
     ├── opencode.jsonc
     ├── README.md
     ├── tui.jsonc
     ├── plugins/
     │   └── rtk.ts
     └── skills/
-        ├── code-review/SKILL.md
-        ├── git-conventions/SKILL.md
-        ├── karpathy-guidelines/SKILL.md
-        ├── security-and-secrets/SKILL.md
-        ├── systematic-debugging/SKILL.md
-        └── test-driven-development/SKILL.md
+        └── karpathy-guidelines/SKILL.md
 ```
 
 Runtime layout (after symlink):
@@ -47,76 +36,75 @@ ln -sfn "$DOTFILES_DIR/opencode" ~/.config/opencode
 
 ## What This Configures
 
-### Providers
+### Provider
 
-Two OpenAI-compatible providers are configured:
+One OpenAI-compatible provider, `aicheap`, using `AI_CHEAP_BASE_URL` and `AI_CHEAP_API_KEY`. All three GPT-5.6 models use the gateway's 372K context limit.
 
-| Provider | Env vars | Notes |
+| Model | Default reasoning | Input / output cost |
 |---|---|---|
-| `aicheap` | `AI_CHEAP_BASE_URL`, `AI_CHEAP_API_KEY` | Default provider; GPT-5.6 Sol, Terra, and Luna use the gateway's 372K context limit |
-| `llm` | `LLM_BASE_URL`, `LLM_API_KEY` | ChatGPT Free-backed gateway; GPT-5.6 Terra uses the gateway's 272K context limit; Sol and Luna are unavailable |
+| `gpt-5.6-sol` | high | 5 / 30 |
+| `gpt-5.6-terra` | high | 2 / 12 |
+| `gpt-5.6-luna` | low | 0.2 / 1.2 |
+
+Costs are OpenAI's official standard short-context list rates per 1M tokens, used by OpenCode for display estimates only — actual billing comes from the gateway. OpenAI also has a long-context tier at roughly double the input rate, but the token threshold that triggers it is not documented for GPT-5.6, so it is not modeled here.
 
 Default models:
-- `model`: `aicheap/gpt-5.6-sol`
+- `model`: `aicheap/gpt-5.6-terra`
 - `small_model`: `aicheap/gpt-5.6-luna`
 
-GPT-5.6 Sol and Terra default to high reasoning, while GPT-5.6 Luna defaults to low and serves as the lightweight `small_model`. The `aicheap` entries expose `none`, `low`, `medium`, `high`, `xhigh`, and `max`; the `llm` provider supports `none`, `low`, `medium`, and `high` only. The `aicheap` provider has all three models; `llm` has Terra only.
+### Reasoning Effort
 
-The `llm` gateway uses a ChatGPT Free account. Its usage quota is dynamic and enforced server-side, so it cannot be represented in OpenCode's model metadata. OpenAI officially lists Terra as the GPT-5.6 model available to Free and Go users in Codex, so this provider exposes Terra only.
+Each model's `options` sets its default effort. OpenCode also ships built-in variants — `none`, `low`, `medium`, `high`, `xhigh`, `max` — selectable per-session via `--variant <name>` or the `variant_cycle` keybind, with no config needed. The `variants` block was removed from this config because it only restated those defaults across ~300 lines.
 
-### Workflow
+Add a `variants` block back only to override a built-in profile or disable one, e.g.:
 
-Recommended daily flow:
+```jsonc
+"variants": {
+  "max": { "disabled": true }
+}
+```
 
-1. Use Build mode directly for small mechanical changes.
-2. Use Plan mode before non-trivial features, refactors, unclear tasks, or reviews.
-3. Use `systematic-debugging` for bugs and unexpected failures before fixing.
-4. Use `test-driven-development` for app-level features and bug fixes when the repository has a test runner.
-5. Run the relevant verification before claiming work is done.
-6. Use `git-conventions` before branch creation, staging, commits, or commit messages.
-
-OpenCode loads `AGENTS.md` globally for concise, always-on operating rules. Task-specific workflows remain in skills and are loaded on demand.
-
-Built-in LSP and formatter support are enabled with default OpenCode behavior.
-
-### Permissions
-
-This config uses OpenCode's default agent permissions without additional overrides. Behavioral guardrails live in `AGENTS.md`, task-specific skills, and explicit command workflows.
-
-File watching ignores noisy generated folders like `node_modules`, `.git`, `dist`, `build`, and `.cache`.
-
-### Commands
-
-Custom workflow commands live in `commands/`:
-
-| Command | Agent | Purpose |
-|---|---|---|
-| `/plan <task>` | `plan` | Analyze context and produce an implementation plan without edits |
-| `/review [context]` | `plan` | Review current changes without edits |
-| `/commit-msg [context]` | `plan` | Suggest Conventional Commit messages from current changes |
-| `/create-pull-request [context]` | `plan` | Inspect the current branch and draft a PR; creates it with `gh` for GitHub after explicit confirmation, otherwise returns title and description |
-
-### TUI
-
-`tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, and native OpenCode attention notifications/sounds for done/question/permission/error events. This replaces the removed custom notification plugin.
+Caveat observed on this gateway: OpenCode does not validate variant names (an unknown `--variant` is silently accepted), and neither `--variant none` nor `options.reasoningEffort: "none"` reliably drove reasoning tokens to zero on `gpt-5.6-sol`. Measured counts stayed in the same 50-80 range across every effort level, so the gateway may not be forwarding the effort parameter. Verify with `--format json` before relying on effort to control cost.
 
 ### Environment Variables
 
 ```bash
-# aicheap provider
 export AI_CHEAP_BASE_URL="..."
 export AI_CHEAP_API_KEY="..."
-
-# llm provider
-export LLM_BASE_URL="..."
-export LLM_API_KEY="..."
 ```
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax.
 
+### Skills
+
+Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them and exposes them to agents via the `skill` tool, which loads the full content on demand based on the frontmatter `description`.
+
+| Skill | Purpose | Source |
+|---|---|---|
+| `karpathy-guidelines` | Simple, surgical, goal-driven engineering work | verbatim from [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
+
+The file is kept byte-identical to upstream so it can be re-synced with:
+
+```bash
+curl -s https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main/skills/karpathy-guidelines/SKILL.md \
+  -o skills/karpathy-guidelines/SKILL.md
+```
+
+There is no global `AGENTS.md` and no custom commands. Skill routing is left to the agent's own judgment via the `skill` tool; project-local `AGENTS.md` or `CLAUDE.md` files still apply as usual, and OpenCode's built-in commands are unchanged.
+
+### Permissions
+
+This config uses OpenCode's default agent permissions without overrides. File watching ignores noisy generated folders like `node_modules`, `.git`, `dist`, `build`, and `.cache`.
+
+Built-in LSP and formatter support are enabled with default OpenCode behavior.
+
+### TUI
+
+`tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, and native OpenCode attention notifications/sounds for done/question/permission/error events.
+
 ### Plugins
 
-OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`. This repo manages the whole `~/.config/opencode` directory via symlink.
+OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`.
 
 | Plugin | Purpose | Requirement |
 |---|---|---|
@@ -129,43 +117,16 @@ brew install rtk
 rtk init --show
 ```
 
-The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`; keeping it in dotfiles makes the OpenCode setup reproducible.
-
-The RTK plugin only uses type imports and has no checked-in local package dependencies.
-
-### Skills
-
-Skills use OpenCode's [native skill system](https://opencode.ai/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them from `~/.config/opencode/skills/` (symlinked from this dotfiles repo) and exposes them to agents via the `skill` tool — the agent invokes `skill({ name: "..." })` on demand to load the full content.
-
-`AGENTS.md` only routes agents to the relevant task-specific skill. The full guidance for surfacing assumptions, keeping changes surgical, tracking multi-step work, and verifying success criteria lives in `karpathy-guidelines`.
-
-The working-style principles in `AGENTS.md` are adapted from the MIT-licensed [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) project.
-
-| Skill | Purpose | Source |
-|---|---|---|
-| `code-review` | Findings-first review workflow focused on bugs, regressions, missing tests, and security risks | local |
-| `git-conventions` | Branch naming, Conventional Commits, scopes, staging safety, and verification before commit | local |
-| `karpathy-guidelines` | Full guidance for simple, surgical, goal-driven engineering work | local, adapted from multica-ai/andrej-karpathy-skills (MIT) |
-| `security-and-secrets` | Security-sensitive auth, secret, permission, trust-boundary, and untrusted-input workflows | local |
-| `systematic-debugging` | Root cause investigation before any fix attempt. Hard gate: no fixes without understanding | local |
-| `test-driven-development` | Red-green-refactor for behavior changes; green-before/green-after checks for pure refactors | local |
-
-The debugging and TDD methodology skills are adapted from [obra/superpowers](https://github.com/obra/superpowers) with Claude Code-specific mechanics removed.
+The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`. It only uses type imports, so no local package dependencies are checked in.
 
 ## Verification
 
 ```bash
-# Check symlinks
+# Check symlink
 ls -la ~/.config/opencode
 
-# Check commands are reachable
-ls ~/.config/opencode/commands/
-
-# Check plugins are reachable
-ls ~/.config/opencode/plugins/
-
-# Check skills are reachable
-ls ~/.config/opencode/skills/
+# Check plugins and skills are reachable
+ls ~/.config/opencode/plugins/ ~/.config/opencode/skills/
 
 # Check RTK rewrite behavior
 rtk rewrite "git status"
