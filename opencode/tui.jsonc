@@ -3,6 +3,12 @@
   "theme": "system",
   "diff_style": "stacked",
   "mouse": true,
+  "scroll_acceleration": {
+    "enabled": true
+  },
+  "prompt": {
+    "max_width": "auto"
+  },
   "attention": {
     "enabled": true,
     "notifications": true,

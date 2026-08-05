@@ -93,7 +93,7 @@ Built-in LSP and formatter support are enabled with default OpenCode behavior.
 
 ### TUI
 
-`tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, and native OpenCode attention notifications/sounds for done/question/permission/error events.
+`tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, macOS-style scroll acceleration, an adaptive Home prompt width, and native OpenCode attention notifications/sounds for done/question/permission/error events.
 
 ## Verification
 
