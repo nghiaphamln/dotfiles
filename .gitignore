@@ -25,13 +25,9 @@ superpowers/
 nvim.backup*/
 nvim/.nvim-debug.*
 nvim-startup.log
-github-copilot/
 
 # Temporary files
 *.tmp
 *.swp
 *.swo
 *~
-
-# OpenCode local plugin dependencies
-opencode/package.json

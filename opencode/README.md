@@ -7,16 +7,9 @@ This directory contains the OpenCode configuration symlinked into `~/.config/ope
 ```text
 dotfiles/
 └── opencode/
-    ├── assets/
-    │   ├── opencode-logo-dark.png
-    │   ├── opencode-logo-dark.svg
-    │   ├── opencode-logo-light.png
-    │   └── opencode-logo-light.svg
     ├── opencode.jsonc
     ├── README.md
     ├── tui.jsonc
-    ├── plugins/
-    │   └── rtk.ts
     └── skills/
         └── karpathy-guidelines/SKILL.md
 ```
@@ -102,32 +95,15 @@ Built-in LSP and formatter support are enabled with default OpenCode behavior.
 
 `tui.jsonc` uses the `system` theme, stacked diff rendering, mouse support, and native OpenCode attention notifications/sounds for done/question/permission/error events.
 
-### Plugins
-
-OpenCode auto-loads local plugins from `~/.config/opencode/plugins/`.
-
-| Plugin | Purpose | Requirement |
-|---|---|---|
-| `rtk.ts` | Rewrites shell commands through `rtk rewrite` so verbose outputs are token-optimized before they reach the model | `rtk` in PATH |
-
-Install RTK separately, then restart OpenCode:
-
-```bash
-brew install rtk
-rtk init --show
-```
-
-The checked-in plugin was seeded from the official file installed by `rtk init -g --opencode`. It only uses type imports, so no local package dependencies are checked in.
-
 ## Verification
 
 ```bash
 # Check symlink
 ls -la ~/.config/opencode
 
-# Check plugins and skills are reachable
-ls ~/.config/opencode/plugins/ ~/.config/opencode/skills/
+# Check skills are reachable
+ls ~/.config/opencode/skills/
 
-# Check RTK rewrite behavior
-rtk rewrite "git status"
+# Check OpenCode can load the config
+opencode debug config >/dev/null
 ```

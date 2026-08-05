@@ -1,22 +1,17 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Kitty, Zsh, IdeaVim, Codex CLI, OpenCode, Pi, and PowerShell.
+Personal development environment configuration for Neovim, Ghostty, Zsh, IdeaVim, OpenCode, and PowerShell.
 
 ## Structure
 
 ```
 dotfiles/
 ├── nvim/              → ~/.config/nvim
-├── zed/               → ~/.config/zed
-├── kitty/             → ~/.config/kitty
+├── ghostty/           → ~/.config/ghostty
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-├── codex/             → ~/.codex/AGENTS.md
-├── opencode/          → ~/.config/opencode
-├── pi/                → ~/.pi/agent/{settings.json,models.json,skills/,prompts/}
-├── github-copilot/    → Copilot version tracking
-└── docs/              → Documentation
+└── opencode/          → ~/.config/opencode
 ```
 
 ## Quick Install
@@ -30,10 +25,8 @@ cd ~/dotfiles
 
 ```bash
 ln -sf ~/dotfiles/nvim ~/.config/nvim
-ln -sf ~/dotfiles/zed ~/.config/zed
-ln -sf ~/dotfiles/kitty ~/.config/kitty
+ln -sf ~/dotfiles/ghostty ~/.config/ghostty
 ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
-mkdir -p ~/.config/zed/prompts
 ```
 
 ### Zsh and Oh My Posh
@@ -66,56 +59,20 @@ See [opencode/README.md](opencode/README.md) for detailed setup instructions.
 ln -sfn ~/dotfiles/opencode ~/.config/opencode
 
 # Set API keys in ~/.zshenv — see opencode/README.md
-# Optional token optimization for shell output:
-# brew install rtk && restart OpenCode
 ```
 
-OpenCode setup details, provider environment variables, workflow commands, TUI attention, plugins, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
-
-The checked-in OpenCode plugin currently covers token-optimized shell rewrites via RTK.
-
-### Codex CLI
-
-The global `AGENTS.md` adapts the MIT-licensed [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills/tree/main/skills/karpathy-guidelines) guidelines as concise, always-on personal defaults. Repository and nested instruction files can still add more specific guidance.
-
-```bash
-mkdir -p ~/.codex
-ln -sf ~/dotfiles/codex/AGENTS.md ~/.codex/AGENTS.md
-```
-
-Only `AGENTS.md` is symlinked. Authentication, configuration, sessions, skills, caches, and other runtime state remain local in `~/.codex`.
-
-### Pi Coding Agent
-
-See [pi/README.md](pi/README.md) for detailed setup instructions.
-
-```bash
-mkdir -p ~/.pi/agent
-
-ln -sf ~/dotfiles/pi/agent/settings.json ~/.pi/agent/settings.json
-ln -sf ~/dotfiles/pi/agent/models.json ~/.pi/agent/models.json
-ln -sf ~/dotfiles/pi/agent/APPEND_SYSTEM.md ~/.pi/agent/APPEND_SYSTEM.md
-ln -sf ~/dotfiles/pi/agent/AGENTS.md ~/.pi/agent/AGENTS.md
-ln -sfn ~/dotfiles/pi/agent/skills ~/.pi/agent/skills
-ln -sfn ~/dotfiles/pi/agent/prompts ~/.pi/agent/prompts
-```
-
-Pi setup keeps `~/.pi/agent/auth.json`, sessions, logs, and runtime files local. Only reproducible config is symlinked from dotfiles.
+OpenCode setup details, provider environment variables, workflow, TUI attention, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
 
 ## Tools
 
 | Tool | Config | Purpose |
 |---|---|---|
 | [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
-| [Zed](https://zed.dev/) | `zed/` | Secondary editor |
-| [Kitty](https://sw.kovidgoyal.net/kitty/) | `kitty/` | Terminal emulator |
+| [Ghostty](https://ghostty.org/) | `ghostty/` | Terminal emulator |
 | [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
-| [Codex CLI](https://developers.openai.com/codex/cli/) | `codex/` | AI coding agent with global Karpathy-style guidance |
 | [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
-| [Pi](https://pi.dev/) | `pi/` | AI coding agent (terminal) |
 | PowerShell | `PowerShell/` | Shell profile (Windows) |
-| GitHub Copilot | `github-copilot/` | Copilot version tracking |
 
 ## Neovim
 
