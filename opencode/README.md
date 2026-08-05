@@ -43,7 +43,7 @@ One OpenAI-compatible provider, `aicheap`, using `AI_CHEAP_BASE_URL` and `AI_CHE
 | Model | Default reasoning | Input / output cost |
 |---|---|---|
 | `gpt-5.6-sol` | high | 5 / 30 |
-| `gpt-5.6-terra` | high | 2 / 12 |
+| `gpt-5.6-terra` | max | 2 / 12 |
 | `gpt-5.6-luna` | low | 0.2 / 1.2 |
 
 Costs are OpenAI's official standard short-context list rates per 1M tokens, used by OpenCode for display estimates only — actual billing comes from the gateway. OpenAI also has a long-context tier at roughly double the input rate, but the token threshold that triggers it is not documented for GPT-5.6, so it is not modeled here.
@@ -54,17 +54,17 @@ Default models:
 
 ### Reasoning Effort
 
-Each model's `options` sets its default effort. OpenCode also ships built-in variants — `none`, `low`, `medium`, `high`, `xhigh`, `max` — selectable per-session via `--variant <name>` or the `variant_cycle` keybind, with no config needed. The `variants` block was removed from this config because it only restated those defaults across ~300 lines.
+Each model's `options` sets its default effort. The AI Cheap Bifrost gateway supports the same verified levels for Luna, Terra, and Sol: `low`, `medium`, `high`, `xhigh`, and `max`.
 
-Add a `variants` block back only to override a built-in profile or disable one, e.g.:
+OpenCode already provides `low`, `medium`, `high`, and `xhigh` as built-in OpenAI variants. This config adds the missing gateway-supported `max` variant to all three models. Terra uses `max` by default; Luna and Sol keep their current defaults.
 
-```jsonc
-"variants": {
-  "max": { "disabled": true }
-}
+Select a level in the model picker in the TUI, cycle model variants with the `variant_cycle` keybind, or use the CLI:
+
+```bash
+opencode run --model aicheap/gpt-5.6-terra --variant max "..."
 ```
 
-Caveat observed on this gateway: OpenCode does not validate variant names (an unknown `--variant` is silently accepted), and neither `--variant none` nor `options.reasoningEffort: "none"` reliably drove reasoning tokens to zero on `gpt-5.6-sol`. Measured counts stayed in the same 50-80 range across every effort level, so the gateway may not be forwarding the effort parameter. Verify with `--format json` before relying on effort to control cost.
+The gateway rejects `ultra` with HTTP 400. Although `none` and `minimal` return HTTP 200, they are omitted from its explicit allowlist and did not report reasoning-token usage in a minimal probe, so they are intentionally not exposed as variants. OpenCode does not validate a variant name locally; use only the levels above.
 
 ### Environment Variables
 

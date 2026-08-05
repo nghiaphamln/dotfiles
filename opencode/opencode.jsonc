@@ -40,6 +40,13 @@
             "reasoningSummary": "detailed",
             "textVerbosity": "medium"
           },
+          "variants": {
+            "max": {
+              "reasoningEffort": "max",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            }
+          },
           "cost": {
             "input": 5,
             "output": 30,
@@ -67,9 +74,16 @@
           "temperature": false,
           "tool_call": true,
           "options": {
-            "reasoningEffort": "high",
+            "reasoningEffort": "max",
             "reasoningSummary": "detailed",
             "textVerbosity": "medium"
+          },
+          "variants": {
+            "max": {
+              "reasoningEffort": "max",
+              "reasoningSummary": "detailed",
+              "textVerbosity": "medium"
+            }
           },
           "cost": {
             "input": 2,
@@ -101,6 +115,13 @@
             "reasoningEffort": "low",
             "reasoningSummary": "auto",
             "textVerbosity": "medium"
+          },
+          "variants": {
+            "max": {
+              "reasoningEffort": "max",
+              "reasoningSummary": "auto",
+              "textVerbosity": "medium"
+            }
           },
           "cost": {
             "input": 0.2,
