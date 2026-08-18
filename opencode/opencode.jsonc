@@ -157,25 +157,79 @@
           "name": "Gemini 3.7 Flash (High)",
           "attachment": true,
           "reasoning": true,
-          "tool_call": true
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          },
+          "variants": {
+            "minimal": {
+              "disabled": true
+            },
+            "low": {
+              "disabled": true
+            },
+            "medium": {
+              "disabled": true
+            },
+            "high": {
+              "disabled": true
+            }
+          }
         },
         "gemini-pro-agent": {
           "name": "Gemini 3.1 Pro (High)",
           "attachment": true,
           "reasoning": true,
-          "tool_call": true
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "variants": {
+            "low": {
+              "disabled": true
+            },
+            "high": {
+              "disabled": true
+            }
+          }
         },
         "claude-sonnet-4-6": {
           "name": "Claude Sonnet 4.6 (Thinking)",
           "attachment": true,
           "reasoning": true,
-          "tool_call": true
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          },
+          "variants": {
+            "low": {
+              "disabled": true
+            },
+            "high": {
+              "disabled": true
+            }
+          }
         },
         "claude-opus-4-6-thinking": {
           "name": "Claude Opus 4.6 (Thinking)",
           "attachment": true,
           "reasoning": true,
-          "tool_call": true
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          },
+          "variants": {
+            "low": {
+              "disabled": true
+            },
+            "high": {
+              "disabled": true
+            }
+          }
         }
       }
     }
