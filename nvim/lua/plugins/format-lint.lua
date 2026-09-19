@@ -62,7 +62,7 @@ return {
 				python = { "pylint" },
 				rust = { "clippy" },
 				lua = { "selene" },
-				go = { "golangci-lint" },
+				go = { "golangcilint" },
 				c = { "cppcheck" },
 				cpp = { "cppcheck" },
 			}
