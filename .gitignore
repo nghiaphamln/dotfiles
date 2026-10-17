@@ -21,6 +21,10 @@ superpowers/
 # Claude Code local settings
 .claude/
 
+# OpenCode private service credentials (generated at runtime)
+opencode/service.json
+opencode/.ponytail-active
+
 # Nvim backups
 nvim.backup*/
 nvim/.nvim-debug.*

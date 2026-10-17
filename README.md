@@ -61,7 +61,7 @@ ln -sfn ~/dotfiles/opencode ~/.config/opencode
 # Set API keys in ~/.zshenv — see opencode/README.md
 ```
 
-OpenCode setup details, provider environment variables, workflow, TUI attention, and skill layout are documented in [`opencode/README.md`](opencode/README.md).
+OpenCode V2 setup, provider environment variables, workflow, CLI settings, and skill layout are documented in [`opencode/README.md`](opencode/README.md). Private runtime `service.json` credentials are not tracked.
 
 ## Tools
 
@@ -98,6 +98,4 @@ See [nvim/README.md](nvim/README.md) for full documentation.
 
 ## Update OpenCode Config
 
-```bash
-restart OpenCode
-```
+Edit `opencode/opencode.jsonc` for server settings or `opencode/cli.json` for terminal preferences. Valid edits normally reload automatically. These files use native V2 syntax and should not be used with V1. See [`opencode/README.md`](opencode/README.md) for verification and troubleshooting.

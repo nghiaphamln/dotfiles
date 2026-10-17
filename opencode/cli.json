@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "system",
+    "mode": "system"
+  },
+  "mouse": true,
+  "scroll": {
+    "acceleration": true
+  },
+  "diffs": {
+    "wrap": "word",
+    "view": "unified"
+  },
+  "session": {
+    "sidebar": "hide",
+    "scrollbar": false,
+    "thinking": "hide"
+  },
+  "animations": true,
+  "attention": {
+    "notifications": true,
+    "sound": true,
+    "volume": 0.35,
+    "sound_pack": "opencode.default"
+  }
+}
