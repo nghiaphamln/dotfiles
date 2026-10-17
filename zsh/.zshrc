@@ -37,3 +37,9 @@ unset _zsh_autosuggestions
 
 # Added by Antigravity CLI installer
 export PATH="/Users/nghiapm/.local/bin:$PATH"
+
+# Unity CLI
+. "/Users/nghiapm/.unity/env"
+
+# opencode
+export PATH=/Users/nghiapm/.opencode/bin:$PATH
