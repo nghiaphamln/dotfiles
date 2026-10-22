@@ -6,7 +6,7 @@ The terminal shortcut below works throughout the workspace, including when the t
 
 | Keys | Action |
 |---|---|
-| Command + backtick | Show / hide the terminal panel |
+| Control + backtick | Show / hide the terminal panel |
 | `;` | Jump to a visible word using labels |
 | `gd` / `gy` / `gi` / `gu` | Declaration / type definition / implementation / references |
 | `Ctrl-o` / `Ctrl-i` | Back / forward |

@@ -2,7 +2,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      "cmd-`": "terminal_panel::Toggle"
+      "ctrl-`": "terminal_panel::Toggle"
     }
   },
   {
