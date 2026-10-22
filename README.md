@@ -1,12 +1,13 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Ghostty, Zsh, IdeaVim, OpenCode, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Ghostty, Zsh, IdeaVim, OpenCode, and PowerShell.
 
 ## Structure
 
 ```
 dotfiles/
 ├── nvim/              → ~/.config/nvim
+├── zed/settings.json  → ~/.config/zed/settings.json
 ├── ghostty/           → ~/.config/ghostty
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
@@ -27,6 +28,15 @@ cd ~/dotfiles
 ln -sf ~/dotfiles/nvim ~/.config/nvim
 ln -sf ~/dotfiles/ghostty ~/.config/ghostty
 ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
+```
+
+### Zed
+
+Back up an existing `~/.config/zed/settings.json` before creating the symlink.
+
+```bash
+mkdir -p ~/.config/zed
+ln -sf ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
 ```
 
 ### Zsh and Oh My Posh
@@ -68,6 +78,7 @@ OpenCode V2 setup, provider environment variables, workflow, CLI settings, and s
 | Tool | Config | Purpose |
 |---|---|---|
 | [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
+| [Zed](https://zed.dev/) | `zed/settings.json` | Editor settings |
 | [Ghostty](https://ghostty.org/) | `ghostty/` | Terminal emulator |
 | [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
