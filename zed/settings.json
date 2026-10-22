@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
   "markdown_preview": {
     "font_family": "JetBrainsMono Nerd Font"
   },
@@ -38,7 +43,19 @@
     "trust_all_worktrees": true
   },
   "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "always",
+    "highlight_on_yank_duration": 200,
+    "show_edit_predictions_in_normal_mode": true
+  },
+  "relative_line_numbers": "enabled",
+  "vertical_scroll_margin": 15,
+  "use_smartcase_search": true,
   "base_keymap": "JetBrains",
+  "which_key": {
+    "enabled": true,
+    "delay_ms": 500
+  },
   "agent_servers": {
     "claude-acp": {
       "type": "registry"

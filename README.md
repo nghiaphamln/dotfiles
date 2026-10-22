@@ -7,7 +7,7 @@ Personal development environment configuration for Neovim, Zed, Ghostty, Zsh, Id
 ```
 dotfiles/
 ├── nvim/              → ~/.config/nvim
-├── zed/settings.json  → ~/.config/zed/settings.json
+├── zed/               → ~/.config/zed/{settings,keymap}.json
 ├── ghostty/           → ~/.config/ghostty
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
@@ -32,12 +32,15 @@ ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
 
 ### Zed
 
-Back up an existing `~/.config/zed/settings.json` before creating the symlink.
+Back up existing `~/.config/zed/settings.json` and `keymap.json` files before creating the symlinks.
 
 ```bash
 mkdir -p ~/.config/zed
 ln -sf ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
+ln -sf ~/dotfiles/zed/keymap.json ~/.config/zed/keymap.json
 ```
+
+The Vim keymap follows [IdeaVim/.ideavimrc](IdeaVim/.ideavimrc), with `Space` as leader. See [zed/README.md](zed/README.md) for shortcuts and differences.
 
 ### Zsh and Oh My Posh
 
@@ -78,7 +81,7 @@ OpenCode V2 setup, provider environment variables, workflow, CLI settings, and s
 | Tool | Config | Purpose |
 |---|---|---|
 | [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
-| [Zed](https://zed.dev/) | `zed/settings.json` | Editor settings |
+| [Zed](https://zed.dev/) | `zed/` | Editor settings and IdeaVim-style bindings |
 | [Ghostty](https://ghostty.org/) | `ghostty/` | Terminal emulator |
 | [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
 | [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |

@@ -1,0 +1,61 @@
+[
+  {
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      ";": "vim::HelixJumpToWord",
+      "g d": "editor::GoToDeclaration",
+      "g y": "editor::GoToTypeDefinition",
+      "g i": "editor::GoToImplementation",
+      "g u": "editor::FindAllReferences",
+      "ctrl-o": "pane::GoBack",
+      "ctrl-i": "pane::GoForward",
+      "s c d": ["workspace::SendKeystrokes", "v a f"],
+      "space o i": "editor::OrganizeImports"
+    }
+  },
+  {
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !menu",
+    "bindings": {
+      "space e n": ["editor::GoToDiagnostic", { "severity": { "min": "error", "max": "error" } }],
+      "space e p": ["editor::GoToPreviousDiagnostic", { "severity": { "min": "error", "max": "error" } }],
+      "space s e": "editor::Hover",
+      "space c": ["editor::ToggleComments", { "advance_downwards": false }],
+      "space x": "project_panel::ToggleFocus",
+      "space q": "pane::CloseActiveItem",
+      "space r n": "editor::Rename",
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space f m": "editor::Format",
+      "space f w": "project_search::ToggleFocus"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "<": "editor::Outdent",
+      ">": "editor::Indent"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && edit_prediction && !showing_completions && !menu",
+    "bindings": {
+      "tab": "editor::AcceptEditPrediction"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "q": "workspace::ToggleLeftDock",
+      "space x": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "EmptyPane",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space f w": "project_search::ToggleFocus",
+      "space x": "project_panel::ToggleFocus"
+    }
+  }
+]
