@@ -39,7 +39,9 @@ unset _zsh_autosuggestions
 export PATH="/Users/nghiapm/.local/bin:$PATH"
 
 # Unity CLI
-. "/Users/nghiapm/.unity/env"
+if [[ -r "$HOME/.unity/env" ]]; then
+  source "$HOME/.unity/env"
+fi
 
 # opencode
 export PATH=/Users/nghiapm/.opencode/bin:$PATH
