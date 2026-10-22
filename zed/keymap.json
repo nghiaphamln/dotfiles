@@ -1,5 +1,11 @@
 [
   {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-`": "terminal_panel::Toggle"
+    }
+  },
+  {
     "context": "Editor && vim_mode == normal && !menu",
     "bindings": {
       ";": "vim::HelixJumpToWord",
@@ -45,8 +51,8 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "q": "workspace::ToggleLeftDock",
-      "space x": "workspace::ToggleLeftDock"
+      "q": "workspace::CloseActiveDock",
+      "space x": "workspace::CloseActiveDock"
     }
   },
   {

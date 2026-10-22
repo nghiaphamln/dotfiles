@@ -2,8 +2,11 @@
 
 Vim bindings adapted from [`../IdeaVim/.ideavimrc`](../IdeaVim/.ideavimrc). Keep `vim_mode` enabled and the JetBrains base keymap. Leader is `Space`; the custom bindings apply in normal and visual modes, with code navigation restricted to normal mode.
 
+The terminal shortcut below works throughout the workspace, including when the terminal is focused.
+
 | Keys | Action |
 |---|---|
+| Command + backtick | Show / hide the terminal panel |
 | `;` | Jump to a visible word using labels |
 | `gd` / `gy` / `gi` / `gu` | Declaration / type definition / implementation / references |
 | `Ctrl-o` / `Ctrl-i` | Back / forward |
@@ -24,6 +27,8 @@ Vim bindings adapted from [`../IdeaVim/.ideavimrc`](../IdeaVim/.ideavimrc). Keep
 Settings also enable the system clipboard, relative line numbers, a 15-line scroll margin, smartcase search, and yank highlighting.
 
 Autosave runs after 1 second of inactivity. Use `Space fm` to format explicitly; delayed autosave skips format-on-save. Which-key displays available key sequences after a 500 ms pause.
+
+The project tree is docked on the left and the terminal on the right. Use `Space x` to focus the tree, then `q` or `Space x` to close it. Zed 1.25.2 has no built-in setting to automatically hide the project tree when it loses focus.
 
 ## Differences from IdeaVim
 

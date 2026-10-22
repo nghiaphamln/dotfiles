@@ -18,9 +18,13 @@
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "ui_font_family": "JetBrainsMono Nerd Font",
   "terminal": {
+    "dock": "right",
     "font_size": 15.0,
     "font_weight": 450.0,
     "font_family": "JetBrainsMono Nerd Font"
+  },
+  "project_panel": {
+    "dock": "left"
   },
   "agent": {
     "favorite_models": [],
