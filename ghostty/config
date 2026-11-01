@@ -9,7 +9,7 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 custom-shader = shaders/cursor_warp.glsl
 custom-shader = shaders/ripple_cursor.glsl
-custom-shader-animation = always
+custom-shader-animation = true
 
 # macOS titlebar
 macos-option-as-alt = true
@@ -21,7 +21,7 @@ window-padding-x = 8
 window-padding-y = 4
 window-padding-balance = true
 background-opacity = 0.95
-background-blur = true
+background-blur = macos-glass-regular
 
 # Behavior
 mouse-hide-while-typing = true
