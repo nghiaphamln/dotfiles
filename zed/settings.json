@@ -16,11 +16,13 @@
     "font_family": "JetBrainsMono Nerd Font"
   },
   "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_weight": 600,
   "ui_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_weight": 600,
   "terminal": {
     "dock": "right",
-    "font_size": 15.0,
-    "font_weight": 450.0,
+    "font_size": 13.0,
+    "font_weight": 600.0,
     "font_family": "JetBrainsMono Nerd Font"
   },
   "project_panel": {
@@ -68,8 +70,8 @@
       "type": "registry"
     }
   },
-  "ui_font_size": 16.0,
-  "buffer_font_size": 15,
+  "ui_font_size": 13.0,
+  "buffer_font_size": 13,
   "theme": {
     "mode": "system",
     "light": "Ayu Light",
