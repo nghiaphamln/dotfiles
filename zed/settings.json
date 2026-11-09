@@ -70,7 +70,7 @@
       "type": "registry"
     }
   },
-  "ui_font_size": 13.0,
+  "ui_font_size": 15.0,
   "buffer_font_size": 13,
   "theme": {
     "mode": "system",
