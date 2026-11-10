@@ -8,7 +8,7 @@ The terminal shortcut below works throughout the workspace, including when the t
 |---|---|
 | Control + backtick | Show / hide the terminal panel |
 | `;` | Jump to a visible word using labels |
-| `gd` / `gy` / `gi` / `gu` | Declaration / type definition / implementation / references |
+| `gd` / `gy` / `gi` / `gu` | Definition / type definition / implementation / references |
 | `Ctrl-o` / `Ctrl-i` | Back / forward |
 | `scd` | Select the containing function (`vaf`) |
 | `Space oi` | Organize imports |

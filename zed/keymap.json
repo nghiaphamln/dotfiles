@@ -9,7 +9,7 @@
     "context": "Editor && vim_mode == normal && !menu",
     "bindings": {
       ";": "vim::HelixJumpToWord",
-      "g d": "editor::GoToDeclaration",
+      "g d": "editor::GoToDefinition",
       "g y": "editor::GoToTypeDefinition",
       "g i": "editor::GoToImplementation",
       "g u": "editor::FindAllReferences",
