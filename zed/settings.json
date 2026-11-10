@@ -73,8 +73,8 @@
   "ui_font_size": 15.0,
   "buffer_font_size": 13,
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "dark": "Ayu Dark"
   },
 }
