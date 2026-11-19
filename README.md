@@ -1,55 +1,51 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Ghostty, Zsh, IdeaVim, OpenCode, Codex, and PowerShell.
+Personal editor, terminal, and coding-agent configuration.
 
-## Structure
+## Karpathy Guidelines
 
+The shared skill and both plugin manifests live in `skills/karpathy-guidelines/`. [SKILL.md](skills/karpathy-guidelines/skill/SKILL.md) · [Upstream revision (MIT)](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2/skills/karpathy-guidelines)
+
+### Codex
+
+Run these commands from any directory to install from GitHub and check for `installed, enabled`.
+
+```bash
+codex plugin marketplace add nghiaphamln/dotfiles
+codex plugin add karpathy-guidelines@dotfiles
+codex plugin list --marketplace dotfiles
 ```
-dotfiles/
-├── nvim/              → ~/.config/nvim
-├── zed/               → ~/.config/zed/{settings,keymap}.json
-├── ghostty/           → ~/.config/ghostty
-├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
-├── IdeaVim/           → ~/.ideavimrc
-├── PowerShell/        → PowerShell profile
-├── opencode/          → ~/.config/opencode
-└── skills/            → skill packages for OpenCode and Codex
-```
 
-## Quick Install
+### OpenCode
+
+OpenCode loads the plugin from its global config. [OpenCode V2 setup](opencode/README.md)
+
+## Dotfiles setup
+
+Clone the repo and run the setup commands from its root. Move existing configs aside before linking.
 
 ```bash
 git clone https://github.com/nghiaphamln/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-### Editors & Terminal
+### Editors and terminal
 
-```bash
-ln -sf ~/dotfiles/nvim ~/.config/nvim
-ln -sf ~/dotfiles/ghostty ~/.config/ghostty
-ln -sf ~/dotfiles/IdeaVim/.ideavimrc ~/.ideavimrc
-```
-
-### Zed
-
-Back up existing `~/.config/zed/settings.json` and `keymap.json` files before creating the symlinks.
+[Neovim setup](nvim/README.md) · [Zed keybindings](zed/README.md) · [PowerShell profiles](PowerShell/)
 
 ```bash
 mkdir -p ~/.config/zed
-ln -sf ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
-ln -sf ~/dotfiles/zed/keymap.json ~/.config/zed/keymap.json
+ln -sf "$PWD/nvim" ~/.config/nvim
+ln -sf "$PWD/ghostty" ~/.config/ghostty
+ln -sf "$PWD/IdeaVim/.ideavimrc" ~/.ideavimrc
+ln -sf "$PWD/zed/settings.json" ~/.config/zed/settings.json
+ln -sf "$PWD/zed/keymap.json" ~/.config/zed/keymap.json
 ```
-
-The Vim keymap follows [IdeaVim/.ideavimrc](IdeaVim/.ideavimrc), with `Space` as leader. See [zed/README.md](zed/README.md) for shortcuts and differences.
 
 ### Zsh and Oh My Posh
 
-The custom prompt matches the Gruvbox Dark palette used by Ghostty and expects a Nerd Font. History-based inline command suggestions are provided by `zsh-autosuggestions`, and Node.js versions are managed by `nvm`.
-
 ```bash
-brew install jandedobbeleer/oh-my-posh/oh-my-posh
-brew install zsh-autosuggestions
+brew install jandedobbeleer/oh-my-posh/oh-my-posh zsh-autosuggestions
 brew install --cask font-jetbrains-mono-nerd-font
 
 PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash'
@@ -60,70 +56,7 @@ nvm install --lts
 curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir "$HOME/.dotnet"
 
 mkdir -p ~/.config/oh-my-posh
-ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/zsh/gruvbox.omp.json ~/.config/oh-my-posh/gruvbox.omp.json
+ln -sf "$PWD/zsh/.zshrc" ~/.zshrc
+ln -sf "$PWD/zsh/gruvbox.omp.json" ~/.config/oh-my-posh/gruvbox.omp.json
 exec zsh
 ```
-
-### OpenCode
-
-See [opencode/README.md](opencode/README.md) for detailed setup instructions.
-
-```bash
-ln -sfn ~/dotfiles/opencode ~/.config/opencode
-
-# Set API keys in ~/.zshenv — see opencode/README.md
-```
-
-OpenCode V2 setup, provider environment variables, workflow, CLI settings, and skill layout are documented in [`opencode/README.md`](opencode/README.md). Private runtime `service.json` credentials are not tracked.
-
-### Codex
-
-Install the Karpathy Guidelines plugin from GitHub. Codex downloads the marketplace into its cache, so you can run these commands from any directory.
-
-```bash
-codex plugin marketplace add nghiaphamln/dotfiles
-codex plugin add karpathy-guidelines@dotfiles
-```
-
-Check the installation with `codex plugin list --marketplace dotfiles`. The plugin should show `installed, enabled`.
-
-Each plugin package has its own directory under `skills/`. Both clients package the same [Karpathy Guidelines skill](skills/karpathy-guidelines/skill/SKILL.md), copied from the [upstream project](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2/skills/karpathy-guidelines) (MIT).
-
-## Tools
-
-| Tool | Config | Purpose |
-|---|---|---|
-| [Neovim](https://neovim.io/) | `nvim/` | Primary editor |
-| [Zed](https://zed.dev/) | `zed/` | Editor settings and IdeaVim-style bindings |
-| [Ghostty](https://ghostty.org/) | `ghostty/` | Terminal emulator |
-| [Oh My Posh](https://ohmyposh.dev/) | `zsh/` | Gruvbox prompt for Zsh |
-| [IdeaVim](https://github.com/JetBrains/ideavim) | `IdeaVim/` | Vim emulation in JetBrains IDEs |
-| [OpenCode](https://opencode.ai/) | `opencode/` | AI coding agent (terminal) |
-| PowerShell | `PowerShell/` | Shell profile (Windows) |
-
-## Neovim
-
-Requires Neovim 0.12+. Launch Neovim — [lazy.nvim](https://github.com/folke/lazy.nvim) installs plugins at the versions pinned in `nvim/lazy-lock.json`, and Mason installs the declared language tools automatically.
-
-Inspect installed language tools:
-```
-:Mason
-```
-
-**Key plugins:**
-- **LSP**: `nvim-lspconfig` + Mason (Rust, Go, Python, Lua, C/C++, YAML, CMake)
-- **Completion**: `blink.cmp`
-- **Syntax**: `nvim-treesitter`
-- **File explorer**: `neo-tree.nvim`
-- **Fuzzy finder**: `snacks.picker`
-- **Formatter**: `conform.nvim`
-- **Theme**: `tokyonight.nvim`
-- **Statusline**: `lualine.nvim`
-- **AI**: `copilot.lua` + `CopilotChat.nvim`
-
-See [nvim/README.md](nvim/README.md) for full documentation.
-
-## Update OpenCode Config
-
-Edit `opencode/opencode.jsonc` for server settings or `opencode/cli.json` for terminal preferences. Valid edits normally reload automatically. These files use native V2 syntax and should not be used with V1. See [`opencode/README.md`](opencode/README.md) for verification and troubleshooting.
