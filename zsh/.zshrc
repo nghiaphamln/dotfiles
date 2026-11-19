@@ -8,7 +8,18 @@ fi
 # Per-user tools and the .NET SDK installed by Microsoft's install script.
 export DOTNET_ROOT="$HOME/.dotnet"
 typeset -U path PATH
-path=("$HOME/.local/bin" "$DOTNET_ROOT" "$DOTNET_ROOT/tools" $path)
+path=("$HOME/.cargo/bin" "$HOME/.local/bin" "$DOTNET_ROOT" "$DOTNET_ROOT/tools" $path)
+
+# Homebrew stores Rust target helpers such as `rust-objcopy` inside the sysroot.
+# Put that directory on PATH when Rust is installed so native Neovim plugins can build.
+if (( $+commands[rustc] )); then
+  _rust_sysroot="$(rustc --print sysroot 2>/dev/null)"
+  _rust_host="$(rustc -vV 2>/dev/null | awk '/^host: / { print $2 }')"
+  if [[ -n "$_rust_sysroot" && -n "$_rust_host" && -d "$_rust_sysroot/lib/rustlib/$_rust_host/bin" ]]; then
+    path=("$_rust_sysroot/lib/rustlib/$_rust_host/bin" $path)
+  fi
+  unset _rust_sysroot _rust_host
+fi
 
 # Node.js version management.
 export NVM_DIR="$HOME/.nvm"
@@ -45,3 +56,20 @@ fi
 
 # opencode
 export PATH=/Users/nghiapm/.opencode/bin:$PATH
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/lap15874/.docker/completions $fpath)
+autoload -Uz compinit
+(( ${+_comps[docker]} )) || compinit
+# End of Docker CLI completions
+
+# Use the selected Docker context (Colima), including in shells that inherited
+# the previous Podman socket from their parent process.
+unset DOCKER_HOST
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/lap15874/.local/bin:$PATH"
+
+# opencode
+export PATH=/Users/lap15874/.opencode/bin:$PATH

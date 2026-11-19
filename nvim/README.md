@@ -118,6 +118,7 @@ A Neovim 0.12+ setup for macOS, focused on LSP, fast completion, AI tooling, Tre
    | `clang-format` | C/C++ |
    | `csharpier` | .NET / C# |
    | `stylua` | Lua |
+   | `selene` | Lua |
 
    Notes:
    - `roslyn` is installed via an extra Mason registry: `github:Crashdummyy/mason-registry`
