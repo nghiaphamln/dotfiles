@@ -1,0 +1,9 @@
+{
+  "name": "opencode-karpathy-guidelines",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./server": "./server.js"
+  }
+}

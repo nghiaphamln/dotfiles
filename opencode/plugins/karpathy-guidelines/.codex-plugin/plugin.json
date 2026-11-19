@@ -1,0 +1,11 @@
+{
+  "name": "karpathy-guidelines",
+  "version": "1.0.0",
+  "description": "Coding guidelines for focused changes, explicit assumptions, and verifiable results.",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Karpathy Guidelines",
+    "shortDescription": "Practical guidance for focused code changes"
+  }
+}

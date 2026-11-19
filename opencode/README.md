@@ -10,8 +10,8 @@ dotfiles/
     ├── opencode.jsonc  # Providers, models, permissions, and compaction
     ├── cli.json        # Global terminal client settings
     ├── README.md
-    └── skills/
-        └── karpathy-guidelines/SKILL.md
+    └── plugins/
+        └── karpathy-guidelines/  # OpenCode server plugin and Codex plugin bundle
 ```
 
 Runtime layout (after symlink):
@@ -73,20 +73,11 @@ export AI_CHEAP_API_KEY="..."
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax. Keep secrets outside this repo. The background service must have these variables in its environment; changing them in a terminal does not update an already-running service.
 
-### Skills
+### Karpathy Guidelines plugin
 
-Skills use OpenCode's [native skill system](https://opencode.ai/v2/docs/skills/). Each skill lives in `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`). OpenCode auto-discovers them and exposes them to agents via the `skill` tool, which loads the full content on demand based on the frontmatter `description`.
+OpenCode loads the local server plugin from `plugins/karpathy-guidelines/`. It registers `karpathy-guidelines` with OpenCode's [skill API](https://opencode.ai/docs/build/plugins/server#skills), using the [bundled upstream `SKILL.md`](plugins/karpathy-guidelines/skills/karpathy-guidelines/SKILL.md). Mention `@karpathy-guidelines` to load it explicitly.
 
-| Skill | Purpose | Source |
-|---|---|---|
-| `karpathy-guidelines` | Simple, surgical, goal-driven engineering work | verbatim from [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
-
-The file is kept byte-identical to upstream so it can be re-synced with:
-
-```bash
-curl -s https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main/skills/karpathy-guidelines/SKILL.md \
-  -o skills/karpathy-guidelines/SKILL.md
-```
+The same directory contains the Codex plugin manifest. See the [root README](../README.md#codex) for the upstream revision and Codex installation commands.
 
 There is no global `AGENTS.md` and no file-based custom commands. Skill routing is left to the agent's own judgment via the `skill` tool; the Ponytail plugin also registers bundled commands and skills and injects its active rules automatically. Project-local `AGENTS.md` files still apply. V2 does not currently discover the old `CLAUDE.md` fallback; put applicable project guidance in `AGENTS.md` instead.
 

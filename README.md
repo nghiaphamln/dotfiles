@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal development environment configuration for Neovim, Zed, Ghostty, Zsh, IdeaVim, OpenCode, and PowerShell.
+Personal development environment configuration for Neovim, Zed, Ghostty, Zsh, IdeaVim, OpenCode, Codex, and PowerShell.
 
 ## Structure
 
@@ -12,7 +12,7 @@ dotfiles/
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-└── opencode/          → ~/.config/opencode
+└── opencode/          → ~/.config/opencode and the shared Karpathy Guidelines plugin
 ```
 
 ## Quick Install
@@ -75,6 +75,17 @@ ln -sfn ~/dotfiles/opencode ~/.config/opencode
 ```
 
 OpenCode V2 setup, provider environment variables, workflow, CLI settings, and skill layout are documented in [`opencode/README.md`](opencode/README.md). Private runtime `service.json` credentials are not tracked.
+
+### Codex
+
+From the dotfiles root, register the local marketplace and install the Karpathy Guidelines plugin.
+
+```bash
+codex plugin marketplace add "$PWD"
+codex plugin add karpathy-guidelines@dotfiles
+```
+
+Both plugin entry points live in `opencode/plugins/karpathy-guidelines/` and package the same [upstream skill](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2/skills/karpathy-guidelines) (MIT). OpenCode discovers its server plugin through the global `plugins/` directory.
 
 ## Tools
 
