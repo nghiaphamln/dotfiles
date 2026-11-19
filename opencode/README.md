@@ -33,48 +33,42 @@ ln -sfn "$DOTFILES_DIR/opencode" ~/.config/opencode
 
 ### Providers
 
-Providers use V2's native `package`, `settings`, and `capabilities` fields:
-
-- `aicheap`: `@opencode/ai/providers/openai`, using `AI_CHEAP_BASE_URL` and `AI_CHEAP_API_KEY`. The three GPT models are capped locally at an 872,000-token context window, with a 744,000-token input budget and 128,000-token output limit. This intentionally stays below the published 1,050,000-token context window.
-- `antigravity`: `@opencode/ai/providers/google`, using `LLM_BASE_URL` with `/v1beta` appended and `LLM_API_KEY`. Its existing Gemini and Claude model IDs are preserved; the Google runtime is intentional for this gateway's API, including its Claude aliases.
+`aicheap` uses V2's `@opencode/ai/providers/openai` package with `AI_CHEAP_BASE_URL` and `AI_CHEAP_API_KEY`. Each model is capped locally at an 872,000-token context window, with a 744,000-token input budget and a 128,000-token output limit.
 
 | Model | Default reasoning | Input | Cached input | Cache writes | Output |
 |---|---|---|---|---|---|
-| `gpt-6.1-sol` | high | $2 | $0.10 | $2.50 | $10 |
-| `gpt-6-astra` | max | $10 | $1 | $12.50 | $50 |
+| `gpt-6.2-sol` | high | $2 | $0.10 | $2.50 | $10 |
+| `gpt-6.2-astra` | max | $8 | $0.40 | $10 | $40 |
+| `gpt-6.1-terra` | max | $1 | $0.05 | $1.25 | $5 |
 | `gpt-6-luna` | low | $0.10 | $0.01 | $0.125 | $0.50 |
 
-Prices are OpenAI's published Standard rates in USD per 1M tokens for requests with at most 272,000 input tokens, checked on 2026-10-17. Each model also configures the published long-context tier for requests above 272,000 input tokens: 2x input/cache rates and 1.5x output rates for the full request. These are OpenCode display estimates; actual billing comes from the gateway. No Fast, Ultrafast, Batch, Flex, or regional-processing price adjustments are configured. Antigravity has no explicit price overrides.
+OpenCode estimates costs using OpenAI's published Standard rates in USD per 1M tokens. Above 272,000 input tokens, the estimates apply 2× input and cache rates and 1.5× output rates to the full request. Actual rates and model availability depend on the gateway.
 
-Sources: [OpenAI pricing](https://developers.openai.com/api/docs/pricing), [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol), [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), and [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna).
+[OpenAI pricing](https://developers.openai.com/api/docs/pricing) · [GPT-6.2 Sol](https://developers.openai.com/api/docs/models/gpt-6.2-sol) · [GPT-6.2 Astra](https://developers.openai.com/api/docs/models/gpt-6.2-astra) · [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra)
 
 Default models:
-- `model`: `aicheap/gpt-6.1-sol`, with `settings.reasoningEffort: "high"`
+- `model`: `aicheap/gpt-6.2-sol`, with `settings.reasoningEffort: "high"`
 - `agents.title.model`: `aicheap/gpt-6-luna` (the V2 replacement for `small_model`)
 
-Existing sessions retain their selected model; changing the configured default does not override them.
+Existing sessions retain their selected model. Use `/models` to switch a session that used a removed model.
 
 ### Reasoning Effort
 
-Each GPT model's `settings` sets its default effort. Sol and Astra support `low`, `medium`, `high`, `xhigh`, and `max`. Luna additionally supports `none`, included explicitly in its effort list.
+Each model offers `low`, `medium`, `high`, `xhigh`, and `max`. Terra and Luna also offer `none`.
 
-The effort levels are declared explicitly in `capabilities.reasoning.effort`, allowing V2 to generate the variants. Astra uses `max` by default; Luna uses `low` and Sol uses `high`. GPT temperature controls are explicitly disabled with `capabilities.temperature: false`. The OpenAI runtime uses the Responses API for reasoning-enabled tool calls, as required by Sol and Luna.
+The effort levels in `capabilities.reasoning.effort` generate the V2 variants. `capabilities.temperature: false` disables temperature controls. The OpenAI runtime uses the Responses API for reasoning-enabled tool calls.
 
 Select a level with `/models`, or use a V2 model reference with `#variant`:
 
 ```bash
-opencode run --model 'aicheap/gpt-6.1-sol#high' "..."
+opencode run --model 'aicheap/gpt-6.2-sol#high' "..."
 ```
-
-Only the published levels above are exposed; V2 rejects unknown variants. Antigravity's model aliases rely on the gateway's reasoning defaults and intentionally expose no effort variants (`supported: true` without effort or budget controls). Legacy `variants.<name>.disabled` entries are not used.
 
 ### Environment Variables
 
 ```bash
 export AI_CHEAP_BASE_URL="..."
 export AI_CHEAP_API_KEY="..."
-export LLM_BASE_URL="..."
-export LLM_API_KEY="..."
 ```
 
 Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NAME}` syntax. Keep secrets outside this repo. The background service must have these variables in its environment; changing them in a terminal does not update an already-running service.
@@ -154,7 +148,7 @@ opencode plugin list
 opencode api get /api/config >/dev/null
 ```
 
-In the TUI, use `/models` to confirm the three GPT models offer `low`, `medium`, `high`, `xhigh`, and `max`, Luna additionally offers `none`, and Antigravity models offer no effort variants. New sessions default to GPT-6.1 Sol with high reasoning; the title agent uses GPT-6 Luna. Use **Open settings** from `Ctrl+P` to check terminal preferences.
+In the TUI, use `/models` to check the four AiCheap models and their reasoning levels. Use **Open settings** from `Ctrl+P` to check terminal preferences.
 
 Server configuration and valid CLI edits normally reload automatically; in-flight model requests keep their original settings. If a client does not refresh its appearance, close and reopen it. If the shared service is unhealthy, use `opencode service restart` and recheck its status; do not delete service files or the database.
 

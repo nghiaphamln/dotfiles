@@ -12,6 +12,9 @@
     "wrap": "word",
     "view": "unified"
   },
+  "tabs": {
+    "mode": "off"
+  },
   "session": {
     "sidebar": "hide",
     "scrollbar": false,
