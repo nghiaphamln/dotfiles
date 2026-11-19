@@ -94,7 +94,7 @@ curl -s https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main
   -o skills/karpathy-guidelines/SKILL.md
 ```
 
-There is no global `AGENTS.md` and no file-based custom commands. Skill routing is left to the agent's own judgment via the `skill` tool; Ponytail and Aseprite AI Artist also register their bundled commands and skills through plugins. Ponytail injects its active rules automatically. Project-local `AGENTS.md` files still apply. V2 does not currently discover the old `CLAUDE.md` fallback; put applicable project guidance in `AGENTS.md` instead.
+There is no global `AGENTS.md` and no file-based custom commands. Skill routing is left to the agent's own judgment via the `skill` tool; the Ponytail plugin also registers bundled commands and skills and injects its active rules automatically. Project-local `AGENTS.md` files still apply. V2 does not currently discover the old `CLAUDE.md` fallback; put applicable project guidance in `AGENTS.md` instead.
 
 ### Ponytail plugin
 
@@ -114,41 +114,6 @@ To reinstall the pinned version or remove it:
 opencode plugin add @dietrichgebert/ponytail@5.3.2
 opencode plugin remove @dietrichgebert/ponytail@5.3.2
 ```
-
-### Aseprite AI Artist
-
-[`with-pebbly/aseprite-ai-artist`](https://github.com/with-pebbly/aseprite-ai-artist) is installed globally as two pieces:
-
-- The V2 OpenCode plugin, pinned to commit `5894b12cead839789077b279369409f868451ffc` (0.8.2), registers fourteen `/aseprite:*` commands and skills, plus connection-status and preview-reminder hooks.
-- The local MCP server runs `npx -y @pebbly/aseprite-ai-artist@0.8.2 serve`. `ASEPRITE_AI_PROMPTS=0` avoids duplicate workflows because the plugin already registers them.
-
-Both entries live in `opencode.jsonc`, alongside Ponytail and the existing providers. The Aseprite Lua extension is installed outside this repo in Aseprite's config directory. This machine already had extension 0.8.2 connected to Aseprite 1.3.17.2, so installation did not replace it or restart the application.
-
-For a new machine, install Aseprite 1.3+ and Node 22.6+, open Aseprite once, then install the extension:
-
-```bash
-npx -y @pebbly/aseprite-ai-artist@0.8.2 install-extension
-```
-
-Restart Aseprite after installing its extension. The tracked config supplies the OpenCode plugin and MCP server; to add them manually instead:
-
-```bash
-opencode plugin add 'github:with-pebbly/aseprite-ai-artist#5894b12cead839789077b279369409f868451ffc::path:opencode'
-opencode mcp add aseprite-ai-artist --global --env ASEPRITE_AI_PROMPTS=0 -- npx -y @pebbly/aseprite-ai-artist@0.8.2 serve
-```
-
-Start with `/aseprite:studio <request>`, or choose `/aseprite:draw`, `/aseprite:animate`, `/aseprite:review`, or `/aseprite:export` for one stage. The server exposes eighteen MCP tools and the bundled craft knowledge as resources. No art is published automatically; `/aseprite:submit` is an explicit gallery-submission workflow.
-
-This setup uses the live Aseprite window, not headless mode, and does not enable arbitrary Lua execution. Drawing tools can change the active document; saving and exporting can write anywhere the user account can. The bridge listens only on `127.0.0.1` (ports 9931/9932), but any local process can control Aseprite through it while it runs. Use it only on a trusted machine.
-
-Check the connection without drawing:
-
-```bash
-opencode mcp list
-npx -y @pebbly/aseprite-ai-artist@0.8.2 doctor
-```
-
-The MCP `preflight` tool must report `ready: true` before drawing. Installation was checked with `preflight` only; no pixels, layers, frames, or files in the open drawing were changed.
 
 ### Permissions
 
@@ -182,9 +147,8 @@ opencode --version
 opencode service status
 opencode api get /api/info
 
-# Confirm the plugins and Aseprite MCP connection
+# Confirm the installed plugins
 opencode plugin list
-opencode mcp list
 
 # Inspect config loading without printing resolved credentials
 opencode api get /api/config >/dev/null

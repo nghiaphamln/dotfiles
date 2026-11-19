@@ -280,23 +280,6 @@
     }
   },
   "plugins": [
-    "@dietrichgebert/ponytail@5.3.2",
-    "github:with-pebbly/aseprite-ai-artist#5894b12cead839789077b279369409f868451ffc::path:opencode"
-  ],
-  "mcp": {
-    "servers": {
-      "aseprite-ai-artist": {
-        "type": "local",
-        "command": [
-          "npx",
-          "-y",
-          "@pebbly/aseprite-ai-artist@0.8.2",
-          "serve"
-        ],
-        "environment": {
-          "ASEPRITE_AI_PROMPTS": "0"
-        }
-      }
-    }
-  }
+    "@dietrichgebert/ponytail@5.3.2"
+  ]
 }
