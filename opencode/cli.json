@@ -18,7 +18,8 @@
   "session": {
     "sidebar": "hide",
     "scrollbar": false,
-    "thinking": "hide"
+    "thinking": "hide",
+    "verbosity": "medium"
   },
   "animations": true,
   "attention": {
