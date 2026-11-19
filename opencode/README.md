@@ -6,12 +6,13 @@ This directory contains native OpenCode V2 configuration symlinked into `~/.conf
 
 ```text
 dotfiles/
-└── opencode/
-    ├── opencode.jsonc  # Providers, models, permissions, and compaction
-    ├── cli.json        # Global terminal client settings
-    ├── README.md
-    └── plugins/
-        └── karpathy-guidelines/  # OpenCode server plugin and Codex plugin bundle
+├── opencode/
+│   ├── opencode.jsonc  # Providers, models, permissions, and compaction
+│   ├── cli.json        # Global terminal client settings
+│   ├── README.md
+│   └── plugins/karpathy-guidelines.js  # Loads the shared server plugin
+└── skills/
+    └── karpathy-guidelines/  # OpenCode and Codex plugin package
 ```
 
 Runtime layout (after symlink):
@@ -75,7 +76,7 @@ Recommended location: `~/.zshenv`. OpenCode resolves these via `{env:VARIABLE_NA
 
 ### Karpathy Guidelines plugin
 
-OpenCode loads the local server plugin from `plugins/karpathy-guidelines/`. It registers `karpathy-guidelines` with OpenCode's [skill API](https://opencode.ai/docs/build/plugins/server#skills), using the [bundled upstream `SKILL.md`](plugins/karpathy-guidelines/skills/karpathy-guidelines/SKILL.md). Mention `@karpathy-guidelines` to load it explicitly.
+OpenCode discovers `plugins/karpathy-guidelines.js`, which loads the server plugin from the shared package. The plugin registers the [bundled `SKILL.md`](../skills/karpathy-guidelines/skill/SKILL.md) with OpenCode's [skill API](https://opencode.ai/docs/build/plugins/server#skills). Mention `@karpathy-guidelines` to load it explicitly.
 
 The same directory contains the Codex plugin manifest. See the [root README](../README.md#codex) for the upstream revision and Codex installation commands.
 

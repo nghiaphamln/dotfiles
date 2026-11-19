@@ -8,7 +8,7 @@
       "name": "karpathy-guidelines",
       "source": {
         "source": "local",
-        "path": "./opencode/plugins/karpathy-guidelines"
+        "path": "./skills/karpathy-guidelines"
       },
       "policy": {
         "installation": "AVAILABLE",

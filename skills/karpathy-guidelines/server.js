@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 const id = "karpathy-guidelines";
-const path = fileURLToPath(new URL("./skills/karpathy-guidelines/SKILL.md", import.meta.url));
+const path = fileURLToPath(new URL("./skill/SKILL.md", import.meta.url));
 
 export default {
   id,

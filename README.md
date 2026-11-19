@@ -12,7 +12,8 @@ dotfiles/
 ├── zsh/               → ~/.zshrc + ~/.config/oh-my-posh/gruvbox.omp.json
 ├── IdeaVim/           → ~/.ideavimrc
 ├── PowerShell/        → PowerShell profile
-└── opencode/          → ~/.config/opencode and the shared Karpathy Guidelines plugin
+├── opencode/          → ~/.config/opencode
+└── skills/            → skill packages for OpenCode and Codex
 ```
 
 ## Quick Install
@@ -78,14 +79,16 @@ OpenCode V2 setup, provider environment variables, workflow, CLI settings, and s
 
 ### Codex
 
-From the dotfiles root, register the local marketplace and install the Karpathy Guidelines plugin.
+Install the Karpathy Guidelines plugin from GitHub. Codex downloads the marketplace into its cache, so you can run these commands from any directory.
 
 ```bash
-codex plugin marketplace add "$PWD"
+codex plugin marketplace add nghiaphamln/dotfiles
 codex plugin add karpathy-guidelines@dotfiles
 ```
 
-Both plugin entry points live in `opencode/plugins/karpathy-guidelines/` and package the same [upstream skill](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2/skills/karpathy-guidelines) (MIT). OpenCode discovers its server plugin through the global `plugins/` directory.
+Check the installation with `codex plugin list --marketplace dotfiles`. The plugin should show `installed, enabled`.
+
+Each plugin package has its own directory under `skills/`. Both clients package the same [Karpathy Guidelines skill](skills/karpathy-guidelines/skill/SKILL.md), copied from the [upstream project](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2/skills/karpathy-guidelines) (MIT).
 
 ## Tools
 
