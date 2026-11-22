@@ -45,31 +45,36 @@ if [[ -r "$_zsh_autosuggestions" ]]; then
 fi
 unset _zsh_autosuggestions
 
-
-# Added by Antigravity CLI installer
-export PATH="/Users/nghiapm/.local/bin:$PATH"
-
 # Unity CLI
 if [[ -r "$HOME/.unity/env" ]]; then
   source "$HOME/.unity/env"
 fi
 
-# opencode
-export PATH=/Users/nghiapm/.opencode/bin:$PATH
+# OpenCode and Flutter installed in the user's home directory.
+if [[ -d "$HOME/.opencode/bin" ]]; then
+  path=("$HOME/.opencode/bin" $path)
+fi
+if [[ -d "$HOME/development/flutter/bin" ]]; then
+  path+=("$HOME/development/flutter/bin")
+fi
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/lap15874/.docker/completions $fpath)
-autoload -Uz compinit
-(( ${+_comps[docker]} )) || compinit
-# End of Docker CLI completions
+# Fall back to full Xcode when xcode-select only points to Command Line Tools.
+if [[ -z ${DEVELOPER_DIR:-} && -d /Applications/Xcode.app/Contents/Developer &&
+      $(xcode-select -p 2>/dev/null) != */Contents/Developer ]]; then
+  export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+fi
 
-# Use the selected Docker context (Colima), including in shells that inherited
-# the previous Podman socket from their parent process.
-unset DOCKER_HOST
+# Docker Desktop installs its completions here.
+if [[ -d "$HOME/.docker/completions" ]]; then
+  typeset -U fpath
+  fpath=("$HOME/.docker/completions" $fpath)
+  autoload -Uz compinit
+  (( ${+_comps[docker]} )) || compinit
+fi
 
-
-# Added by Antigravity CLI installer
-export PATH="/Users/lap15874/.local/bin:$PATH"
-
-# opencode
-export PATH=/Users/lap15874/.opencode/bin:$PATH
+# Let the selected Colima context take over from a stale Podman socket.
+if [[ ${DOCKER_HOST:-} == unix://*/podman/*.sock && ! -S "${DOCKER_HOST#unix://}" ]] &&
+   (( $+commands[docker] )) &&
+   [[ $(env -u DOCKER_HOST docker context show 2>/dev/null) == colima(|-*) ]]; then
+  unset DOCKER_HOST
+fi
